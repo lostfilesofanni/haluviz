@@ -475,6 +475,11 @@ function renderHalu() {
   const thr = +$("halu-thresh").value;
   $("halu-thresh-val").textContent = thr.toFixed(2);
   const toks = H.tokens.map((t) => ({ ...t, flag: t.score >= thr && WORDLIKE.test(t.token) && !t.in_prompt }));
+  // whole-word flags, mirroring hallucination.py
+  let ws = 0;
+  toks.forEach((t, i) => { if (i > 0 && (t.token.startsWith(" ") || !WORDLIKE.test(t.token))) ws = i; t.word = ws; });
+  const flaggedWords = new Set(toks.filter((t) => t.flag).map((t) => t.word));
+  for (const t of toks) t.flag = flaggedWords.has(t.word) && WORDLIKE.test(t.token);
   for (const t of toks) halu.set(t.pos, { score: t.score, flag: t.flag });
   // inline answer with flagged tokens marked
   $("halu-answer").innerHTML = toks

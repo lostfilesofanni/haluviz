@@ -65,6 +65,16 @@ def hallucination_signals(
                 "flag": bool(score >= threshold and WORDLIKE.search(s) and tid not in prompt_ids),
             }
         )
+    # Flags apply to whole words: a sub-word piece over the line ("ha" in
+    # " N|ha| Tr|ang") drags its siblings along, so spans read as words.
+    word_start = 0
+    for i, tok in enumerate(tokens):
+        if i > 0 and (tok["token"].startswith(" ") or not WORDLIKE.search(tok["token"])):
+            word_start = i
+        tok["word"] = word_start
+    flagged_words = {tok["word"] for tok in tokens if tok["flag"]}
+    for tok in tokens:
+        tok["flag"] = tok["word"] in flagged_words and bool(WORDLIKE.search(tok["token"]))
     spans, cur = [], None
     for tok in tokens:
         if tok["flag"]:
