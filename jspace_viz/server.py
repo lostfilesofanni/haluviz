@@ -8,6 +8,7 @@ import argparse
 import logging
 import os
 import threading
+import time
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +29,16 @@ state: dict[str, Any] = {}
 # MPS is not safe to drive from two threads at once (Metal command-buffer
 # assertion); FastAPI runs sync endpoints in a pool, so serialize model use.
 _model_lock = threading.Lock()
+
+
+def _idle_watchdog(idle_seconds: float) -> None:
+    """Exit when nobody has asked for a read in a while — the model holds GBs
+    of wired memory, and a forgotten server starves an 8 GB machine."""
+    while True:
+        time.sleep(30)
+        if time.monotonic() - state.get("last_read", time.monotonic()) > idle_seconds:
+            logger.info("idle for %.0f min; exiting to free memory", idle_seconds / 60)
+            os._exit(0)
 
 
 class ReadRequest(BaseModel):
@@ -76,6 +87,7 @@ def load_chip_baseline(model_id: str) -> dict[str, float]:
 def read(req: ReadRequest) -> dict[str, Any]:
     if req.mode not in ("jlens", "logit"):
         raise HTTPException(400, "mode must be 'jlens' or 'logit'")
+    state["last_read"] = time.monotonic()
     try:
         with _model_lock:
             return read_grid(
@@ -173,10 +185,14 @@ def main() -> None:
     parser.add_argument("--dtype", default=None, choices=["float32", "float16", "bfloat16", "int8"])
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8321)
+    parser.add_argument("--idle-timeout", type=float, default=10.0, help="minutes without a read before the server exits (0 = never)")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
     load(args.preset, args.model_id, args.lens, args.dtype)
+    state["last_read"] = time.monotonic()
+    if args.idle_timeout > 0:
+        threading.Thread(target=_idle_watchdog, args=(args.idle_timeout * 60,), daemon=True).start()
 
     import uvicorn
 

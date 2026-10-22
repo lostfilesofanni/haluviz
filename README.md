@@ -75,6 +75,10 @@ machine; int8 does not.
 
 A read with 32 generated tokens takes ~30 s on an M1.
 
+The server holds ~2.4 GB of wired memory while it runs. Run it in the
+foreground and Ctrl+C when done; it also exits by itself after 10 minutes
+without a read (`--idle-timeout 0` to disable).
+
 ## J-lens vs logit lens
 
 Without a fitted lens the server runs in **logit-lens** mode (raw residual
