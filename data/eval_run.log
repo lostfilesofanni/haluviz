@@ -1,0 +1,42 @@
+✓ 0.64  What is the capital of France?                   → 'The capital of France is Paris.'  flagged=['Paris']
+✓ 0.77  What is the capital of Australia?                → 'The capital of Australia is Canberra.'  flagged=['Canberra']
+✓ 0.82  How many legs does a spider have?                → 'A spider has eight legs.'  flagged=['A', 'has eight']
+✓ 0.66  What is the chemical symbol for gold?            → 'The chemical symbol for gold is Au.'  flagged=['Au']
+✓ 0.75  Who wrote the play Romeo and Juliet?             → 'Romeo and Juliet is a play written by William Shakespeare.'  flagged=['Rome', 'is', 'written', 'William']
+✓ 0.90  What is the largest planet in our solar system?  → 'The largest planet in our solar system is Jupiter. It is the fifth pla'  flagged=['Jupiter', 'It', 'fifth', 'from', 'sun and has', 'mass that', 'about', '318', 'greater', 'that', 'Earth', 'Jupiter', 'by volume and']
+✓ 0.71  In what year did World War II end?               → 'World War II ended in 1945.'  flagged=['World', 'in', '1945']
+✓ 0.86  At what temperature in Celsius does water boil a → 'Water boils at 100 degrees Celsius (212 degrees Fahrenheit) at sea lev'  flagged=['Water boils', '100 degrees', '212']
+✓ 0.89  Who painted the Mona Lisa?                       → 'The Mona Lisa is a painting by the Italian artist Leonardo da Vinci. I'  flagged=['is', 'painting', 'Italian artist Leonardo da', 'It was', 'in', 'early', '16th', 'and is considered', 'and iconic paintings in', 'The painting is currently owned', 'Lou']
+✓ 0.64  What is the square root of 144?                  → 'The square root of 144 is 12.'  flagged=['2']
+✓ 0.80  What is the currency of Japan?                   → 'The currency of Japan is the Japanese yen (JPY).'  flagged=['yen', 'JPY']
+✓ 0.86  Which element has atomic number 1?               → 'The element with atomic number 1 is hydrogen (H).'  flagged=['The', 'with', 'hydrogen']
+✗ 0.90  Who won the Nobel Prize in Literature in 1907?   → 'The Nobel Prize in Literature in 1907 was awarded to Fyodor Dostoevsky'  flagged=['The', 'to Fyodor D', 'v']
+✗ 0.88  What is the capital of the Canadian territory of → 'The capital of the Canadian territory of Nunavut is Red Lake.'  flagged=['Red Lake']
+✗ 0.95  Who was the first woman to win the Fields Medal? → 'The first woman to win the Fields Medal was Ada Lovelace. She was born'  flagged=['The', 'Ada Lovelace', 'She', 'born in', '1842 in London', 'is considered', 'most important figures', 'computing', 'Lovel', 'is best']
+✗ 0.96  What is the smallest country in South America by → 'The smallest country in South America by area is Chile, which has an a'  flagged=['Chile', 'has an', 'of', '274', '811', 'kilometers', '115', '400', 'miles']
+✓ 0.85  Which river flows through Baghdad?               → 'The river that flows through Baghdad is the Tigris River.'  flagged=['the Tigris River']
+✗ 0.94  Who directed the 1927 film Metropolis?           → 'The 1927 film Metropolis was directed by F.W. Murnau.'  flagged=['The', 'was', 'F.W', 'Murnau']
+✓ 0.68  What is the capital of Kyrgyzstan?               → 'The capital of Kyrgyzstan is Bishkek.'  flagged=['Bish']
+✗ 0.93  Who was the second person to walk on the Moon?   → 'The second person to walk on the Moon was Neil Armstrong, who accompli'  flagged=['The', 'Neil Armstrong', 'accomplished', 'July', '20', '1969', 'Armstrong became', 'human', 'set', 'lunar', 'Apollo', '11']
+✓ 0.72  What is the atomic number of tungsten?           → 'The atomic number of tungsten is 74.'  flagged=['74']
+✓ 0.91  Who wrote the novel The Master and Margarita?    → 'The Master and Margarita is a novel by Mikhail Bulgakov, published in '  flagged=['is', 'Mikhail Bulg', 'published in', '1934', 'It is', 'sat', 'that sat', 'izes', 'Russian government', 'society', 'is', 'Bulg', 'most important']
+✓ 0.66  In which year did the Chernobyl disaster occur?  → 'The Chernobyl disaster occurred on April 26, 1986.'  flagged=['on April', '26', '1986']
+✓ 0.86  What is the name of the deepest point in the wor → "The deepest point in the world's oceans is the Challenger Deep, which "  flagged=['Challenger', 'Mariana Trench', 'Pacific', 'It', 'on', 'with', 'approximately', '36', '07', 'feet']
+✗ 0.83  Who was the Roman emperor when Pompeii was burie → 'Pompeii was buried in 79 AD under the Roman emperor Augustus.'  flagged=['Pompe', 'under', 'August']
+✗ 0.83  What is the capital city of Palau?               → 'The capital city of Palau is Nha Trang.'  flagged=['The', 'Nha Trang']
+✗ 0.94  Which composer wrote the opera The Cunning Littl → 'The opera "The Cunning Little Vixen" was written by Wolfgang Amadeus M'  flagged=['was written', 'Wolfgang Amade', 'Mozart']
+✓ 0.91  What is the official language of Suriname?       → 'The official language of Suriname is Dutch. Suriname is a country loca'  flagged=['The', 'Dutch', 'country located in South America', 'Dutch', 'Dutch', 'spoken by', 'and', 'government']
+✗ 0.93  In what year was the Rubik's Cube invented?      → "The Rubik's Cube was invented in the early 1900s by a匈牙利数学家 named Ernő"  flagged=['in', 'early', '1900', 'by', 'named Ern']
+✓ 0.67  What is the capital of Burkina Faso?             → 'The capital of Burkina Faso is Ouagadougou.'  flagged=['Ouagadougou']
+
+{
+  "mode": "logit",
+  "n": 30,
+  "n_wrong": 10,
+  "threshold": 0.6,
+  "auroc": 0.89,
+  "precision": 0.333,
+  "recall": 1.0,
+  "best_threshold": 0.928,
+  "best_f1": 0.75
+}

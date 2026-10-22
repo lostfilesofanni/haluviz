@@ -12,7 +12,10 @@ produced it (position t-1 predicts token t):
 score = mean(1 - p_final, commit_depth, 1 - support). High = the model said
 something it had low confidence in, decided late, and never "had in mind".
 
-# ponytail: equal weights + one global threshold; tune with scripts/eval_detector.py.
+Default threshold 0.85 was set from scripts/eval_detector.py on data/questions.json
+(logit-lens mode): under the logit lens commit_depth≈1 and support≈0 for nearly
+every token, so the score floors near 0.65 and only p_final moves it.
+# ponytail: equal weights + one global threshold; re-tune once a J-lens is fitted.
 """
 
 from __future__ import annotations
@@ -29,7 +32,7 @@ def hallucination_signals(
     vocab: dict[int, str],
     prompt_len: int,
     *,
-    threshold: float = 0.6,
+    threshold: float = 0.85,
 ) -> dict[str, Any]:
     fitted = [r for r in grid if not r["is_output"]]
     out = next(r for r in grid if r["is_output"])

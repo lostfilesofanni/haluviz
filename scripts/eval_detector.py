@@ -38,7 +38,7 @@ def main() -> None:
     ap.add_argument("--preset", default="qwen-1.8b-chat")
     ap.add_argument("--mode", default=None, help="logit | jlens (default: jlens if a lens is loaded)")
     ap.add_argument("--max-new-tokens", type=int, default=48)
-    ap.add_argument("--threshold", type=float, default=0.6)
+    ap.add_argument("--threshold", type=float, default=0.85)
     ap.add_argument("--questions", default=os.path.join(ROOT, "data", "questions.json"))
     ap.add_argument("--url", default=None, help="POST to a running haluviz server instead of loading the model here")
     args = ap.parse_args()
@@ -69,6 +69,7 @@ def main() -> None:
         rows.append({
             "q": q["q"], "tier": q.get("tier", ""), "answer": ans.strip(), "correct": correct,
             "max_score": h["max_score"], "spans": [s["text"] for s in h["spans"]],
+            "tokens": h["tokens"],  # per-token signals, for calibration analysis
         })
         mark = "✓" if correct else "✗"
         print(f"{mark} {h['max_score']:.2f}  {q['q'][:48]:<48} → {ans.strip()[:70]!r}  flagged={rows[-1]['spans']}")
