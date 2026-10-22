@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+import threading
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,9 @@ logger = logging.getLogger("jspace_viz")
 STATIC_DIR = Path(__file__).parent / "static"
 
 state: dict[str, Any] = {}
+# MPS is not safe to drive from two threads at once (Metal command-buffer
+# assertion); FastAPI runs sync endpoints in a pool, so serialize model use.
+_model_lock = threading.Lock()
 
 
 class ReadRequest(BaseModel):
@@ -73,19 +77,20 @@ def read(req: ReadRequest) -> dict[str, Any]:
     if req.mode not in ("jlens", "logit"):
         raise HTTPException(400, "mode must be 'jlens' or 'logit'")
     try:
-        return read_grid(
-            state["model"],
-            state["lens"],
-            req.prompt,
-            mode=req.mode,
-            top_k=req.top_k,
-            max_seq_len=req.max_seq_len,
-            pinned_ids=req.pinned_ids,
-            chat=req.chat,
-            generate_continuation=req.continuation,
-            max_new_tokens=req.max_new_tokens,
-            threshold=req.threshold,
-        )
+        with _model_lock:
+            return read_grid(
+                state["model"],
+                state["lens"],
+                req.prompt,
+                mode=req.mode,
+                top_k=req.top_k,
+                max_seq_len=req.max_seq_len,
+                pinned_ids=req.pinned_ids,
+                chat=req.chat,
+                generate_continuation=req.continuation,
+                max_new_tokens=req.max_new_tokens,
+                threshold=req.threshold,
+            )
     except Exception as exc:  # surfaced to the UI status line
         logger.exception("read failed")
         raise HTTPException(500, str(exc)) from exc
