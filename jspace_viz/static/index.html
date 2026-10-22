@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>haluviz — J-space + hallucination detector</title>
-<link rel="stylesheet" href="static/app.css">
+<link rel="stylesheet" href="static/app.css?v=2">
 </head>
 <body>
 <header>
@@ -25,6 +25,7 @@
     <label>top-k <input id="topk" type="number" min="1" max="20" value="8"></label>
     <label title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox" checked> chat</label>
     <label title="how many tokens the model generates">new tokens <input id="newtok" type="number" min="1" max="128" value="32"></label>
+    <label title="per cell, show the highest-ranked English token instead of the raw top-1 (early layers of a bilingual model read as noise under the logit lens)"><input id="english" type="checkbox" checked> english only</label>
     <label id="live-label" title="re-read automatically while you type — watch the thoughts change"><input id="live" type="checkbox"> live</label>
     <button id="read" class="primary">Read</button>
     <button id="jump-gen" hidden title="scroll the grid to the model's own generated words — its thoughts while it speaks">→ what it wrote</button>
@@ -58,6 +59,6 @@
 </section>
 
 <div id="tooltip" hidden></div>
-<script src="static/app.js"></script>
+<script src="static/app.js?v=2"></script>
 </body>
 </html>

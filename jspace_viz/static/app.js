@@ -287,6 +287,7 @@ async function read(opts = {}) {
         el.classList.add("flash");
       }
     }
+    if (data.continuation) scrollToGeneration(); // the answer is what you came for
     const says = data.continuation ? `${modelSays()} · ` : "";
     setStatus(`${says}${data.seq_len} tokens × ${data.layers.length} layers · ${((performance.now() - t0) / 1000).toFixed(1)}s${opts.live ? " · live" : ""}`);
   } catch (e) {
@@ -300,6 +301,11 @@ async function read(opts = {}) {
     }
   }
 }
+
+// "English" = printable ASCII with at least one letter/digit (includes the
+// chat-template tokens, which are informative). CJK/Hangul/etc. are skipped.
+const ENGLISH = /^[\x20-\x7e\n\t]*[A-Za-z0-9][\x20-\x7e\n\t]*$/;
+$("english").addEventListener("change", () => { if (data) renderGrid(); });
 
 // Background for a top-1 probability (0..1) — accent blue ramp.
 function probColor(p) {
@@ -344,8 +350,12 @@ function renderGrid() {
         text = "–";
         bg = "transparent";
       } else {
-        text = tokStr(vocab[row.top_ids[t][0]]);
-        bg = probColor(row.top_probs[t][0]);
+        let i = 0;
+        if ($("english").checked) {
+          i = row.top_ids[t].findIndex((id) => ENGLISH.test(vocab[id] || ""));
+        }
+        text = i < 0 ? "·" : tokStr(vocab[row.top_ids[t][i]]);
+        bg = i < 0 ? "transparent" : probColor(row.top_probs[t][i]);
       }
       parts.push(`<div class="cell${cls}${genCls(t)}" data-l="${li}" data-t="${t}" style="background:${bg}">${esc(text)}</div>`);
     }
