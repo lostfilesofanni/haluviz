@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.egg-info/
+models/
+lenses/
+*.gguf
+data/eval_results.json
+.DS_Store

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "haluviz"
+version = "0.1.0"
+description = "J-space visualizer with hallucination detection for Qwen-1.8B-Chat"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = [
+    "torch",
+    "transformers",
+    "numpy",
+    "huggingface_hub",
+    "fastapi",
+    "uvicorn",
+    "gguf",
+    "safetensors",
+]
+
+[project.optional-dependencies]
+fit = ["datasets"]
+
+[project.scripts]
+haluviz = "jspace_viz.server:main"
+
+[tool.setuptools]
+packages = ["jspace_viz"]
+
+[tool.setuptools.package-data]
+jspace_viz = ["static/*", "data/chip_baselines/*"]
