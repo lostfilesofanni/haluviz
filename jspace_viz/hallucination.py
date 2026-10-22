@@ -35,6 +35,7 @@ def hallucination_signals(
     out = next(r for r in grid if r["is_output"])
     n = len(fitted)
     lo, hi = int(n * 0.25), max(int(n * 0.25) + 1, int(n * 0.85))
+    prompt_ids = set(context_ids[:prompt_len])  # copying a prompt word is not hallucinating
     tokens: list[dict[str, Any]] = []
     for t in range(prompt_len, len(context_ids)):
         tid, col = context_ids[t], t - 1
@@ -55,7 +56,8 @@ def hallucination_signals(
                 "commit_depth": round(commit / max(n, 1), 3),
                 "support": round(support, 4),
                 "score": round(score, 3),
-                "flag": bool(score >= threshold and WORDLIKE.search(s)),
+                "in_prompt": tid in prompt_ids,
+                "flag": bool(score >= threshold and WORDLIKE.search(s) and tid not in prompt_ids),
             }
         )
     spans, cur = [], None
@@ -87,6 +89,7 @@ if __name__ == "__main__":  # self-check: late-committed, unsupported, low-p tok
         {"is_output": True, "top_ids": [[1], [2]], "next_prob": [0.95, 0.2]},
     ]
     r = hallucination_signals(grid, [0, 1, 2], {1: " Paris", 2: " Zork"}, 1)
+    assert hallucination_signals(grid, [2, 1, 2], {1: " Paris", 2: " Zork"}, 1)["spans"] == []  # prompt copy
     assert r["tokens"][0]["flag"] is False and r["tokens"][0]["commit_depth"] == 0.0
     assert r["tokens"][1]["flag"] is True and r["tokens"][1]["commit_depth"] == 1.0
     assert r["spans"] == [{"start": 2, "end": 2, "text": "Zork", "score": r["tokens"][1]["score"]}]

@@ -464,7 +464,7 @@ function renderHalu() {
   if (!H) { panel.hidden = true; return; }
   const thr = +$("halu-thresh").value;
   $("halu-thresh-val").textContent = thr.toFixed(2);
-  const toks = H.tokens.map((t) => ({ ...t, flag: t.score >= thr && WORDLIKE.test(t.token) }));
+  const toks = H.tokens.map((t) => ({ ...t, flag: t.score >= thr && WORDLIKE.test(t.token) && !t.in_prompt }));
   for (const t of toks) halu.set(t.pos, { score: t.score, flag: t.flag });
   // inline answer with flagged tokens marked
   $("halu-answer").innerHTML = toks
@@ -482,7 +482,7 @@ function renderHalu() {
     else if (t.flag) { cur = { start: t.pos, end: t.pos, text: t.token, score: t.score, n: 1, p: t.p_final, d: t.commit_depth, s: t.support }; spans.push(cur); }
     else cur = null;
   }
-  const nWord = toks.filter((t) => WORDLIKE.test(t.token)).length;
+  const nWord = toks.filter((t) => WORDLIKE.test(t.token) && !t.in_prompt).length;
   const nFlag = toks.filter((t) => t.flag).length;
   $("halu-summary").textContent = `${nFlag}/${nWord} tokens flagged · max score ${H.max_score.toFixed(2)}`;
   $("halu-chips").innerHTML = spans

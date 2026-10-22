@@ -165,7 +165,7 @@ def main() -> None:
     )
     parser.add_argument("--model-id", default=None, help="override the preset's model")
     parser.add_argument("--lens", default=None, help="path to a fitted lens .pt")
-    parser.add_argument("--dtype", default=None, choices=["float32", "float16", "bfloat16"])
+    parser.add_argument("--dtype", default=None, choices=["float32", "float16", "bfloat16", "int8"])
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8321)
     args = parser.parse_args()

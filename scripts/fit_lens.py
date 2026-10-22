@@ -34,7 +34,7 @@ def main() -> None:
     parser.add_argument("--n-prompts", type=int, default=100)
     parser.add_argument("--dim-batch", type=int, default=8)
     parser.add_argument("--max-seq-len", type=int, default=128)
-    parser.add_argument("--dtype", default=None, choices=["float32", "float16", "bfloat16"])
+    parser.add_argument("--dtype", default=None, choices=["float32", "float16", "bfloat16", "int8"])
     parser.add_argument("--prompts-file", default=None, help="newline-delimited corpus override (default: WikiText-103 stream)")
     args = parser.parse_args()
 

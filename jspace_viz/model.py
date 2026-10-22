@@ -110,6 +110,36 @@ class WrappedModel:
         return logits
 
 
+class Int8Linear(nn.Module):
+    """Weight-only int8 linear (per-output-row absmax scale), dequantized to
+    the activation dtype on every call. Halves the resident weight footprint —
+    the difference between fitting in RAM and swapping on an 8 GB laptop.
+    Gradients still flow to the activations, so lens fitting works through it.
+    """
+
+    def __init__(self, linear: nn.Linear) -> None:
+        super().__init__()
+        w = linear.weight.data.float()
+        scale = w.abs().amax(dim=1, keepdim=True).clamp_min(1e-8) / 127.0
+        self.register_buffer("w_q", (w / scale).round().clamp(-127, 127).to(torch.int8))
+        self.register_buffer("scale", scale.to(torch.float16))
+        self.bias = linear.bias
+        self.in_features, self.out_features = linear.in_features, linear.out_features
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        w = self.w_q.to(x.dtype) * self.scale.to(x.dtype)
+        return nn.functional.linear(x, w, None if self.bias is None else self.bias.to(x.dtype))
+
+
+def quantize_linears_int8(module: nn.Module) -> None:
+    """Replace every nn.Linear under ``module`` (the decoder blocks) in place."""
+    for name, child in list(module.named_children()):
+        if isinstance(child, nn.Linear):
+            setattr(module, name, Int8Linear(child))
+        else:
+            quantize_linears_int8(child)
+
+
 def pick_device() -> str:
     if torch.cuda.is_available():
         return "cuda"
@@ -127,8 +157,14 @@ def load_model(
     device = device or pick_device()
     if dtype == "auto":
         dtype = "float32" if device == "cpu" else "bfloat16"
+    # "int8": fp16 activations, int8 decoder weights (see Int8Linear).
+    int8 = dtype == "int8"
     hf_model = transformers.AutoModelForCausalLM.from_pretrained(
-        model_id, dtype=getattr(torch, dtype), trust_remote_code=False
-    ).to(device)
+        model_id, dtype=torch.float16 if int8 else getattr(torch, dtype), trust_remote_code=False
+    )
+    if int8:
+        layout = _find_layout(hf_model)
+        quantize_linears_int8(getattr(_resolve(hf_model, layout.path), layout.layers))
+    hf_model = hf_model.to(device)
     tokenizer = transformers.AutoTokenizer.from_pretrained(model_id)
     return WrappedModel(hf_model, tokenizer)

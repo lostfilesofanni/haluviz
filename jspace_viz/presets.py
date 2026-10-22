@@ -32,7 +32,7 @@ PRESETS: dict[str, Preset] = {
     "qwen-1.8b-chat": Preset(
         model_id="models/qwen-1_8b-chat-hf",
         lens=("file", "lenses/qwen-1_8b-chat_jlens_wikitext.pt"),
-        dtype="float16",
+        dtype="int8",
         notes="Runs on an 8 GB M1. Without a fitted lens the server serves logit-lens only.",
     ),
     # Runs (and fits) on a 16 GB Apple-Silicon laptop. A local lens wins if
