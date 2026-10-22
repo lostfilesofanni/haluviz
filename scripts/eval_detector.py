@@ -5,6 +5,7 @@ any gold string appears in the continuation. We then ask: does the detector's
 max token score separate wrong answers from right ones?
 
     python scripts/eval_detector.py [--preset qwen-1.8b-chat] [--mode logit|jlens]
+    python scripts/eval_detector.py --url http://127.0.0.1:8321   # reuse a running server
 """
 
 from __future__ import annotations
@@ -39,16 +40,29 @@ def main() -> None:
     ap.add_argument("--max-new-tokens", type=int, default=48)
     ap.add_argument("--threshold", type=float, default=0.6)
     ap.add_argument("--questions", default=os.path.join(ROOT, "data", "questions.json"))
+    ap.add_argument("--url", default=None, help="POST to a running haluviz server instead of loading the model here")
     args = ap.parse_args()
 
-    load(args.preset, None, None, None)
-    mode = args.mode or ("jlens" if state["lens"].source_layers else "logit")
+    if args.url:
+        import urllib.request
+        info = json.load(urllib.request.urlopen(args.url.rstrip("/") + "/api/info"))
+        mode = args.mode or ("jlens" if info["fitted_layers"] else "logit")
+        def run(q):
+            body = json.dumps({"prompt": q, "mode": mode, "chat": True, "top_k": 1,
+                               "max_new_tokens": args.max_new_tokens, "threshold": args.threshold}).encode()
+            req = urllib.request.Request(args.url.rstrip("/") + "/api/read", body, {"Content-Type": "application/json"})
+            return json.load(urllib.request.urlopen(req, timeout=600))
+    else:
+        load(args.preset, None, None, None)
+        mode = args.mode or ("jlens" if state["lens"].source_layers else "logit")
+        def run(q):
+            return read_grid(state["model"], state["lens"], q, mode=mode, chat=True,
+                             max_new_tokens=args.max_new_tokens, threshold=args.threshold, top_k=1)
     questions = json.load(open(args.questions, encoding="utf-8"))
 
     rows = []
     for q in questions:
-        r = read_grid(state["model"], state["lens"], q["q"], mode=mode, chat=True,
-                      max_new_tokens=args.max_new_tokens, threshold=args.threshold, top_k=1)
+        r = run(q["q"])
         ans = r["continuation"] or ""
         correct = any(a.lower() in ans.lower() for a in q["answers"])
         h = r["hallucination"]
