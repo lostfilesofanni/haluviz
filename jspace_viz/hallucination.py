@@ -39,6 +39,9 @@ def hallucination_signals(
     tokens: list[dict[str, Any]] = []
     for t in range(prompt_len, len(context_ids)):
         tid, col = context_ids[t], t - 1
+        s = vocab.get(tid, "")
+        if s.startswith("<|") and s.endswith("|>"):
+            break  # end-of-turn marker: the answer is over
         p_final = out["next_prob"][col]
         commit = n
         for i in range(n - 1, -1, -1):
@@ -47,7 +50,6 @@ def hallucination_signals(
             commit = i
         support = max((fitted[i]["next_prob"][col] for i in range(lo, hi)), default=0.0)
         score = ((1 - p_final) + commit / max(n, 1) + (1 - support)) / 3
-        s = vocab.get(tid, "")
         tokens.append(
             {
                 "pos": t,
