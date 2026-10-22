@@ -44,7 +44,8 @@ Question-level: max token score vs. "answer was wrong".
 | | |
 |---|---|
 | AUROC | **0.915** |
-| threshold 0.85 (default) | precision 0.53, recall 0.80 |
+| threshold 0.80 (default) | precision 0.56, recall 1.00 |
+| threshold 0.85 | precision 0.53, recall 0.80 |
 | threshold 0.90 | precision 0.88, recall 0.70 |
 
 Caveats, honestly:

@@ -38,7 +38,7 @@ def main() -> None:
     ap.add_argument("--preset", default="qwen-1.8b-chat")
     ap.add_argument("--mode", default=None, help="logit | jlens (default: jlens if a lens is loaded)")
     ap.add_argument("--max-new-tokens", type=int, default=48)
-    ap.add_argument("--threshold", type=float, default=0.85)
+    ap.add_argument("--threshold", type=float, default=0.8)
     ap.add_argument("--questions", default=os.path.join(ROOT, "data", "questions.json"))
     ap.add_argument("--url", default=None, help="POST to a running haluviz server instead of loading the model here")
     args = ap.parse_args()
