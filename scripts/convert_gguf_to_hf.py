@@ -127,8 +127,8 @@ def main() -> None:
     model = model.to(device).eval()
     ids = tok.apply_chat_template(
         [{"role": "user", "content": "What is the capital of France?"}],
-        add_generation_prompt=True, return_tensors="pt",
-    ).to(device)
+        add_generation_prompt=True, return_tensors="pt", return_dict=True,
+    )["input_ids"].to(device)
     out = model.generate(ids, max_new_tokens=16, do_sample=False)
     text = tok.decode(out[0, ids.shape[1]:], skip_special_tokens=True)
     print("self-check answer:", text.strip())
