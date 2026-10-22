@@ -34,6 +34,8 @@ class ReadRequest(BaseModel):
     chat: bool = False
     pinned_ids: list[int] = Field(default_factory=list, max_length=16)
     continuation: bool = True  # False = latency-sensitive live-typing read
+    max_new_tokens: int = Field(default=32, ge=1, le=128)
+    threshold: float = Field(default=0.6, ge=0.0, le=1.0)
 
 
 app = FastAPI(title="jspace-viz")
@@ -81,6 +83,8 @@ def read(req: ReadRequest) -> dict[str, Any]:
             pinned_ids=req.pinned_ids,
             chat=req.chat,
             generate_continuation=req.continuation,
+            max_new_tokens=req.max_new_tokens,
+            threshold=req.threshold,
         )
     except Exception as exc:  # surfaced to the UI status line
         logger.exception("read failed")
@@ -124,10 +128,11 @@ def load(preset_name: str | None, model_id: str | None, lens_path: str | None, d
                     lens = JacobianLens.from_pretrained(repo, filename=filename)
                     state["lens_source"] = f"hub:{repo}:{filename}"
                 elif not os.path.exists(path):
-                    raise SystemExit(
-                        f"lens file {path!r} not found — fit one first:\n"
-                        f"  python scripts/fit_lens.py --preset {preset_name}"
-                    )
+                    # No lens yet: run logit-lens only. Fit one with
+                    #   python scripts/fit_lens.py --preset <name>
+                    logger.warning("lens file %r not found; logit-lens mode only", path)
+                    lens = JacobianLens({}, n_prompts=0, d_model=0)
+                    state["lens_source"] = "none (logit-lens only)"
                 else:
                     lens = JacobianLens.load(path)
     if lens_path is not None:
@@ -138,6 +143,8 @@ def load(preset_name: str | None, model_id: str | None, lens_path: str | None, d
 
     logger.info("loading model %s", model_id)
     model = load_model(model_id, dtype=dtype or "auto")
+    if lens.d_model == 0:
+        lens.d_model = model.d_model
     if lens.d_model != model.d_model:
         raise SystemExit(
             f"lens d_model={lens.d_model} does not match model d_model={model.d_model}"
@@ -154,7 +161,7 @@ def load(preset_name: str | None, model_id: str | None, lens_path: str | None, d
 def main() -> None:
     parser = argparse.ArgumentParser(description="Live J-space visualizer")
     parser.add_argument(
-        "--preset", default=os.environ.get("JSPACE_PRESET", "deepseek-coder-1.3b")
+        "--preset", default=os.environ.get("JSPACE_PRESET", "qwen-1.8b-chat")
     )
     parser.add_argument("--model-id", default=None, help="override the preset's model")
     parser.add_argument("--lens", default=None, help="path to a fitted lens .pt")

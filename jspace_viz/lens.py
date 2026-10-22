@@ -34,6 +34,8 @@ class JacobianLens:
         self.d_model = d_model
 
     def __repr__(self) -> str:
+        if not self.source_layers:
+            return f"JacobianLens(d_model={self.d_model}, unfitted)"
         lo, hi = self.source_layers[0], self.source_layers[-1]
         return (
             f"JacobianLens(d_model={self.d_model}, n_prompts={self.n_prompts}, "

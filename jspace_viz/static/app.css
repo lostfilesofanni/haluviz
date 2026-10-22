@@ -58,6 +58,15 @@ button.primary { background: var(--accent); color: #04121f; font-weight: 600; pa
 .ex-chip { background: #1c2129; border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; margin: 0 8px 8px 0; font-size: 13px; color: var(--fg); cursor: pointer; }
 .ex-chip:hover { border-color: var(--accent); color: var(--accent); }
 
+#halu-panel { margin: 2px 18px 8px; background: var(--panel); border: 1px solid #f8514966; border-radius: 8px; padding: 8px 12px; }
+#halu-panel h3 { margin: 0 0 6px; font-size: 12px; color: #f85149; font-weight: 500; }
+#halu-answer { font-family: var(--mono); font-size: 13px; white-space: pre-wrap; margin-bottom: 6px; }
+#halu-answer mark { background: rgba(248,81,73,.35); color: var(--fg); border-radius: 3px; cursor: help; }
+#halu-thresh { width: 140px; }
+.halu-chip { display: inline-flex; align-items: baseline; gap: 6px; background: #2a1518; border: 1px solid #f8514966; border-radius: 20px; padding: 3px 12px; margin: 0 6px 6px 0; font-family: var(--mono); font-size: 12px; }
+.halu-chip .sig { color: var(--dim); font-size: 10px; }
+.hcell.halu { color: #f85149; }
+
 #grid-wrap { overflow: auto; margin: 6px 18px; border: 1px solid var(--border); border-radius: 8px; max-height: 58vh; background: var(--panel); }
 #grid { display: grid; font-family: var(--mono); font-size: 11px; width: max-content; }
 .cell, .hcell, .lcell {

@@ -27,6 +27,14 @@ class Preset:
 
 
 PRESETS: dict[str, Preset] = {
+    # The original 2023 Qwen chat model, converted from GGUF into a native
+    # Qwen2 checkpoint by scripts/convert_gguf_to_hf.py (no remote code).
+    "qwen-1.8b-chat": Preset(
+        model_id="models/qwen-1_8b-chat-hf",
+        lens=("file", "lenses/qwen-1_8b-chat_jlens_wikitext.pt"),
+        dtype="float16",
+        notes="Runs on an 8 GB M1. Without a fitted lens the server serves logit-lens only.",
+    ),
     # Runs (and fits) on a 16 GB Apple-Silicon laptop. A local lens wins if
     # you fit one; otherwise the published lens downloads from the Hub.
     "deepseek-coder-1.3b": Preset(
@@ -76,6 +84,11 @@ PRESETS: dict[str, Preset] = {
 #: Demo prompts. The first three follow examples shipped with the official
 #: jacobian-lens repo (Apache-2.0, Anthropic PBC).
 EXAMPLES: list[dict[str, str]] = [
+    {"name": "Fact it knows: capital of France", "prompt": "What is the capital of France? Answer in one sentence."},
+    {"name": "Obscure: capital of Palau", "prompt": "What is the capital city of Palau? Answer in one sentence."},
+    {"name": "Obscure: 1907 Nobel in Literature", "prompt": "Who won the Nobel Prize in Literature in 1907? Answer in one sentence."},
+    {"name": "Obscure: emperor when Pompeii fell", "prompt": "Who was the Roman emperor when Pompeii was buried in 79 AD? Answer in one sentence."},
+    {"name": "Invented: a book that doesn't exist", "prompt": "Summarize the plot of the 1994 novel 'The Glass Cartographer' by Helen Marrow."},
     {
         "name": "Multi-hop: country shaped like a boot",
         "prompt": (

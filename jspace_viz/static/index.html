@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>jspace-viz — live J-space visualizer</title>
+<title>haluviz — J-space + hallucination detector</title>
 <link rel="stylesheet" href="static/app.css">
 </head>
 <body>
 <header>
-  <h1>jspace-viz</h1>
-  <span class="sub">live Jacobian-lens / J-space readout &middot; <a href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a></span>
+  <h1>haluviz</h1>
+  <span class="sub">J-space readout + hallucination detection &middot; <a href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a></span>
   <span id="model-chip" class="chip">loading&hellip;</span>
   <span id="lens-chip" class="chip"></span>
 </header>
@@ -23,7 +23,8 @@
       <button data-mode="logit" title="unembed the raw residual (J = I baseline)">logit lens</button>
     </div>
     <label>top-k <input id="topk" type="number" min="1" max="20" value="8"></label>
-    <label title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox"> chat</label>
+    <label title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox" checked> chat</label>
+    <label title="how many tokens the model generates">new tokens <input id="newtok" type="number" min="1" max="128" value="32"></label>
     <label id="live-label" title="re-read automatically while you type — watch the thoughts change"><input id="live" type="checkbox" checked> live</label>
     <button id="read" class="primary">Read</button>
     <button id="jump-gen" hidden title="scroll the grid to the model's own generated words — its thoughts while it speaks">→ what it wrote</button>
@@ -39,6 +40,13 @@
 <section id="workspace-panel" hidden>
   <h3 title="Concepts active in the middle layers that are neither words from your prompt nor the model's literal next word — the J-space content. Click one to trace where it lives.">🧠 in the workspace right now</h3>
   <div id="workspace-chips"></div>
+</section>
+
+<section id="halu-panel" hidden>
+  <h3 title="Generated tokens the model said with low confidence, decided only in its last layers, and never had in its mid-layer workspace. Score = mean of those three signals.">⚠ possible hallucination</h3>
+  <div id="halu-answer"></div>
+  <div class="row"><label>threshold <input id="halu-thresh" type="range" min="0" max="1" step="0.05" value="0.6"><span id="halu-thresh-val" class="hint">0.60</span></label><span id="halu-summary" class="hint"></span></div>
+  <div id="halu-chips"></div>
 </section>
 
 <section id="grid-wrap"><div id="grid"></div></section>

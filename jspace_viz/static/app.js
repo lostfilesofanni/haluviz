@@ -13,6 +13,7 @@ let STATIC = false;       // no backend: serve precomputed example grids
 let INFO = null;          // /api/info (or data/index.json) payload
 let selectedSlug = null;  // active example in static mode
 let colLimit = null;      // static demo: cap visible grid columns during reveal
+let halu = new Map();     // generated position -> {score, flag} at the current threshold
 
 // Render a token for display: make whitespace visible, trim length.
 function tokStr(s) {
@@ -76,6 +77,15 @@ async function init() {
   }
   $("model-chip").textContent = `${INFO.model_id} · ${INFO.n_layers}L · d=${INFO.d_model} · ${INFO.device}`;
   $("lens-chip").textContent = `lens: ${INFO.fitted_layers.length} layers, ${INFO.lens_n_prompts} prompts`;
+  if (!INFO.fitted_layers.length) {
+    // No fitted lens yet: logit lens is the only readout available.
+    mode = "logit";
+    const jl = document.querySelector('#mode-toggle button[data-mode="jlens"]');
+    jl.disabled = true;
+    jl.title = "no fitted lens yet — run scripts/fit_lens.py --preset qwen-1.8b-chat";
+    for (const b of $("mode-toggle").children) b.classList.toggle("active", b.dataset.mode === mode);
+    $("lens-chip").textContent = "lens: none (logit-lens only)";
+  }
   INFO.examples.forEach((ex, i) => {
     const opt = document.createElement("option");
     opt.value = String(i);
@@ -259,10 +269,13 @@ async function read(opts = {}) {
         chat: $("chat").checked,
         pinned_ids: pinned.map((p) => p.id),
         continuation: !opts.live,
+        max_new_tokens: +$("newtok").value,
+        threshold: +$("halu-thresh").value,
       }),
     });
     if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
     data = await res.json();
+    renderHalu();
     renderGrid();
     renderWorkspace();
     renderMetrics();
@@ -311,7 +324,10 @@ function renderGrid() {
   const parts = ['<div class="hcell corner">layer ╲ pos</div>'];
   for (let t = 0; t < cols; t++) {
     const label = t === promptLen ? '<span class="idx">↳ model says</span>' : `<span class="idx">${t}</span>`;
-    parts.push(`<div class="hcell${genCls(t)}">${label}${esc(tokStr(vocab[context_ids[t]]))}</div>`);
+    const h = halu.get(t);
+    const hcls = h && h.flag ? " halu" : "";
+    const hstyle = h && h.flag ? ` style="background:${haluColor(h.score)}" title="hallucination score ${h.score}"` : "";
+    parts.push(`<div class="hcell${genCls(t)}${hcls}"${hstyle}>${label}${esc(tokStr(vocab[context_ids[t]]))}</div>`);
   }
   for (let li = 0; li < layers.length; li++) {
     const row = rows[li];
@@ -432,6 +448,52 @@ $("workspace-chips").addEventListener("click", (e) => {
   rankViewId = id;
   renderPinned();
   read();
+});
+
+// ---- hallucination panel ---------------------------------------------------
+// Scores come from the server (jspace_viz/hallucination.py); flags are
+// re-derived here so the threshold slider works without another read.
+const WORDLIKE = /[A-Za-z0-9]/;
+function haluColor(score) {
+  return `rgba(248, 81, 73, ${(0.25 + 0.6 * score).toFixed(3)})`;
+}
+function renderHalu() {
+  halu = new Map();
+  const panel = $("halu-panel");
+  const H = data.hallucination;
+  if (!H) { panel.hidden = true; return; }
+  const thr = +$("halu-thresh").value;
+  $("halu-thresh-val").textContent = thr.toFixed(2);
+  const toks = H.tokens.map((t) => ({ ...t, flag: t.score >= thr && WORDLIKE.test(t.token) }));
+  for (const t of toks) halu.set(t.pos, { score: t.score, flag: t.flag });
+  // inline answer with flagged tokens marked
+  $("halu-answer").innerHTML = toks
+    .map((t) => {
+      const s = esc(t.token);
+      if (!t.flag) return s;
+      return `<mark title="score ${t.score} · p=${(t.p_final * 100).toFixed(0)}% · committed at ${(t.commit_depth * 100).toFixed(0)}% depth · workspace support ${(t.support * 100).toFixed(0)}%">${s}</mark>`;
+    })
+    .join("");
+  // contiguous flagged tokens -> spans
+  const spans = [];
+  let cur = null;
+  for (const t of toks) {
+    if (t.flag && cur && cur.end === t.pos - 1) { cur.end = t.pos; cur.text += t.token; cur.score = Math.max(cur.score, t.score); cur.n++; }
+    else if (t.flag) { cur = { start: t.pos, end: t.pos, text: t.token, score: t.score, n: 1, p: t.p_final, d: t.commit_depth, s: t.support }; spans.push(cur); }
+    else cur = null;
+  }
+  const nWord = toks.filter((t) => WORDLIKE.test(t.token)).length;
+  const nFlag = toks.filter((t) => t.flag).length;
+  $("halu-summary").textContent = `${nFlag}/${nWord} tokens flagged · max score ${H.max_score.toFixed(2)}`;
+  $("halu-chips").innerHTML = spans
+    .map((sp) => `<span class="halu-chip">${esc(sp.text.trim())}<span class="sig">score ${sp.score.toFixed(2)} · p ${(sp.p * 100).toFixed(0)}% · depth ${(sp.d * 100).toFixed(0)}% · support ${(sp.s * 100).toFixed(0)}%</span></span>`)
+    .join("");
+  panel.hidden = false;
+}
+$("halu-thresh").addEventListener("input", () => {
+  if (!data) { $("halu-thresh-val").textContent = (+$("halu-thresh").value).toFixed(2); return; }
+  renderHalu();
+  renderGrid();
 });
 
 function renderMetrics() {

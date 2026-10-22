@@ -8,6 +8,7 @@ from typing import Any
 
 import torch
 
+from jspace_viz.hallucination import hallucination_signals
 from jspace_viz.hooks import ActivationRecorder
 from jspace_viz.lens import JacobianLens
 from jspace_viz.model import WrappedModel
@@ -39,6 +40,8 @@ def read_grid(
     chat: bool = False,
     track_all: bool = False,
     generate_continuation: bool = True,
+    max_new_tokens: int = 32,
+    threshold: float = 0.6,
 ) -> dict[str, Any]:
     """One forward pass, then per-layer lens readouts at every position.
 
@@ -60,7 +63,10 @@ def read_grid(
             add_generation_prompt=True,
         )
     final_layer = model.n_layers - 1
-    layers = sorted(set(lens.source_layers) | {final_layer})
+    # Logit mode (and an unfitted lens) reads every layer; J-lens mode reads
+    # the fitted ones.
+    source = lens.source_layers if mode == "jlens" and lens.source_layers else range(final_layer)
+    layers = sorted(set(source) | {final_layer})
     pinned = list(pinned_ids or [])
 
     input_ids = model.encode(prompt, max_length=max_seq_len)
@@ -74,7 +80,7 @@ def read_grid(
     if generate_continuation:
         generated = model.hf_model.generate(
             input_ids,
-            max_new_tokens=12,
+            max_new_tokens=max_new_tokens,
             do_sample=False,
             pad_token_id=model.tokenizer.eos_token_id,
         )
@@ -114,6 +120,8 @@ def read_grid(
         token_ids_seen.update(top_ids.flatten().tolist())
 
         entropy = -(probs.clamp_min(1e-12).log() * probs).sum(-1)
+        # probability this layer assigns to the token that actually came next
+        next_prob = probs[:-1].gather(1, next_ids.unsqueeze(1)).squeeze(1)
         kurt = _excess_kurtosis(logits)
 
         row: dict[str, Any] = {
@@ -123,6 +131,7 @@ def read_grid(
             "top_probs": [[round(p, 5) for p in ps] for ps in top.values.cpu().tolist()],
             "entropy": [round(e, 3) for e in entropy.cpu().tolist()],
             "kurtosis": [round(k, 2) for k in kurt.cpu().tolist()],
+            "next_prob": [round(p, 5) for p in next_prob.cpu().tolist()],
         }
         if pinned_t is not None:
             # rank of each pinned token at each position (0 = top)
@@ -164,8 +173,14 @@ def read_grid(
             int(t): [rank_tables[l][:, t].tolist() for l in layers]
             for t in sorted(tracked_ids)
         }
+    hallucination = (
+        hallucination_signals(grid, ids_list, vocab, prompt_len, threshold=threshold)
+        if continuation is not None
+        else None
+    )
     return {
         "continuation": continuation,
+        "hallucination": hallucination,
         "prompt_len": prompt_len,
         **({"ranks": ranks} if ranks is not None else {}),
         "mode": mode,
