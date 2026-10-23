@@ -28,6 +28,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 WORD = re.compile(r"[A-Za-z0-9]")
 BINS = [0.0, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.01]
+# "I don't know" is honest, not a hallucination: kept out of the calibration.
+ABSTAIN = re.compile(r"i('m| am) sorry|i (do not|don't|cannot|can't) (have|know|find|provide|recall)|no information|not (sure|aware|familiar)", re.I)
 
 
 def content_tokens(tokens):
@@ -104,10 +106,11 @@ def main() -> None:
         r = run(ex["question"])
         ans = (r["continuation"] or "").strip()
         correct = any(a.lower() in ans.lower() for a in aliases if a.strip())
+        abstained = bool(ABSTAIN.search(ans)) and not correct
         h = r["hallucination"]
         ct = content_tokens(h["tokens"])
         rows.append({
-            "id": ex["id"], "q": ex["question"], "gold": aliases[:3], "answer": ans, "correct": correct,
+            "id": ex["id"], "q": ex["question"], "gold": aliases[:3], "answer": ans, "correct": correct, "abstained": abstained,
             "max_score": max((t["score"] for t in ct), default=0.0),
             "mean_score": float(np.mean([t["score"] for t in ct])) if ct else 0.0,
             "min_p_final": min((t["p_final"] for t in ct), default=1.0),
@@ -116,13 +119,18 @@ def main() -> None:
         print(f"[{k+1}/{len(idx)}] {'✓' if correct else '✗'} {rows[-1]['max_score']:.2f} {ex['question'][:50]:<50} → {ans[:60]!r}  ({(time.time()-t0)/(k+1):.0f}s/q)")
         json.dump({"rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
 
-    wrong = [not r["correct"] for r in rows]
-    scores = [r["max_score"] for r in rows]
+    for r in rows:  # rows from an older run lack the field
+        r.setdefault("abstained", bool(ABSTAIN.search(r["answer"])) and not r["correct"])
+    n_abstain = sum(r["abstained"] for r in rows)
+    rows_c = [r for r in rows if not r["abstained"]]
+    wrong = [not r["correct"] for r in rows_c]
+    scores = [r["max_score"] for r in rows_c]
     summary = {
-        "mode": mode, "n": len(rows), "n_wrong": int(sum(wrong)), "accuracy": round(1 - sum(wrong) / len(rows), 3),
+        "mode": mode, "n": len(rows), "n_abstained": int(n_abstain), "n_scored": len(rows_c),
+        "n_wrong": int(sum(wrong)), "accuracy": round(1 - sum(wrong) / max(len(rows_c), 1), 3),
         "auroc_max_score": round(auroc(scores, wrong), 3),
-        "auroc_min_p_final": round(auroc([1 - r["min_p_final"] for r in rows], wrong), 3),
-        "auroc_mean_score": round(auroc([r["mean_score"] for r in rows], wrong), 3),
+        "auroc_min_p_final": round(auroc([1 - r["min_p_final"] for r in rows_c], wrong), 3),
+        "auroc_mean_score": round(auroc([r["mean_score"] for r in rows_c], wrong), 3),
     }
     bins = calibrate(scores, wrong)
     print("\n" + json.dumps(summary, indent=2))
