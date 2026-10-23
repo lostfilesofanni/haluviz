@@ -60,7 +60,10 @@ button.primary { background: var(--accent); color: #04121f; font-weight: 600; pa
 .ex-chip:hover { border-color: var(--accent); color: var(--accent); }
 
 #halu-panel { margin: 2px 18px 8px; background: var(--panel); border: 1px solid #f8514966; border-radius: 8px; padding: 8px 12px; }
-#halu-panel h3 { margin: 0 0 6px; font-size: 12px; color: #f85149; font-weight: 500; }
+#halu-panel h3 { margin: 0 0 6px; font-size: 13px; color: var(--dim); font-weight: 500; }
+#halu-panel.low { border-color: #2ea04366; } #halu-panel.low h3 { color: #7ee787; }
+#halu-panel.mid { border-color: #ffa65766; } #halu-panel.mid h3 { color: var(--hot); }
+#halu-panel.high { border-color: #f8514966; } #halu-panel.high h3 { color: #f85149; }
 #halu-answer { font-family: var(--mono); font-size: 13px; white-space: pre-wrap; margin-bottom: 6px; }
 #halu-answer mark { background: rgba(248,81,73,.35); color: var(--fg); border-radius: 3px; cursor: help; }
 #halu-thresh { width: 140px; }

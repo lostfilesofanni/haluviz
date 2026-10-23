@@ -497,6 +497,15 @@ function renderHalu() {
     else if (t.flag) { cur = { start: t.pos, end: t.pos, text: t.token, score: t.score, n: 1, p: t.p_final, d: t.commit_depth, s: t.support }; spans.push(cur); }
     else cur = null;
   }
+  // Verdict: calibrated P(wrong) from PopQA bins when available, else the raw score.
+  const cal = INFO && INFO.calibration;
+  const bin = cal && cal.bins.find((b) => H.max_score >= b.lo && H.max_score < b.hi);
+  const pWrong = bin ? bin.p_wrong : null;
+  const band = pWrong != null ? (pWrong < 0.25 ? "low" : pWrong < 0.6 ? "mid" : "high") : (H.max_score < thr ? "low" : "high");
+  panel.className = band;
+  $("halu-verdict").textContent = pWrong != null
+    ? `${band === "low" ? "✔ likely reliable" : band === "mid" ? "⚠ uncertain" : "✘ likely hallucinated"} · estimated chance this answer is wrong: ${Math.round(pWrong * 100)}% (calibrated on ${cal.n} ${cal.source} questions)`
+    : `${band === "low" ? "✔ no word over the threshold" : "⚠ possible hallucination"} · max score ${H.max_score.toFixed(2)} (uncalibrated — run scripts/eval_popqa.py)`;
   const nWord = toks.filter((t) => WORDLIKE.test(t.token) && !t.in_prompt).length;
   const nFlag = toks.filter((t) => t.flag).length;
   $("halu-summary").textContent = `${nFlag}/${nWord} tokens flagged · max score ${H.max_score.toFixed(2)}`;
