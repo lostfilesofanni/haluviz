@@ -256,6 +256,44 @@ On the 8 GB M1 the attempt was killed by the OS for memory. The notebook does
 it on a free Colab T4 in fp32: ~1 min/prompt, 30 prompts, checkpointed to
 Google Drive. Output drops into `lenses/` and the server picks it up.
 
+**Fitted 2026-10-23:** 30 WikiText-103 prompts, 128 tokens each, all 23
+fittable layers, 193 MB fp16. (`colab/fit_lens_kaggle.ipynb` is the same
+recipe for Kaggle, which has no daily GPU cap.)
+
+### 9.1 First look: the column that predicts Palau's capital
+
+Prompt "What is the capital city of Palau?"; answer "… is **Nha Trang**."
+Top tokens at the position right after " is", by layer:
+
+| layer | logit lens | J-lens |
+|---|---|---|
+| L0–L12 | 由中国, 滋味, 야, しさ, 崩, 若要 … (noise) | punctuation, list markers (structural) |
+| L14–L16 | 若要, boxed, 答题 | 城市建设, 之城, 的城市 (*city, urban*) |
+| L18 | 答题, 果, 白色的 | 岛, 岛上, 椰, 群岛 (*island, coconut, archipelago*) |
+| L20 | Pal, 果, Coconut | 岛, 群岛, Honolulu, Pal |
+| L22 | 督, Pal | Pal, Nou, Coron |
+| output | **N**, Kor, Pal, Nou | **N**, Kor, Pal, Nou |
+
+Under the J-lens the middle of the network is readable: the model is holding
+*city → island/archipelago → Pacific-capital-like names* (Honolulu, Nouméa,
+Coron) and even **Kor**(or), Palau's former capital, as the runner-up at the
+output. The emitted "Nha" has zero support at every layer. That is the
+hallucination signature the detector was designed around, now visible.
+
+Two consequences:
+- A bilingual model's workspace is partly in Chinese single-token concepts
+  (岛 = island). The UI's *english only* filter is switched off in J-lens
+  mode so these show.
+- Within the answer the signals now discriminate: " city" commits at 26 %
+  depth with support 0.99; "Nha" commits at 100 % with support 0. Under the
+  logit lens both had support ≈ 0 and commit ≈ 1. Whether this lifts the
+  question-level AUROC is measured in §9.2.
+
+### 9.2 Logit lens vs J-lens on the same 130 questions
+*(run in progress: `data/eval_results_jlens.json`, `data/popqa_results_jlens.json`,
+`data/calibration_jlens.json`; judge labels transfer because greedy output is
+identical across lens modes.)*
+
 ## 9b. Phase 2 — suggest a fix (`jspace_viz/fix.py`, `POST /api/fix`)
 
 Three candidate fixes, shown side by side under **Suggest a fix**:
