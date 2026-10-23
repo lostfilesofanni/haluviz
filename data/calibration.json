@@ -1,61 +1,67 @@
 {
-  "source": "PopQA",
+  "source": "PopQA + hand set",
   "mode": "logit",
-  "n": 100,
-  "metric": "max_score",
+  "n": 111,
+  "metric": "answer_score",
   "bins": [
     {
       "lo": 0.0,
       "hi": 0.7,
-      "n": 1,
-      "p_wrong": 0.0
+      "n": 13,
+      "p_wrong": 0.077
     },
     {
       "lo": 0.7,
       "hi": 0.75,
-      "n": 1,
-      "p_wrong": 0.0
+      "n": 11,
+      "p_wrong": 0.364
     },
     {
       "lo": 0.75,
       "hi": 0.8,
-      "n": 2,
-      "p_wrong": 0.0
+      "n": 28,
+      "p_wrong": 0.75
     },
     {
       "lo": 0.8,
       "hi": 0.85,
-      "n": 2,
-      "p_wrong": 1.0
+      "n": 35,
+      "p_wrong": 0.914
     },
     {
       "lo": 0.85,
       "hi": 0.9,
-      "n": 9,
+      "n": 24,
       "p_wrong": 1.0
     },
     {
       "lo": 0.9,
       "hi": 0.95,
-      "n": 26,
+      "n": 0,
       "p_wrong": 1.0
     },
     {
       "lo": 0.95,
       "hi": 1.0,
-      "n": 40,
+      "n": 0,
       "p_wrong": 1.0
     }
   ],
   "summary": {
     "mode": "logit",
-    "n": 100,
+    "n": 130,
+    "sources": [
+      "PopQA",
+      "data/eval_results.json"
+    ],
     "n_abstained": 19,
-    "n_scored": 81,
-    "n_wrong": 64,
-    "accuracy": 0.21,
-    "auroc_max_score": 0.714,
-    "auroc_min_p_final": 0.732,
-    "auroc_mean_score": 0.811
+    "n_scored": 111,
+    "n_wrong": 82,
+    "accuracy": 0.261,
+    "labels": "judge",
+    "auroc_answer_score": 0.898,
+    "auroc_max_score": 0.87,
+    "auroc_min_p_final": 0.867,
+    "auroc_mean_score": 0.83
   }
 }

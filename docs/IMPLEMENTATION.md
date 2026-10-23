@@ -183,17 +183,54 @@ The internals can't see the truth. The verifier asks a stronger model
 Failure mode is explicit: any API error returns `unsure` with the error text;
 a read never fails because the verifier did.
 
-## 7. Evaluation without hand labels (`scripts/eval_popqa.py`)
+## 7. Evaluation without hand labels
 
-PopQA (akariasai/PopQA, 14,267 long-tail factual questions with gold aliases)
-is the calibration set. Answer = correct iff any alias appears in the
-continuation. The script writes:
-- `data/popqa_results.json`: per-question rows incl. per-token signals;
-- `data/calibration.json`: score bins → empirical P(wrong), monotone-smoothed.
+### 7.1 Data
+- **PopQA** (akariasai/PopQA, 14,267 long-tail factual questions with gold
+  aliases). 100 questions sampled (seed 0), `scripts/eval_popqa.py`.
+- **Hand set** (`data/questions.json`, 30 questions).
 
-The UI will use the bins to show *"estimated chance this answer is wrong"*
-with three bands instead of a bare flag. *(Run in progress at time of
-writing; numbers to be added.)*
+### 7.2 Labels: substring → judge
+Alias matching is noisy in both directions ("Sangrur is a district in
+Himachal Pradesh" matched the alias and is wrong; a correct paraphrase can
+miss). `scripts/judge_labels.py` re-labels every answer with the Gemini judge.
+Agreement with substring labels: 70/81 (PopQA), 29/30 (hand set). Honest
+refusals ("I don't have information on …", 19/100 on PopQA) are excluded from
+the hallucination calibration: refusing is not hallucinating.
+
+### 7.3 Results (logit-lens mode, judge labels)
+
+| set | scored | wrong | accuracy | AUROC (answer_score) |
+|---|---|---|---|---|
+| PopQA | 81 | 71 | 12 % | 0.795 |
+| hand set | 30 | 11 | 63 % | — |
+| **pooled** | **111** | **82** | 26 % | **0.898** |
+
+`answer_score = (max + mean) / 2` of content-token scores. Max alone catches
+one wrong entity in a correct frame (hand set); mean alone catches whole
+fabricated answers (PopQA); the average is the most robust across both
+(pooled AUROC: answer 0.898, max 0.870, 1−min p_final 0.867, mean 0.830).
+
+### 7.4 Calibration (`data/calibration.json`, pooled, isotonic-smoothed)
+
+| answer_score | n | P(wrong) |
+|---|---|---|
+| < 0.70 | 13 | 0.08 |
+| 0.70–0.75 | 11 | 0.36 |
+| 0.75–0.80 | 28 | 0.75 |
+| 0.80–0.85 | 35 | 0.91 |
+| ≥ 0.85 | 24 | 1.00 |
+
+The UI maps the answer's score through this table and shows *"estimated
+chance this answer is wrong: N %"* with bands: green < 25 %, yellow < 60 %,
+red otherwise. The server reads the file on each `/api/info`, so re-running
+the eval updates the UI without a restart.
+
+### 7.5 What the detector cannot do
+Confident errors. "Pompeii was buried … under the Roman emperor **Augustus**"
+(correct: Titus) was said at p ≈ 0.63 with no hesitation; answer_score 0.68 →
+"uncertain, 36 %". From the inside a confident false belief looks like
+knowledge. The verifier (§6) exists for exactly this case and caught it.
 
 ## 8. UI
 
@@ -257,3 +294,6 @@ Google Drive. Output drops into `lenses/` and the server picks it up.
 | 10-23 | Fit lens on Colab | OS killed the local fit for memory |
 | 10-23 | PopQA for calibration | gold aliases → no hand labels |
 | 10-23 | Gemini as judge | user-provided key; local 3B judge too weak and memory-contended |
+| 10-23 | Judge labels replace substring labels | 11/81 PopQA substring labels were wrong |
+| 10-23 | Pool PopQA + hand set for calibration | PopQA alone bakes in a 12 % base rate |
+| 10-23 | answer_score = (max+mean)/2 | most robust aggregate across both sets |

@@ -1,14 +1,20 @@
 {
  "summary": {
   "mode": "logit",
-  "n": 100,
+  "n": 130,
+  "sources": [
+   "PopQA",
+   "data/eval_results.json"
+  ],
   "n_abstained": 19,
-  "n_scored": 81,
-  "n_wrong": 64,
-  "accuracy": 0.21,
-  "auroc_max_score": 0.714,
-  "auroc_min_p_final": 0.732,
-  "auroc_mean_score": 0.811
+  "n_scored": 111,
+  "n_wrong": 82,
+  "accuracy": 0.261,
+  "labels": "judge",
+  "auroc_answer_score": 0.898,
+  "auroc_max_score": 0.87,
+  "auroc_min_p_final": 0.867,
+  "auroc_mean_score": 0.83
  },
  "rows": [
   {
@@ -291,10 +297,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Horror / Slasher (1988) or Martial arts sports drama (2024)",
+    "explanation": "The model hallucinates a nonexistent 2015 comedy by John Krasinski, whereas notable films titled 'The Carpenter' include a 1988 horror film and a 2024 martial arts drama.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.867
   },
   {
    "id": 5773447,
@@ -456,10 +464,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Guy Nattiv",
+    "explanation": "The 2018 film 'Skin' was written by Guy Nattiv, while the 2008 film of the same name was written by Anthony Fabian and Glenn Berry.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.807
   },
   {
    "id": 5920784,
@@ -741,10 +751,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Avicii",
+    "explanation": "The model gave an incomplete and factually inaccurate description of an alleged music group instead of identifying the producer of the song or media titled 'The Days' (notably produced by Avicii).",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.878
   },
   {
    "id": 4742010,
@@ -906,10 +918,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Wendy Carlos",
+    "explanation": "The score for the original 1982 film Tron was composed by Wendy Carlos, while the 2010 sequel Tron: Legacy was scored by Daft Punk.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.894
   },
   {
    "id": 6562266,
@@ -1191,10 +1205,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Centre-Sud Region (or Zoundwéogo Province) in Burkina Faso",
+    "explanation": "Manga is a town in Burkina Faso that serves as the capital of the Centre-Sud Region and Zoundwéogo Province.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.799
   },
   {
    "id": 1887736,
@@ -1205,7 +1221,7 @@
     "America"
    ],
    "answer": "Norfolk is a county located in the East of England, England. It is situated on the River East Anglia and",
-   "correct": false,
+   "correct": true,
    "max_score": 0.973,
    "mean_score": 0.6988947368421052,
    "min_p_final": 0.0808,
@@ -1478,10 +1494,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "correct",
+    "correct_answer": "United Kingdom (England)",
+    "explanation": "Norfolk is a ceremonial and non-metropolitan county in the East of England, part of the United Kingdom.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.836
   },
   {
    "id": 5898459,
@@ -1763,7 +1781,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.69
   },
   {
    "id": 692745,
@@ -1902,10 +1921,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Nick Love",
+    "explanation": "The 2005 film The Business was written and directed by Nick Love, not David Fincher.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.846
   },
   {
    "id": 4769814,
@@ -2011,10 +2032,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Bruce Weiss (for the 2007 film)",
+    "explanation": "David Fincher did not produce the movie Interview; the 2007 film was produced by Bruce Weiss, among others.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.85
   },
   {
    "id": 6438538,
@@ -2153,10 +2176,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Lisa Jones (1998 TV miniseries) or Andrzej Kijowski (1972 film)",
+    "explanation": "David Fincher is primarily a director and did not write any film titled The Wedding.",
+    "judge": "gemini-3.8-flash"
+   },
+   "answer_score": 0.86
   },
   {
    "id": 6519720,
@@ -2297,10 +2322,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Joseph Haydn",
+    "explanation": "\"The Seasons\" is a famous oratorio composed by Joseph Haydn, though the name is also associated with works by Pyotr Ilyich Tchaikovsky and Antonio Vivaldi.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.893
   },
   {
    "id": 339462,
@@ -2581,7 +2608,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.643
   },
   {
    "id": 1505834,
@@ -2590,7 +2618,7 @@
     "Sangrur"
    ],
    "answer": "Sangrur is a district in Himachal Pradesh, India. As of 2021, the",
-   "correct": true,
+   "correct": false,
    "max_score": 0.892,
    "mean_score": 0.6603846153846155,
    "min_p_final": 0.3226,
@@ -2863,10 +2891,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Sangrur",
+    "explanation": "Sangrur is a district located in Punjab, India, not Himachal Pradesh, and its administrative headquarters is the city of Sangrur.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.776
   },
   {
    "id": 389972,
@@ -3029,10 +3059,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Esmeraldas, Ecuador",
+    "explanation": "Eduardo Hurtado, the former Ecuadorian professional footballer, was born in Esmeraldas, Ecuador.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.76
   },
   {
    "id": 2955103,
@@ -3316,10 +3348,12 @@
    "mode": "logit",
    "abstained": false,
    "judge": {
-    "verdict": "unsure",
-    "correct_answer": "",
-    "explanation": "verifier error: The read operation timed out"
-   }
+    "verdict": "wrong",
+    "correct_answer": "Electronic",
+    "explanation": "\"It Sounds Like\" is an electronic music EP by Amon Tobin, not a podcast hosted by Dave Grohl.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.878
   },
   {
    "id": 2548089,
@@ -3600,7 +3634,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Fresh TV",
+    "explanation": "Backstage is a Canadian drama series produced by Fresh TV, not a reality TV show produced by ViacomCBS.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.822
   },
   {
    "id": 3009152,
@@ -3816,7 +3857,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Edmond Keosayan and Lev Sukharebsky",
+    "explanation": "The screenwriters for the film were Edmond Keosayan and Lev Sukharebsky, not Alexei Saybodin.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.848
   },
   {
    "id": 3668918,
@@ -4098,7 +4146,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.685
   },
   {
    "id": 4868419,
@@ -4226,7 +4275,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Seth MacFarlane (along with Scott Stuber and Jason Clark)",
+    "explanation": "Seth MacFarlane produced, directed, wrote, and starred in the film Ted.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.824
   },
   {
    "id": 6314520,
@@ -4506,7 +4562,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.721
   },
   {
    "id": 4782802,
@@ -4786,7 +4843,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Ted Demme, Joel Stillerman, and Denis Leary",
+    "explanation": "Blow is a 2001 film directed by Ted Demme and produced by Ted Demme, Joel Stillerman, and Denis Leary.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.848
   },
   {
    "id": 5196597,
@@ -5066,7 +5130,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Harlan Coben (or Jung Yun)",
+    "explanation": "Sarah Pearse did not write a novel called Shelter; notable books titled Shelter include the 2011 novel by Harlan Coben and the 2016 novel by Jung Yun.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.835
   },
   {
    "id": 6268676,
@@ -5077,7 +5148,7 @@
     "Newcastle, New South Wales, Australia"
    ],
    "answer": "The capital of City of Newcastle is Newcastle upon Tyne.",
-   "correct": true,
+   "correct": false,
    "max_score": 0.708,
    "mean_score": 0.61425,
    "min_p_final": 0.7712,
@@ -5216,7 +5287,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "None (cities do not have capitals)",
+    "explanation": "The City of Newcastle is itself a city, and local government areas or cities do not have capitals.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.661
   },
   {
    "id": 1574139,
@@ -5498,7 +5576,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "New Age is a music genre with no single composer.",
+    "explanation": "New Age is a broad genre of music created by many artists rather than a single composition with one composer, and the model's response was incomplete.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.805
   },
   {
    "id": 1195622,
@@ -5778,7 +5863,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.749
   },
   {
    "id": 5206135,
@@ -5893,7 +5979,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Patty Jenkins",
+    "explanation": "The 2003 film Monster was directed by Patty Jenkins, not John Landis.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.885
   },
   {
    "id": 5930072,
@@ -6173,7 +6266,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Joe Meno",
+    "explanation": "The Great Perhaps is a 2009 novel by Joe Meno, not a work by George Orwell.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.785
   },
   {
    "id": 1237971,
@@ -6454,7 +6554,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.711
   },
   {
    "id": 425466,
@@ -6465,7 +6566,7 @@
     "BR Venezuela"
    ],
    "answer": "El Limón is a citrus fruit that is native to Central and South America, specifically to Mexico, where it is grown",
-   "correct": true,
+   "correct": false,
    "max_score": 0.917,
    "mean_score": 0.6886874999999999,
    "min_p_final": 0.2482,
@@ -6736,7 +6837,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Dominican Republic",
+    "explanation": "El Limón is a well-known municipality and waterfall located in the Samaná Province of the Dominican Republic, not a citrus fruit.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.803
   },
   {
    "id": 5054498,
@@ -6886,7 +6994,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "United States",
+    "explanation": "Magnolia Bible College was located in Kosciusko, Mississippi, in the United States.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.789
   },
   {
    "id": 6145054,
@@ -6992,7 +7107,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Juneau",
+    "explanation": "Juneau is the officially designated capital city of the state of Alaska.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.66
   },
   {
    "id": 4265255,
@@ -7274,7 +7396,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.686
   },
   {
    "id": 2993416,
@@ -7379,7 +7502,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Friends had multiple directors, most notably James Burrows, Gary Halvorson, and Kevin Bright.",
+    "explanation": "David Crane was a co-creator and executive producer of the show, not its director.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.883
   },
   {
    "id": 5963044,
@@ -7560,7 +7690,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Jules Bass",
+    "explanation": "The Wacky World of Mother Goose was directed by Jules Bass, not Robert McKee.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.841
   },
   {
    "id": 310428,
@@ -7841,7 +7978,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Jazz standard / Show tune",
+    "explanation": "Spring Is Here is a classic jazz standard written by Richard Rodgers and Lorenz Hart for the 1938 musical I Married an Angel, not a song by Taylor Swift.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.813
   },
   {
    "id": 310505,
@@ -8121,7 +8265,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.74
   },
   {
    "id": 6395866,
@@ -8402,7 +8547,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.713
   },
   {
    "id": 4534054,
@@ -8682,7 +8828,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "There is no 2001 American romantic comedy titled 'I Love You' directed by Rob Reiner.",
+    "explanation": "Rob Reiner did not direct a film titled 'I Love You' in 2001, and the premise of the model's answer is factually incorrect.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.823
   },
   {
    "id": 4570783,
@@ -8692,7 +8845,7 @@
     "Port Macquarie-Hastings"
    ],
    "answer": "Port Macquarie is not the capital of any country. It is a coastal town located in New South Wales, Australia",
-   "correct": false,
+   "correct": true,
    "max_score": 0.863,
    "mean_score": 0.6305384615384615,
    "min_p_final": 0.4108,
@@ -8963,7 +9116,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Port Macquarie is not a capital city.",
+    "explanation": "Port Macquarie is a town in New South Wales, Australia, and does not serve as a capital for any country, state, or territory.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.747
   },
   {
    "id": 5559861,
@@ -9245,7 +9405,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Woody Allen",
+    "explanation": "The 1979 film 'Manhattan' was directed by Woody Allen, and the model incorrectly identified Manhattan as a fictional city in a television series.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.81
   },
   {
    "id": 2069236,
@@ -9428,7 +9595,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Sean Penn",
+    "explanation": "The screenplay for the 2007 film Into the Wild was written and directed by Sean Penn, not Jon M. Chu.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.844
   },
   {
    "id": 514217,
@@ -9710,7 +9884,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "United Kingdom",
+    "explanation": "Camden is a major borough in London, England, not a town in Northumbria.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.793
   },
   {
    "id": 4161947,
@@ -9721,7 +9902,7 @@
     "political figure"
    ],
    "answer": "Frederick Dundas was a Canadian politician who served as the 14th Prime Minister of Canada from 1",
-   "correct": true,
+   "correct": false,
    "max_score": 0.956,
    "mean_score": 0.6137894736842106,
    "min_p_final": 0.1293,
@@ -9992,7 +10173,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "British politician",
+    "explanation": "Frederick Dundas was a British Liberal Party politician and Member of Parliament for Orkney and Shetland, not a Canadian Prime Minister.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.785
   },
   {
    "id": 6560214,
@@ -10162,7 +10350,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "West Garo Hills district, Meghalaya, India",
+    "explanation": "Tura is the administrative center of West Garo Hills district in India and was formerly the capital of Evenk Autonomous Okrug in Russia, not the non-existent 'Taurus region'.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.841
   },
   {
    "id": 192850,
@@ -10444,7 +10639,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Bobby Garabedian and William Zabka",
+    "explanation": "The 2003 Oscar-nominated short film Most was written by Bobby Garabedian and William Zabka, not a television series.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.83
   },
   {
    "id": 3062832,
@@ -10726,7 +10928,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.701
   },
   {
    "id": 6463892,
@@ -11008,7 +11211,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Sweden",
+    "explanation": "The 1976 Swedish general election took place in Sweden, as indicated by the name of the election.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.835
   },
   {
    "id": 2748982,
@@ -11135,7 +11345,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Hickory, North Carolina",
+    "explanation": "Bob Warlick was born in Hickory, North Carolina, not New York City.",
+    "judge": "gemini-3.6-flash"
+   },
+   "answer_score": 0.811
   },
   {
    "id": 2411849,
@@ -11416,7 +11633,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Garth Nix",
+    "explanation": "Sir Thursday is the fourth book in the The Keys to the Kingdom series written by Garth Nix, not a character in The Lord of the Rings.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.859
   },
   {
    "id": 5432259,
@@ -11555,7 +11779,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Sydney, Australia",
+    "explanation": "Peter Philpott, the former Australian cricketer, was born in Sydney, New South Wales, not London.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.787
   },
   {
    "id": 5936796,
@@ -11835,7 +12066,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The 1928 film 'The Last Moment' was written by Paul Fejos.",
+    "explanation": "The model provided a hallucinated description of the film, as 'The Last Moment' is a 1928 silent film directed and written by Paul Fejos, not a 2017 film by David Fincher.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.836
   },
   {
    "id": 6464075,
@@ -12116,7 +12354,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Sol C. Siegel",
+    "explanation": "Les Girls is a 1957 American musical film produced by Sol C. Siegel and directed by George Cukor, not a 1968 film by Jean-Luc Godard.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.834
   },
   {
    "id": 1022587,
@@ -12398,7 +12643,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Blink-182 (Mark Hoppus, Tom DeLonge, and Travis Barker)",
+    "explanation": "I Miss You is a famous song by the rock band Blink-182, not Taylor Swift.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.788
   },
   {
    "id": 238575,
@@ -12409,7 +12661,7 @@
     "rock"
    ],
    "answer": "One is a song by the American rock band Imagine Dragons. It was released as the lead single from their third studio album",
-   "correct": true,
+   "correct": false,
    "max_score": 0.941,
    "mean_score": 0.6293333333333334,
    "min_p_final": 0.1779,
@@ -12680,7 +12932,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Metallica's 'One' is a heavy metal/thrash metal song; U2 also has a famous song titled 'One'.",
+    "explanation": "Imagine Dragons does not have a song titled 'One' that was a lead single from their third studio album, and the song 'One' is most famously associated with Metallica or U2.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.785
   },
   {
    "id": 1238475,
@@ -12817,7 +13076,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The 2005 film 'Beautiful People' was written by Brin Hill and others, while the 1999 film was written by April Smith.",
+    "explanation": "Paul Thomas Anderson did not write any film titled 'Beautiful People'.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.852
   },
   {
    "id": 152402,
@@ -12945,7 +13211,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Alfred Hitchcock",
+    "explanation": "Alfred Hitchcock directed the 1963 horror-thriller film The Birds.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.763
   },
   {
    "id": 1612356,
@@ -13106,7 +13379,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Rick Rubin, Fraser T. Smith, Eg White, Dan Wilson, and others.",
+    "explanation": "The album '18' by Moby was produced by Moby himself, while the album '18' by Adele was produced by various artists including Rick Rubin and Fraser T. Smith.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.807
   },
   {
    "id": 57577,
@@ -13223,7 +13503,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Mike Judge, Daniel Rappaport, and Irwin Stoff",
+    "explanation": "Steve Jobs was not involved in the production of the film Office Space; it was produced by Mike Judge, Daniel Rappaport, and Irwin Stoff.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.86
   },
   {
    "id": 128720,
@@ -13351,7 +13638,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Czech Republic",
+    "explanation": "Prague is the capital and largest city of the Czech Republic.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.567
   },
   {
    "id": 3872765,
@@ -13631,7 +13925,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.733
   },
   {
    "id": 208738,
@@ -13911,7 +14206,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Ma Chao",
+    "explanation": "Ma Xiu was the son of the famous Shu Han general Ma Chao, as depicted in the historical novel Romance of the Three Kingdoms.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.833
   },
   {
    "id": 4559863,
@@ -14192,7 +14494,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Robert A. Heinlein did not write a novel titled 'Infinity'.",
+    "explanation": "There is no science fiction novel titled 'Infinity' written by Robert A. Heinlein, making the premise of the model's answer factually incorrect.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.82
   },
   {
    "id": 248682,
@@ -14473,7 +14782,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.755
   },
   {
    "id": 1392070,
@@ -14632,7 +14942,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Roland Emmerich and Harald Kloser",
+    "explanation": "The 2012 film was written by Roland Emmerich and Harald Kloser, not Christopher Nolan.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.77
   },
   {
    "id": 4626587,
@@ -14643,7 +14960,7 @@
     "solicitor"
    ],
    "answer": "James M. Geraghty is an American politician who served as the 11th Vice President of the United",
-   "correct": true,
+   "correct": false,
    "max_score": 0.959,
    "mean_score": 0.6853750000000001,
    "min_p_final": 0.1233,
@@ -14914,7 +15231,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Journalist, author, and political commentator",
+    "explanation": "James M. Geraghty is a senior political correspondent for National Review, not a former Vice President of the United States.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.822
   },
   {
    "id": 3831198,
@@ -14925,7 +15249,7 @@
     "soccer"
    ],
    "answer": "Dan Parkinson is an Australian rules football player who plays for the Essendon Football Club in the Australian Football League (AFL",
-   "correct": true,
+   "correct": false,
    "max_score": 0.888,
    "mean_score": 0.6695454545454544,
    "min_p_final": 0.2929,
@@ -15196,7 +15520,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Dan Parkinson is not a professional Australian rules football player.",
+    "explanation": "There is no record of a professional Australian rules football player named Dan Parkinson playing for the Essendon Football Club in the AFL.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.779
   },
   {
    "id": 283063,
@@ -15476,7 +15807,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Mick Jackson",
+    "explanation": "The 2006 television miniseries Covert One: The Hades Factor was directed by Mick Jackson, not John McTiernan.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.847
   },
   {
    "id": 3333338,
@@ -15757,7 +16095,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Avant-garde, experimental, and jazz-rock musician",
+    "explanation": "André Duchesne is a prominent Canadian guitarist and composer known for his work in avant-garde and experimental music, not a French film director.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.795
   },
   {
    "id": 2557986,
@@ -16038,7 +16383,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Paris is a city, not a musical composition.",
+    "explanation": "The question is based on a false premise because Paris is a city, not a piece of music that would have a composer.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.786
   },
   {
    "id": 4559571,
@@ -16049,7 +16401,7 @@
     "scifi"
    ],
    "answer": "Infected is a science fiction horror game developed by Fearnet and published by Fearnet. It is a survival horror game",
-   "correct": true,
+   "correct": false,
    "max_score": 0.99,
    "mean_score": 0.7218888888888889,
    "min_p_final": 0.0306,
@@ -16320,7 +16672,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Infected is a third-person shooter video game developed by Planet Moon Studios and published by Majesco Entertainment.",
+    "explanation": "The model incorrectly identified the developer and publisher as Fearnet, which is a horror media brand, not a game studio.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.856
   },
   {
    "id": 6306390,
@@ -16602,7 +16961,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.705
   },
   {
    "id": 675554,
@@ -16750,7 +17110,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The Quarterback (2023) is a documentary series featuring Peyton Manning, not a scripted film written by David Fincher.",
+    "explanation": "David Fincher is a film director and producer who has no involvement as a screenwriter for a project titled The Quarterback.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.851
   },
   {
    "id": 17932,
@@ -17032,7 +17399,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Catholicism",
+    "explanation": "Marcellus II was a Pope of the Catholic Church who served in 1555, not a Roman Emperor.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.854
   },
   {
    "id": 295756,
@@ -17160,7 +17534,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Nino Rota",
+    "explanation": "The score for the 1963 film 8½ was composed by Nino Rota, not Philip Glass.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.867
   },
   {
    "id": 4168123,
@@ -17442,7 +17823,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.712
   },
   {
    "id": 3595268,
@@ -17623,7 +18005,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The film was produced by various independent producers including John Jencks, Joe Oppenheimer, and others, not The Walt Disney Company.",
+    "explanation": "The Last Hangman (also known as Pierrepoint) was an independent British film and was not produced by The Walt Disney Company.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.779
   },
   {
    "id": 398906,
@@ -17905,7 +18294,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Super (2010) was produced by Ted Hope, Kyle Henry, and Miranda Bailey.",
+    "explanation": "The 2010 film 'Super' is an American dark comedy directed by James Gunn, not a Japanese superhero series produced by Toho.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.803
   },
   {
    "id": 2935607,
@@ -18185,7 +18581,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Art Linson",
+    "explanation": "The 1984 film 'The Wild Life' was directed by Art Linson, not Ron Howard, and it is a comedy-drama, not a nature documentary.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.847
   },
   {
    "id": 511422,
@@ -18465,7 +18868,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.725
   },
   {
    "id": 4345863,
@@ -18747,7 +19151,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.719
   },
   {
    "id": 1246491,
@@ -18972,7 +19377,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Nora Ephron",
+    "explanation": "Michael is a well-known 1996 feature film starring John Travolta, written and directed by Nora Ephron.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.813
   },
   {
    "id": 5453500,
@@ -19088,7 +19500,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The film 'Airplane!' (often referred to as 'Pilot' in some regions) was directed by Jim Abrahams, David Zucker, and Jerry Zucker.",
+    "explanation": "David Fincher did not direct the 1980 comedy film 'Airplane!', which is commonly known by its original title or as 'Flying High!' in some international markets.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.866
   },
   {
    "id": 3512012,
@@ -19259,7 +19678,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Glasgow, Scotland",
+    "explanation": "Billy McGinty, the professional footballer, was born in Glasgow, Scotland.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.785
   },
   {
    "id": 6270515,
@@ -19541,7 +19967,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Legal thriller",
+    "explanation": "The Firm is primarily a legal thriller novel by John Grisham and a 1993 film adaptation, not a television series that aired on ABC from 1990 to 1994.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.811
   },
   {
    "id": 4915686,
@@ -19821,7 +20254,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Harold Pinter",
+    "explanation": "Landscape is a well-known play written by the British playwright Harold Pinter, first performed in 1968.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.852
   },
   {
    "id": 5925153,
@@ -20103,7 +20543,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Jonathan Stack and Liz Garbus",
+    "explanation": "The Farm: Angola, USA is a 1998 documentary film produced by Jonathan Stack and Liz Garbus, not a 2017 HBO television series.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.864
   },
   {
    "id": 5996529,
@@ -20251,7 +20698,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Karl Alexander",
+    "explanation": "The 1979 novel 'Time After Time' was written by Karl Alexander, not George Orwell.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.87
   },
   {
    "id": 2930080,
@@ -20421,7 +20875,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Michel Franco",
+    "explanation": "Michel Franco wrote and directed the 2021 film Sundown.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.827
   },
   {
    "id": 4978168,
@@ -20701,7 +21162,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Roland Emmerich, Rosilyn Heller, and Marco Weber",
+    "explanation": "The 2007 film 'Trade' was produced by Roland Emmerich, Rosilyn Heller, and Marco Weber, and it is not a television series that aired on ABC.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.853
   },
   {
    "id": 5353264,
@@ -20712,7 +21180,7 @@
     "America"
    ],
    "answer": "Oscar is an American film industry awards ceremony that is held annually in Los Angeles, California. It is named after the",
-   "correct": true,
+   "correct": false,
    "max_score": 0.868,
    "mean_score": 0.6611052631578948,
    "min_p_final": 0.3686,
@@ -20983,7 +21451,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "The United States",
+    "explanation": "The Oscars are an American awards ceremony held in the United States, not a country itself.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.765
   },
   {
    "id": 5593364,
@@ -21154,7 +21629,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Gleb Panfilov and Alexander Chervinsky",
+    "explanation": "The screenplay for the 1979 Soviet film 'The Theme' (Tema) was written by Gleb Panfilov and Alexander Chervinsky.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.795
   },
   {
    "id": 5987744,
@@ -21436,7 +21918,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Gene Saks (for the 1969 film) or Norman Lear (for the All in the Family pilot)",
+    "explanation": "The model provided incorrect information about the show's dates and failed to identify the producer, as 'Those Were the Days' was a 1969 pilot for 'All in the Family' produced by Norman Lear.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.828
   },
   {
    "id": 2209551,
@@ -21574,7 +22063,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Tim Firth",
+    "explanation": "The screenplay for the 2003 film Blackball was written by Tim Firth, not David Fincher.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.851
   },
   {
    "id": 1051707,
@@ -21855,7 +22351,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.722
   },
   {
    "id": 823276,
@@ -21972,7 +22469,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "London, England",
+    "explanation": "Ray Strauss, the former professional footballer, was born in London, England, not New York City.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.727
   },
   {
    "id": 2756925,
@@ -22253,7 +22757,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.751
   },
   {
    "id": 3602648,
@@ -22401,7 +22906,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Michael Hirst",
+    "explanation": "The screenplay for the 1998 film Elizabeth was written by Michael Hirst, not David Fincher.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.864
   },
   {
    "id": 2557830,
@@ -22682,7 +23194,8 @@
     }
    ],
    "mode": "logit",
-   "abstained": true
+   "abstained": true,
+   "answer_score": 0.737
   },
   {
    "id": 1587765,
@@ -22799,7 +23312,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Canada",
+    "explanation": "Park metro station is located in Montreal, Quebec, Canada.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.704
   },
   {
    "id": 1672533,
@@ -22894,7 +23414,14 @@
     }
    ],
    "mode": "logit",
-   "abstained": false
+   "abstained": false,
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Kyiv",
+    "explanation": "Kyiv is the official capital of Ukraine, and while Kiev is a common historical transliteration, Kyiv is the internationally recognized standard.",
+    "judge": "gemini-3.1-flash-lite"
+   },
+   "answer_score": 0.716
   }
  ]
 }

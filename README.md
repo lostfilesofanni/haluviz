@@ -37,27 +37,22 @@ Both are wrong (Ngerulmud; Kipling). The detector has no access to the truth:
 it only reads the model's internals. `scripts/eval_detector.py` measures how
 well that works on `data/questions.json`.
 
-### Measured (logit-lens mode, 30 questions, 10 answered wrong)
+### Measured (logit-lens mode, labels from the Gemini judge)
 
-Question-level: max token score vs. "answer was wrong".
+| set | answers | wrong | AUROC |
+|---|---|---|---|
+| PopQA, 100 sampled (19 refusals excluded) | 81 | 71 | 0.80 |
+| hand set | 30 | 11 | — |
+| pooled | 111 | 82 | **0.90** |
 
-| | |
-|---|---|
-| AUROC | **0.915** |
-| threshold 0.80 (default) | precision 0.56, recall 1.00 |
-| threshold 0.85 | precision 0.53, recall 0.80 |
-| threshold 0.90 | precision 0.88, recall 0.70 |
+Calibrated risk shown in the UI (pooled): answer score < 0.70 → 8 % wrong,
+0.70–0.75 → 36 %, 0.75–0.80 → 75 %, 0.80–0.85 → 91 %, ≥ 0.85 → 100 %.
 
-Caveats, honestly:
-- Under the logit lens, `commit_depth` ≈ 1 and `support` ≈ 0 for almost every
-  token (early layers never agree with the output), so the score floors near
-  0.65 and `p_final` does the separating. Those two signals only become
-  informative with a fitted J-lens.
-- Several "correct" answers that score high are long answers whose *extra*
-  claims are dubious (e.g. "published in 1934" for The Master and Margarita).
-  The eval only checks the gold entity, so some false positives are real
-  hallucinations the labels don't see.
-- 30 questions is a small set. Add yours to `data/questions.json` and re-run.
+Caveats: under the logit lens two of the three signals are near-constant
+(early layers never agree with the output), so `p_final` does most of the
+work until a J-lens is fitted; confident errors are invisible to the
+detector by construction, which is what the **Verify** button (Gemini judge)
+is for. Full details: `docs/IMPLEMENTATION.md`.
 
 ## Setup (Apple Silicon, 8 GB is enough)
 

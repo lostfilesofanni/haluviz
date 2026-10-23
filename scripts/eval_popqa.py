@@ -89,6 +89,7 @@ def main() -> None:
     ap.add_argument("--max-new-tokens", type=int, default=24)
     ap.add_argument("--mode", default=None)
     ap.add_argument("--resume", action="store_true", help="continue a previous run from data/popqa_results.json")
+    ap.add_argument("--extra", nargs="*", default=[], help="other results files (e.g. data/eval_results.json) pooled into the calibration")
     args = ap.parse_args()
 
     from datasets import load_dataset
@@ -134,18 +135,26 @@ def main() -> None:
         print(f"[{k+1}/{len(idx)}] {'✓' if correct else '✗'} {rows[-1]['max_score']:.2f} {ex['question'][:50]:<50} → {ans[:60]!r}  ({(time.time()-t0)/(k+1):.0f}s/q)")
         json.dump({"rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
 
-    for r in rows:  # rows from an older run lack the field
+    pooled = list(rows)
+    for path in args.extra:  # pool other labeled runs so the calibration isn't one dataset's base rate
+        for r in json.load(open(path, encoding="utf-8"))["rows"]:
+            r.setdefault("abstained", False)
+            pooled.append(r)
+    for r in pooled:  # rows from an older run lack the field
         r.setdefault("abstained", bool(ABSTAIN.search(r["answer"])) and not r["correct"])
         if r.get("judge", {}).get("verdict") in ("correct", "wrong"):  # scripts/judge_labels.py
             r["correct"] = r["judge"]["verdict"] == "correct"
         ct = content_tokens(r["tokens"])
         r["answer_score"] = round((max(t["score"] for t in ct) + np.mean([t["score"] for t in ct])) / 2, 3) if ct else 0.0
-    n_abstain = sum(r["abstained"] for r in rows)
-    rows_c = [r for r in rows if not r["abstained"]]
+        r["max_score"] = max((t["score"] for t in ct), default=0.0)
+        r["mean_score"] = float(np.mean([t["score"] for t in ct])) if ct else 0.0
+        r["min_p_final"] = min((t["p_final"] for t in ct), default=1.0)
+    n_abstain = sum(r["abstained"] for r in pooled)
+    rows_c = [r for r in pooled if not r["abstained"]]
     wrong = [not r["correct"] for r in rows_c]
     scores = [r["answer_score"] for r in rows_c]
     summary = {
-        "mode": mode, "n": len(rows), "n_abstained": int(n_abstain), "n_scored": len(rows_c),
+        "mode": mode, "n": len(pooled), "sources": ["PopQA"] + args.extra, "n_abstained": int(n_abstain), "n_scored": len(rows_c),
         "n_wrong": int(sum(wrong)), "accuracy": round(1 - sum(wrong) / max(len(rows_c), 1), 3),
         "labels": "judge" if any("judge" in r for r in rows) else "substring",
         "auroc_answer_score": round(auroc(scores, wrong), 3),
@@ -158,7 +167,7 @@ def main() -> None:
     for b in bins:
         print(f"  score {b['lo']:.2f}–{b['hi']:.2f}: n={b['n']:3d}  P(wrong)={b['p_wrong']:.2f}")
     json.dump({"summary": summary, "rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
-    json.dump({"source": "PopQA", "mode": mode, "n": len(rows_c), "metric": "answer_score", "bins": bins, "summary": summary},
+    json.dump({"source": "PopQA" + (" + hand set" if args.extra else ""), "mode": mode, "n": len(rows_c), "metric": "answer_score", "bins": bins, "summary": summary},
               open(os.path.join(ROOT, "data", "calibration.json"), "w"), indent=2)
     print("wrote data/calibration.json")
 
