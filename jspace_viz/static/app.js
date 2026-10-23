@@ -504,7 +504,26 @@ function renderHalu() {
     .map((sp) => `<span class="halu-chip">${esc(sp.text.trim())}<span class="sig">score ${sp.score.toFixed(2)} · p ${(sp.p * 100).toFixed(0)}% · depth ${(sp.d * 100).toFixed(0)}% · support ${(sp.s * 100).toFixed(0)}%</span></span>`)
     .join("");
   panel.hidden = false;
+  $("verify-out").textContent = "";
+  $("verify-out").className = "";
+  $("verify").disabled = !(INFO && INFO.verifier);
+  $("verify").title = INFO && INFO.verifier ? "ask a stronger model (Gemini) whether this answer is factually correct" : "put GEMINI_API_KEY in .env to enable";
 }
+$("verify").addEventListener("click", async () => {
+  if (!data || !data.continuation) return;
+  const out = $("verify-out");
+  out.className = ""; out.textContent = "asking the judge…";
+  $("verify").disabled = true;
+  try {
+    const res = await fetch("api/verify", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: $("prompt").value, answer: data.continuation }) });
+    const v = await res.json();
+    out.className = v.verdict;
+    const label = { correct: "✔ correct", wrong: "✘ wrong", unsure: "? unsure" }[v.verdict] || v.verdict;
+    out.textContent = `${label}` + (v.correct_answer && v.verdict !== "correct" ? ` · correct answer: ${v.correct_answer}` : "") + (v.explanation ? ` — ${v.explanation}` : "");
+  } catch (e) { out.className = "unsure"; out.textContent = e.message; }
+  finally { $("verify").disabled = false; }
+});
 $("halu-thresh").addEventListener("input", () => {
   if (!data) { $("halu-thresh-val").textContent = (+$("halu-thresh").value).toFixed(2); return; }
   renderHalu();

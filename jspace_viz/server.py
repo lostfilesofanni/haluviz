@@ -21,6 +21,7 @@ from jspace_viz.analysis import read_grid
 from jspace_viz.lens import JacobianLens
 from jspace_viz.model import load_model
 from jspace_viz.presets import EXAMPLES, PRESETS
+from jspace_viz.verify import api_key, judge
 
 logger = logging.getLogger("jspace_viz")
 STATIC_DIR = Path(__file__).parent / "static"
@@ -69,7 +70,19 @@ def info() -> dict[str, Any]:
         "examples": EXAMPLES,
         "device": str(model.device),
         "chip_baseline": state.get("chip_baseline", {}),
+        "verifier": api_key() is not None,
     }
+
+
+class VerifyRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=4000)
+    answer: str = Field(min_length=1, max_length=4000)
+
+
+@app.post("/api/verify")
+def verify(req: VerifyRequest) -> dict[str, Any]:
+    """Ask the external judge whether the answer is factually right."""
+    return judge(req.question, req.answer)
 
 
 def load_chip_baseline(model_id: str) -> dict[str, float]:
