@@ -516,9 +516,33 @@ function renderHalu() {
   panel.hidden = false;
   $("verify-out").textContent = "";
   $("verify-out").className = "";
+  $("fix-out").hidden = true;
+  renderHalu._pWrong = pWrong;
   $("verify").disabled = !(INFO && INFO.verifier);
   $("verify").title = INFO && INFO.verifier ? "ask a stronger model (Gemini) whether this answer is factually correct" : "put GEMINI_API_KEY in .env to enable";
 }
+$("fix").addEventListener("click", async () => {
+  if (!data || !data.continuation) return;
+  const out = $("fix-out");
+  out.hidden = false; out.innerHTML = '<span class="k">working…</span><span>re-decoding with layer contrast (~30 s)</span>';
+  $("fix").disabled = true;
+  try {
+    const H = data.hallucination;
+    const res = await fetch("api/fix", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: $("prompt").value, chat: $("chat").checked, max_new_tokens: +$("newtok").value,
+        p_wrong: renderHalu._pWrong, score: H.answer_score ?? H.max_score }) });
+    if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
+    const f = await res.json();
+    const orig = data.continuation.trim();
+    const rows = [["original", esc(orig)]];
+    rows.push(["abstain", f.abstain ? esc(f.abstain) : '<span class="same">risk is low — no need to abstain</span>']);
+    rows.push(["DoLa re-decode", f.dola === orig ? '<span class="same">same answer — layer contrast agrees with the original</span>' : esc(f.dola) + ` <span class="k">(premature layers ${[...new Set(f.premature_layers)].sort((a,b)=>a-b).join(",")})</span>`]);
+    const v = $("verify-out").className;
+    rows.push(["verified", v === "wrong" ? esc($("verify-out").textContent) : v === "correct" ? '<span class="same">judge says the original is correct</span>' : '<span class="same">press Verify answer for the judge\u2019s correction</span>']);
+    out.innerHTML = rows.map(([k, v]) => `<span class="k">${k}</span><span>${v}</span>`).join("");
+  } catch (e) { out.innerHTML = `<span class="k">error</span><span>${esc(e.message)}</span>`; }
+  finally { $("fix").disabled = false; }
+});
 $("verify").addEventListener("click", async () => {
   if (!data || !data.continuation) return;
   const out = $("verify-out");

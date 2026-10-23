@@ -71,6 +71,9 @@ button.primary { background: var(--accent); color: #04121f; font-weight: 600; pa
 .halu-chip .sig { color: var(--dim); font-size: 10px; }
 .hcell.halu { color: #f85149; }
 #verify-out { font-size: 13px; }
+#fix-out { font-family: var(--mono); font-size: 13px; display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin-top: 6px; }
+#fix-out .k { color: var(--dim); }
+#fix-out .same { color: var(--dim); font-style: italic; }
 #verify-out.correct { color: #7ee787; }
 #verify-out.wrong { color: #f85149; }
 #verify-out.unsure { color: var(--hot); }

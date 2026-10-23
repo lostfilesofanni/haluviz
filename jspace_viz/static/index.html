@@ -49,6 +49,8 @@
   <div class="row"><label>threshold <input id="halu-thresh" type="range" min="0" max="1" step="0.05" value="0.8"><span id="halu-thresh-val" class="hint">0.80</span></label><span id="halu-summary" class="hint"></span></div>
   <div id="halu-chips"></div>
   <div class="row"><button id="verify" title="ask a stronger model (Gemini) whether this answer is factually correct">Verify answer</button><span id="verify-out"></span></div>
+  <div class="row"><button id="fix" title="phase 2: a safer abstaining answer, a layer-contrast (DoLa) re-decode, and the judge's correction">Suggest a fix</button></div>
+  <div id="fix-out" hidden></div>
 </section>
 
 <section id="grid-wrap"><div id="grid"></div></section>

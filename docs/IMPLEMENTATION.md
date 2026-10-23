@@ -256,12 +256,36 @@ On the 8 GB M1 the attempt was killed by the OS for memory. The notebook does
 it on a free Colab T4 in fp32: ~1 min/prompt, 30 prompts, checkpointed to
 Google Drive. Output drops into `lenses/` and the server picks it up.
 
+## 9b. Phase 2 — suggest a fix (`jspace_viz/fix.py`, `POST /api/fix`)
+
+Three candidate fixes, shown side by side under **Suggest a fix**:
+
+1. **Abstain.** If the calibrated risk ≥ 60 %, the safer answer is to say so:
+   *"I'm not confident about this … please verify it elsewhere."* For a
+   model that is wrong 88 % of the time on long-tail facts, abstention is
+   the fix that is always available.
+2. **DoLa-style re-decode** (Chuang et al. 2023). At each step choose the
+   premature layer with maximal Jensen–Shannon divergence from the final
+   layer (candidates: every 2nd layer in the lower two-thirds), score
+   plausible tokens by `log p_final − log p_premature`, pick the max. Boosts
+   tokens whose probability *emerged* through the network; suppresses tokens
+   the early layers already liked.
+3. **Verified correction.** The judge's `correct_answer` (§6).
+
+**Finding (first four examples):** DoLa changes the wording but does not
+repair knowledge the model never had — Palau → "Nha Pali", 1907 Nobel →
+Hemingway (was Dostoevsky), Pompeii → still Augustus; Paris stays Paris.
+Layer contrast can only amplify a fact that is present mid-network. A
+quantitative greedy-vs-DoLa comparison on the hand set, judged by Gemini,
+is produced by `scripts/eval_fix.py` → `data/fix_results.json`
+*(numbers to be added when the run completes)*.
+
 ## 10. Roadmap
 
 - **Phase 1 (done):** visualizer + detector + hand-labeled calibration.
 - **Phase 1b (in progress):** J-lens fit; PopQA calibration; calibrated
   probability display; verifier.
-- **Phase 2 — suggest a fix:**
+- **Phase 2 — suggest a fix (built; see §9b):**
   - *Abstain*: when the risk is high, show "I'm not sure" as the better answer.
   - *DoLa-style re-decoding*: prefer tokens whose probability *rises* between a
     middle layer and the output (knowledge emerging) over tokens that only

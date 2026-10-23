@@ -18,6 +18,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from jspace_viz.analysis import read_grid
+from jspace_viz.fix import abstain_text, dola_generate
 from jspace_viz.lens import JacobianLens
 from jspace_viz.model import load_model
 from jspace_viz.presets import EXAMPLES, PRESETS
@@ -83,6 +84,32 @@ def load_calibration() -> dict[str, Any] | None:
 
         return json.loads(path.read_text(encoding="utf-8"))
     return None
+
+
+class FixRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=20000)
+    chat: bool = True
+    max_new_tokens: int = Field(default=32, ge=1, le=128)
+    p_wrong: float | None = None
+    score: float = 0.0
+
+
+@app.post("/api/fix")
+def fix(req: FixRequest) -> dict[str, Any]:
+    """Phase 2: abstention text + DoLa-style contrastive re-decode."""
+    model = state["model"]
+    prompt = req.prompt
+    if req.chat:
+        prompt = model.tokenizer.apply_chat_template([{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True)
+    state["last_read"] = time.monotonic()
+    try:
+        with _model_lock:
+            ids = model.encode(prompt, max_length=512)
+            dola = dola_generate(model, ids, max_new_tokens=req.max_new_tokens)
+    except Exception as exc:
+        logger.exception("fix failed")
+        raise HTTPException(500, str(exc)) from exc
+    return {"abstain": abstain_text(req.p_wrong, req.score), "dola": dola["text"].strip(), "premature_layers": dola["premature_layers"]}
 
 
 class VerifyRequest(BaseModel):
