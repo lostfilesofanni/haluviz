@@ -41,6 +41,7 @@ def main() -> None:
     ap.add_argument("--threshold", type=float, default=0.8)
     ap.add_argument("--questions", default=os.path.join(ROOT, "data", "questions.json"))
     ap.add_argument("--url", default=None, help="POST to a running haluviz server instead of loading the model here")
+    ap.add_argument("--tag", default="", help="suffix for the results file, e.g. _jlens")
     args = ap.parse_args()
 
     if args.url:
@@ -92,7 +93,7 @@ def main() -> None:
         "best_threshold": round(float(best[0]), 3), "best_f1": round(float(best[1]), 3),
     }
     print("\n" + json.dumps(summary, indent=2))
-    json.dump({"summary": summary, "rows": rows}, open(os.path.join(ROOT, "data", "eval_results.json"), "w"), indent=2, ensure_ascii=False)
+    json.dump({"summary": summary, "rows": rows}, open(os.path.join(ROOT, "data", f"eval_results{args.tag}.json"), "w"), indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":

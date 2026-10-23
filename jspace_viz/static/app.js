@@ -77,6 +77,7 @@ async function init() {
   }
   $("model-chip").textContent = `${INFO.model_id} · ${INFO.n_layers}L · d=${INFO.d_model} · ${INFO.device}`;
   $("lens-chip").textContent = `lens: ${INFO.fitted_layers.length} layers, ${INFO.lens_n_prompts} prompts`;
+  $("english").checked = mode !== "jlens";
   if (!INFO.fitted_layers.length) {
     // No fitted lens yet: logit lens is the only readout available.
     mode = "logit";
@@ -660,6 +661,8 @@ $("mode-toggle").addEventListener("click", (e) => {
   if (!btn) return;
   mode = btn.dataset.mode;
   for (const b of $("mode-toggle").children) b.classList.toggle("active", b === btn);
+  // the J-lens reads real concepts mid-network, often as single CJK tokens in a bilingual model
+  $("english").checked = mode !== "jlens";
   read();
 });
 $("examples").addEventListener("change", (e) => {

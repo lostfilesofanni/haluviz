@@ -90,6 +90,8 @@ def main() -> None:
     ap.add_argument("--mode", default=None)
     ap.add_argument("--resume", action="store_true", help="continue a previous run from data/popqa_results.json")
     ap.add_argument("--extra", nargs="*", default=[], help="other results files (e.g. data/eval_results.json) pooled into the calibration")
+    ap.add_argument("--tag", default="", help="suffix for output files, e.g. _jlens (calibration.json is only written untagged)")
+    ap.add_argument("--labels-from", nargs="*", default=[], help="results files whose judge labels are reused when question+answer match")
     args = ap.parse_args()
 
     from datasets import load_dataset
@@ -101,7 +103,7 @@ def main() -> None:
 
     info = json.load(urllib.request.urlopen(args.url.rstrip("/") + "/api/info"))
     mode = args.mode or ("jlens" if info["fitted_layers"] else "logit")
-    out_path = os.path.join(ROOT, "data", "popqa_results.json")
+    out_path = os.path.join(ROOT, "data", f"popqa_results{args.tag}.json")
     rows = []
     if args.resume and os.path.exists(out_path):
         rows = json.load(open(out_path))["rows"]
@@ -140,6 +142,14 @@ def main() -> None:
         for r in json.load(open(path, encoding="utf-8"))["rows"]:
             r.setdefault("abstained", False)
             pooled.append(r)
+    judged = {}
+    for path in args.labels_from:  # greedy output is identical across lens modes, so labels transfer
+        for r in json.load(open(path, encoding="utf-8"))["rows"]:
+            if "judge" in r:
+                judged[(r["q"], r["answer"])] = r["judge"]
+    for r in pooled:
+        if "judge" not in r and (r["q"], r["answer"]) in judged:
+            r["judge"] = judged[(r["q"], r["answer"])]
     for r in pooled:  # rows from an older run lack the field
         r.setdefault("abstained", bool(ABSTAIN.search(r["answer"])) and not r["correct"])
         if r.get("judge", {}).get("verdict") in ("correct", "wrong"):  # scripts/judge_labels.py
@@ -167,9 +177,10 @@ def main() -> None:
     for b in bins:
         print(f"  score {b['lo']:.2f}–{b['hi']:.2f}: n={b['n']:3d}  P(wrong)={b['p_wrong']:.2f}")
     json.dump({"summary": summary, "rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
+    cal_path = os.path.join(ROOT, "data", f"calibration{args.tag}.json")
     json.dump({"source": "PopQA" + (" + hand set" if args.extra else ""), "mode": mode, "n": len(rows_c), "metric": "answer_score", "bins": bins, "summary": summary},
-              open(os.path.join(ROOT, "data", "calibration.json"), "w"), indent=2)
-    print("wrote data/calibration.json")
+              open(cal_path, "w"), indent=2)
+    print("wrote", cal_path)
 
 
 if __name__ == "__main__":
