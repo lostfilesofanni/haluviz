@@ -51,18 +51,33 @@ def auroc(scores, positive):
 
 
 def calibrate(scores, wrong):
-    """Empirical P(wrong | score in bin). Monotone-smoothed so the UI never
-    shows a lower risk for a higher score."""
+    """Empirical P(wrong | score bin), made monotone by pool-adjacent-violators
+    (weighted isotonic regression) so a higher score never shows lower risk."""
     s, w = np.asarray(scores), np.asarray(wrong, bool)
     bins = []
     for lo, hi in zip(BINS[:-1], BINS[1:]):
         m = (s >= lo) & (s < hi)
-        bins.append({"lo": lo, "hi": min(hi, 1.0), "n": int(m.sum()), "p_wrong": float(w[m].mean()) if m.any() else None})
+        bins.append({"lo": lo, "hi": min(hi, 1.0), "n": int(m.sum()), "sum": int(w[m].sum())})
+    blocks = [[b] for b in bins if b["n"]]
+    i = 0
+    while i < len(blocks) - 1:
+        a, b = blocks[i], blocks[i + 1]
+        pa = sum(x["sum"] for x in a) / sum(x["n"] for x in a)
+        pb = sum(x["sum"] for x in b) / sum(x["n"] for x in b)
+        if pa > pb:
+            blocks[i:i + 2] = [a + b]
+            i = max(i - 1, 0)
+        else:
+            i += 1
+    for blk in blocks:
+        p = sum(x["sum"] for x in blk) / sum(x["n"] for x in blk)
+        for x in blk:
+            x["p_wrong"] = round(p, 3)
     last = 0.0
-    for b in bins:  # fill empty bins and enforce monotonicity
-        if b["p_wrong"] is None or b["p_wrong"] < last:
-            b["p_wrong"] = last
+    for b in bins:  # empty bins inherit the previous block's risk
+        b["p_wrong"] = b.get("p_wrong", last)
         last = b["p_wrong"]
+        b.pop("sum", None)
     return bins
 
 
@@ -121,14 +136,20 @@ def main() -> None:
 
     for r in rows:  # rows from an older run lack the field
         r.setdefault("abstained", bool(ABSTAIN.search(r["answer"])) and not r["correct"])
+        if r.get("judge", {}).get("verdict") in ("correct", "wrong"):  # scripts/judge_labels.py
+            r["correct"] = r["judge"]["verdict"] == "correct"
+        ct = content_tokens(r["tokens"])
+        r["answer_score"] = round((max(t["score"] for t in ct) + np.mean([t["score"] for t in ct])) / 2, 3) if ct else 0.0
     n_abstain = sum(r["abstained"] for r in rows)
     rows_c = [r for r in rows if not r["abstained"]]
     wrong = [not r["correct"] for r in rows_c]
-    scores = [r["max_score"] for r in rows_c]
+    scores = [r["answer_score"] for r in rows_c]
     summary = {
         "mode": mode, "n": len(rows), "n_abstained": int(n_abstain), "n_scored": len(rows_c),
         "n_wrong": int(sum(wrong)), "accuracy": round(1 - sum(wrong) / max(len(rows_c), 1), 3),
-        "auroc_max_score": round(auroc(scores, wrong), 3),
+        "labels": "judge" if any("judge" in r for r in rows) else "substring",
+        "auroc_answer_score": round(auroc(scores, wrong), 3),
+        "auroc_max_score": round(auroc([r["max_score"] for r in rows_c], wrong), 3),
         "auroc_min_p_final": round(auroc([1 - r["min_p_final"] for r in rows_c], wrong), 3),
         "auroc_mean_score": round(auroc([r["mean_score"] for r in rows_c], wrong), 3),
     }
@@ -137,7 +158,7 @@ def main() -> None:
     for b in bins:
         print(f"  score {b['lo']:.2f}–{b['hi']:.2f}: n={b['n']:3d}  P(wrong)={b['p_wrong']:.2f}")
     json.dump({"summary": summary, "rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
-    json.dump({"source": "PopQA", "mode": mode, "n": len(rows), "metric": "max_score", "bins": bins, "summary": summary},
+    json.dump({"source": "PopQA", "mode": mode, "n": len(rows_c), "metric": "answer_score", "bins": bins, "summary": summary},
               open(os.path.join(ROOT, "data", "calibration.json"), "w"), indent=2)
     print("wrote data/calibration.json")
 

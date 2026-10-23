@@ -1,0 +1,61 @@
+{
+  "source": "PopQA",
+  "mode": "logit",
+  "n": 100,
+  "metric": "max_score",
+  "bins": [
+    {
+      "lo": 0.0,
+      "hi": 0.7,
+      "n": 1,
+      "p_wrong": 0.0
+    },
+    {
+      "lo": 0.7,
+      "hi": 0.75,
+      "n": 1,
+      "p_wrong": 0.0
+    },
+    {
+      "lo": 0.75,
+      "hi": 0.8,
+      "n": 2,
+      "p_wrong": 0.0
+    },
+    {
+      "lo": 0.8,
+      "hi": 0.85,
+      "n": 2,
+      "p_wrong": 1.0
+    },
+    {
+      "lo": 0.85,
+      "hi": 0.9,
+      "n": 9,
+      "p_wrong": 1.0
+    },
+    {
+      "lo": 0.9,
+      "hi": 0.95,
+      "n": 26,
+      "p_wrong": 1.0
+    },
+    {
+      "lo": 0.95,
+      "hi": 1.0,
+      "n": 40,
+      "p_wrong": 1.0
+    }
+  ],
+  "summary": {
+    "mode": "logit",
+    "n": 100,
+    "n_abstained": 19,
+    "n_scored": 81,
+    "n_wrong": 64,
+    "accuracy": 0.21,
+    "auroc_max_score": 0.714,
+    "auroc_min_p_final": 0.732,
+    "auroc_mean_score": 0.811
+  }
+}

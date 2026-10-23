@@ -499,7 +499,8 @@ function renderHalu() {
   }
   // Verdict: calibrated P(wrong) from PopQA bins when available, else the raw score.
   const cal = INFO && INFO.calibration;
-  const bin = cal && cal.bins.find((b) => H.max_score >= b.lo && H.max_score < b.hi);
+  const metric = cal ? (H[cal.metric] ?? H.max_score) : H.max_score;
+  const bin = cal && cal.bins.find((b) => metric >= b.lo && metric < b.hi);
   const pWrong = bin ? bin.p_wrong : null;
   const band = pWrong != null ? (pWrong < 0.25 ? "low" : pWrong < 0.6 ? "mid" : "high") : (H.max_score < thr ? "low" : "high");
   panel.className = band;

@@ -37,40 +37,51 @@ def api_key() -> str | None:
     return None
 
 
-def judge(question: str, answer: str, *, model: str | None = None, timeout: int = 60) -> dict:
-    key = api_key()
-    if not key:
-        return {"verdict": "unsure", "correct_answer": "", "explanation": "no GEMINI_API_KEY configured (put it in .env)"}
-    model = model or os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
+# Google retires model names for new keys without notice; try these in order.
+MODELS = ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.1-flash-lite", "gemini-flash-latest", "gemini-2.5-flash-lite"]
+
+
+def _call(model: str, key: str, prompt: str, timeout: int) -> str:
     body = {
-        "contents": [{"parts": [{"text": PROMPT.format(question=question, answer=answer)}]}],
+        "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0, "responseMimeType": "application/json"},
     }
     req = urllib.request.Request(
-        GEMINI_URL.format(model=model, key=key),
-        json.dumps(body).encode(),
-        {"Content-Type": "application/json"},
+        GEMINI_URL.format(model=model, key=key), json.dumps(body).encode(), {"Content-Type": "application/json"}
     )
-    try:
-        for attempt in range(3):  # 503/429 are routine on the free tier
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        data = json.load(resp)
+    return data["candidates"][0]["content"]["parts"][0]["text"]
+
+
+def judge(question: str, answer: str, *, model: str | None = None, timeout: int = 120, tries: int = 4) -> dict:
+    key = api_key()
+    if not key:
+        return {"verdict": "unsure", "correct_answer": "", "explanation": "no GEMINI_API_KEY configured (put it in .env)"}
+    models = [model] if model else ([os.environ["GEMINI_MODEL"]] if os.environ.get("GEMINI_MODEL") else MODELS)
+    prompt = PROMPT.format(question=question, answer=answer)
+    last = "no attempt"
+    for attempt in range(tries):
+        for m in models:
             try:
-                with urllib.request.urlopen(req, timeout=timeout) as resp:
-                    data = json.load(resp)
-                break
+                text = _call(m, key, prompt, timeout)
+                mt = re.search(r"\{.*\}", text, re.S)
+                out = json.loads(mt.group(0) if mt else text)
+                verdict = out.get("verdict") if out.get("verdict") in ("correct", "wrong", "unsure") else "unsure"
+                return {"verdict": verdict, "correct_answer": str(out.get("correct_answer", "")),
+                        "explanation": str(out.get("explanation", "")), "judge": m}
             except urllib.error.HTTPError as e:
-                if e.code not in (429, 503) or attempt == 2:
-                    raise
-                time.sleep(2 * (attempt + 1))
-        text = data["candidates"][0]["content"]["parts"][0]["text"]
-        m = re.search(r"\{.*\}", text, re.S)
-        out = json.loads(m.group(0) if m else text)
-        out.setdefault("verdict", "unsure")
-        if out["verdict"] not in ("correct", "wrong", "unsure"):
-            out["verdict"] = "unsure"
-        return {"verdict": out["verdict"], "correct_answer": str(out.get("correct_answer", "")),
-                "explanation": str(out.get("explanation", "")), "judge": model}
-    except Exception as exc:  # the UI shows this; never crash a read over a verifier hiccup
-        return {"verdict": "unsure", "correct_answer": "", "explanation": f"verifier error: {exc}"}
+                last = f"{m}: HTTP {e.code}"
+                if e.code == 404:  # retired name: drop it for this process
+                    if m in MODELS and len(MODELS) > 1:
+                        MODELS.remove(m)
+                    continue
+                if e.code not in (429, 500, 503):
+                    return {"verdict": "unsure", "correct_answer": "", "explanation": f"verifier error: {last}"}
+            except Exception as e:  # timeouts, bad JSON — try the next model / attempt
+                last = f"{m}: {e}"
+        time.sleep(5 * (attempt + 1))
+    return {"verdict": "unsure", "correct_answer": "", "explanation": f"verifier error: {last}"}
 
 
 if __name__ == "__main__":
