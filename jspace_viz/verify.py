@@ -10,6 +10,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -39,7 +41,7 @@ def judge(question: str, answer: str, *, model: str | None = None, timeout: int 
     key = api_key()
     if not key:
         return {"verdict": "unsure", "correct_answer": "", "explanation": "no GEMINI_API_KEY configured (put it in .env)"}
-    model = model or os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+    model = model or os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
     body = {
         "contents": [{"parts": [{"text": PROMPT.format(question=question, answer=answer)}]}],
         "generationConfig": {"temperature": 0, "responseMimeType": "application/json"},
@@ -50,8 +52,15 @@ def judge(question: str, answer: str, *, model: str | None = None, timeout: int 
         {"Content-Type": "application/json"},
     )
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            data = json.load(resp)
+        for attempt in range(3):  # 503/429 are routine on the free tier
+            try:
+                with urllib.request.urlopen(req, timeout=timeout) as resp:
+                    data = json.load(resp)
+                break
+            except urllib.error.HTTPError as e:
+                if e.code not in (429, 503) or attempt == 2:
+                    raise
+                time.sleep(2 * (attempt + 1))
         text = data["candidates"][0]["content"]["parts"][0]["text"]
         m = re.search(r"\{.*\}", text, re.S)
         out = json.loads(m.group(0) if m else text)
