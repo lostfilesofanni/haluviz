@@ -84,6 +84,28 @@ def judge(question: str, answer: str, *, model: str | None = None, timeout: int 
     return {"verdict": "unsure", "correct_answer": "", "explanation": f"verifier error: {last}"}
 
 
+GLOSS_PROMPT = """Translate each of these language-model vocabulary tokens into a 1-3 word English gloss.
+They are fragments (Chinese, Japanese, Korean, or other); give the most likely meaning of each fragment on its own.
+Reply with JSON only: an object mapping each token exactly as given to its gloss. Tokens:
+{tokens}"""
+
+
+def gloss(tokens: list[str], *, timeout: int = 60) -> dict[str, str]:
+    """English glosses for non-English workspace tokens (one API call)."""
+    key = api_key()
+    if not key or not tokens:
+        return {}
+    for m in list(MODELS):
+        try:
+            text = _call(m, key, GLOSS_PROMPT.format(tokens=json.dumps(tokens, ensure_ascii=False)), timeout)
+            mt = re.search(r"\{.*\}", text, re.S)
+            out = json.loads(mt.group(0) if mt else text)
+            return {k: str(v) for k, v in out.items() if isinstance(k, str)}
+        except Exception:
+            continue
+    return {}
+
+
 if __name__ == "__main__":
     import sys
 

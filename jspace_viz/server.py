@@ -22,7 +22,7 @@ from jspace_viz.fix import abstain_text, dola_generate
 from jspace_viz.lens import JacobianLens
 from jspace_viz.model import load_model
 from jspace_viz.presets import EXAMPLES, PRESETS
-from jspace_viz.verify import api_key, judge
+from jspace_viz.verify import api_key, gloss, judge
 
 logger = logging.getLogger("jspace_viz")
 STATIC_DIR = Path(__file__).parent / "static"
@@ -110,6 +110,22 @@ def fix(req: FixRequest) -> dict[str, Any]:
         logger.exception("fix failed")
         raise HTTPException(500, str(exc)) from exc
     return {"abstain": abstain_text(req.p_wrong, req.score), "dola": dola["text"].strip(), "premature_layers": dola["premature_layers"]}
+
+
+class GlossRequest(BaseModel):
+    tokens: list[str] = Field(max_length=80)
+
+
+_gloss_cache: dict[str, str] = {}
+
+
+@app.post("/api/gloss")
+def gloss_tokens(req: GlossRequest) -> dict[str, str]:
+    """English glosses for non-English tokens, cached for the process."""
+    missing = [t for t in dict.fromkeys(req.tokens) if t not in _gloss_cache]
+    if missing:
+        _gloss_cache.update(gloss(missing))
+    return {t: _gloss_cache[t] for t in req.tokens if t in _gloss_cache}
 
 
 class VerifyRequest(BaseModel):

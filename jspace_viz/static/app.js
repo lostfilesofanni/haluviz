@@ -276,6 +276,11 @@ async function read(opts = {}) {
     });
     if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
     data = await res.json();
+    {
+      const pl = data.prompt_len ?? data.seq_len, words = new Set();
+      for (const row of data.grid) for (let t = Math.max(0, pl - 2); t < data.seq_len; t++) for (const id of row.top_ids[t].slice(0, 2)) { const w = (data.vocab[id] || "").trim(); if (CJK.test(w) && !GLOSS.has(w)) words.add(w); }
+      glossTokens([...words]);
+    }
     renderHalu();
     renderGrid();
     renderWorkspace();
@@ -415,9 +420,10 @@ function renderWorkspace() {
       row.top_ids[t].forEach((id, i) => {
         const str = vocab[id] || "";
         const w = str.trim().toLowerCase();
-        // word-start tokens only (leading space in BPE) — filters subword junk
-        if (!str.startsWith(" ") && !str.startsWith("▁")) return;
-        if (!/^[a-z][a-z'’-]{2,}$/i.test(str.trim())) return;
+        // word-start tokens (leading space in BPE) or CJK concept tokens (the J-space of a bilingual model)
+        const cjk = CJK.test(str.trim());
+        if (!cjk && !str.startsWith(" ") && !str.startsWith("▁")) return;
+        if (!cjk && !/^[a-z][a-z'’-]{2,}$/i.test(str.trim())) return;
         if (promptWords.has(w) || STOP.has(w)) return;
         const p = row.top_probs[t][i];
         if (p < 0.03) return; // diffuse noise doesn't accumulate
@@ -444,9 +450,25 @@ function renderWorkspace() {
     .map((e) => {
       const word = e.str.trim();
       const pop = previous.has(word.toLowerCase()) ? "" : " pop";
-      return `<span class="ws-chip${pop}" data-id="${e.id}" title="strength ${e.adj.toFixed(1)}, peaks at layer ${e.peakLayer}">${esc(word)}<span class="score">${e.adj.toFixed(1)}</span><span class="peak">L${e.peakLayer}</span></span>`;
+      const g = GLOSS.get(word);
+      return `<span class="ws-chip${pop}" data-id="${e.id}" title="strength ${e.adj.toFixed(1)}, peaks at layer ${e.peakLayer}">${esc(word)}${g ? `<span class="gloss">≈ ${esc(g)}</span>` : ""}<span class="score">${e.adj.toFixed(1)}</span><span class="peak">L${e.peakLayer}</span></span>`;
     })
     .join("");
+  glossTokens(top.map((e) => e.str.trim()).filter((w) => CJK.test(w) && !GLOSS.has(w)));
+}
+// ---- glosses for non-English workspace tokens (Gemini, cached server-side) ----
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]/;
+const GLOSS = new Map();
+let glossing = false;
+async function glossTokens(words) {
+  if (!words.length || glossing || !(INFO && INFO.verifier)) return;
+  glossing = true;
+  try {
+    const res = await fetch("api/gloss", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tokens: words.slice(0, 80) }) });
+    const g = await res.json();
+    for (const [k, v] of Object.entries(g)) GLOSS.set(k, v);
+    if (Object.keys(g).length) renderWorkspace();
+  } catch {} finally { glossing = false; }
 }
 $("workspace-chips").addEventListener("click", (e) => {
   const chip = e.target.closest(".ws-chip");
@@ -615,7 +637,7 @@ $("grid").addEventListener("mousemove", (e) => {
   const row = data.grid[li];
   const rows = row.top_ids[t]
     .map((id, i) =>
-      `<tr><td>${esc(tokStr(data.vocab[id]))}</td><td class="p">${(row.top_probs[t][i] * 100).toFixed(1)}%</td></tr>`)
+      `<tr><td>${esc(tokStr(data.vocab[id]))}${GLOSS.has((data.vocab[id] || "").trim()) ? ` <span class=\"gloss\">≈ ${esc(GLOSS.get((data.vocab[id] || "").trim()))}</span>` : ""}</td><td class="p">${(row.top_probs[t][i] * 100).toFixed(1)}%</td></tr>`)
     .join("");
   tip.innerHTML =
     `<table>${rows}</table>` +
