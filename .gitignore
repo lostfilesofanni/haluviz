@@ -6,3 +6,5 @@ lenses/
 *.gguf
 data/eval_results.json
 .DS_Store
+haluviz_colab.zip
+.env

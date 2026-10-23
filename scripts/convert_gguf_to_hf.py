@@ -123,7 +123,7 @@ def main() -> None:
     del state
 
     # Self-check: a real forward pass must produce a sane chat answer.
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     model = model.to(device).eval()
     ids = tok.apply_chat_template(
         [{"role": "user", "content": "What is the capital of France?"}],
