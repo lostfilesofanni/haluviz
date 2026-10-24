@@ -10,3 +10,8 @@ greedy correct dola correct ≠  Who painted the Mona Lisa?                    �
 greedy correct dola correct =  What is the square root of 144?               → 'The square root of 144 is 12.'
 greedy correct dola correct ≠  What is the currency of Japan?                → 'The currency of Japan is the Japanese Yen (JPY). The Yen is '
 greedy correct dola wrong   ≠  Which element has atomic number 1?            → 'The element with atomic number 1 is an atom with the symbol '
+greedy wrong   dola wrong   ≠  Who won the Nobel Prize in Literature in 1907 → 'Ernest Hemingway won the Nobel Prize in Literature in 1907. '
+greedy wrong   dola wrong   =  What is the capital of the Canadian territory → 'The capital of the Canadian territory of Nunavut is Red Lake'
+greedy wrong   dola wrong   ≠  Who was the first woman to win the Fields Med → 'The first woman to win the Fields Medal (a gold medal awarde'
+greedy wrong   dola wrong   ≠  What is the smallest country in South America → 'The smallest country in South America by area is Eritrea, wi'
+greedy correct dola wrong   ≠  Which river flows through Baghdad?            → 'The river that flows through Baghdad is the Euphrates. The E'

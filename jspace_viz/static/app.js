@@ -111,10 +111,10 @@ function renderWelcome() {
     .join(" ");
   const typeHint = STATIC
     ? 'Pick an example below. To type <em>your own</em> prompts, clone the repo — <a href="https://github.com/Festyve/jspace-viz" target="_blank" rel="noopener">github.com/Festyve/jspace-viz</a> — and run it locally (two commands).'
-    : "Type any prompt above and hit <b>Read</b> (⌘↵), or start from an example:";
+    : "Ask it something above and press <b>Read</b> (⌘↵), or start from an example. Easy facts read green; obscure ones usually don't.";
   $("grid").innerHTML =
-    `<div class="welcome"><p>Every cell will show what a layer of <b>${esc(INFO.model_id)}</b> ` +
-    `is <i>disposed to say</i> at each word of your prompt.</p>` +
+    `<div class="welcome"><p>Each cell shows what one layer of <b>${esc(INFO.model_id.split("/").pop())}</b> ` +
+    `is <i>about to say</i> at each word. Generated words are scored for hallucination from the same grid.</p>` +
     `<p>${typeHint}</p><p>${chips}</p></div>`;
 }
 $("grid").addEventListener("click", (e) => {
@@ -316,19 +316,19 @@ $("english").addEventListener("change", () => { if (data) renderGrid(); });
 // Background for a top-1 probability (0..1) — accent blue ramp.
 function probColor(p) {
   const a = Math.min(0.85, Math.pow(p, 0.6));
-  return `rgba(56, 139, 253, ${a.toFixed(3)})`;
+  return `rgba(53, 70, 255, ${a.toFixed(3)})`;
 }
 // Background for a rank (0 = top) — orange ramp, fades out past ~1000.
 function rankColor(r) {
   const a = Math.max(0, 0.9 - 0.9 * (Math.log10(r + 1) / 3));
-  return `rgba(255, 166, 87, ${a.toFixed(3)})`;
+  return `rgba(255, 238, 155, ${a.toFixed(3)})`;
 }
 
 function renderGrid() {
   const grid = $("grid");
   const { layers, grid: rows, context_ids, vocab, seq_len } = data;
   const cols = colLimit == null ? seq_len : Math.min(seq_len, colLimit);
-  grid.style.gridTemplateColumns = `auto repeat(${cols}, max-content)`;
+  grid.style.gridTemplateColumns = `64px repeat(${cols}, 80px)`;
   // Columns past prompt_len are the model's own generated words — tinted, so
   // you can see what it was thinking *while it spoke*.
   const promptLen = data.prompt_len ?? seq_len;
@@ -489,7 +489,7 @@ $("workspace-chips").addEventListener("click", (e) => {
 // re-derived here so the threshold slider works without another read.
 const WORDLIKE = /[A-Za-z0-9]/;
 function haluColor(score) {
-  return `rgba(248, 81, 73, ${(0.25 + 0.6 * score).toFixed(3)})`;
+  return `rgba(233, 85, 0, ${(0.18 + 0.5 * score).toFixed(3)})`;
 }
 function renderHalu() {
   halu = new Map();
@@ -527,16 +527,28 @@ function renderHalu() {
   const bin = cal && cal.bins.find((b) => metric >= b.lo && metric < b.hi);
   const pWrong = bin ? bin.p_wrong : null;
   const band = pWrong != null ? (pWrong < 0.25 ? "low" : pWrong < 0.6 ? "mid" : "high") : (H.max_score < thr ? "low" : "high");
-  panel.className = band;
-  $("halu-verdict").textContent = pWrong != null
-    ? `${band === "low" ? "✔ likely reliable" : band === "mid" ? "⚠ uncertain" : "✘ likely hallucinated"} · estimated chance this answer is wrong: ${Math.round(pWrong * 100)}% (calibrated on ${cal.n} ${cal.source} questions)`
-    : `${band === "low" ? "✔ no word over the threshold" : "⚠ possible hallucination"} · max score ${H.max_score.toFixed(2)} (uncalibrated — run scripts/eval_popqa.py)`;
+  panel.className = "card " + band;
+  const label = band === "low" ? "likely reliable" : band === "mid" ? "uncertain" : "likely hallucinated";
+  const needle = pWrong != null ? pWrong : Math.min(1, metric);
+  drawGauge($("halu-gauge"), needle, band);
+  $("halu-verdict").innerHTML = pWrong != null
+    ? `<span class="pct">${Math.round(pWrong * 100)}%</span>${esc(label)}<span class="note">estimated chance this answer is wrong · calibrated on ${cal.n} ${esc(cal.source)} questions</span>`
+    : `<span class="pct">${metric.toFixed(2)}</span>${esc(label)}<span class="note">raw answer score, uncalibrated — run scripts/eval_popqa.py</span>`;
   const nWord = toks.filter((t) => WORDLIKE.test(t.token) && !t.in_prompt).length;
   const nFlag = toks.filter((t) => t.flag).length;
   $("halu-summary").textContent = `${nFlag}/${nWord} tokens flagged · max score ${H.max_score.toFixed(2)}`;
-  $("halu-chips").innerHTML = spans
-    .map((sp) => `<span class="halu-chip">${esc(sp.text.trim())}<span class="sig">score ${sp.score.toFixed(2)} · p ${(sp.p * 100).toFixed(0)}% · depth ${(sp.d * 100).toFixed(0)}% · support ${(sp.s * 100).toFixed(0)}% · instability ${(sp.i * 100).toFixed(0)}% (${sp.f} flips)</span></span>`)
-    .join("");
+  const bar = (name, v, good, text) => `<div class="bar${good ? " good" : ""}">${name}<i style="--w:${Math.round(v * 100)}%"></i><b>${text}</b></div>`;
+  $("halu-chips").innerHTML = spans.length
+    ? spans.map((sp) => `<div class="sig-row"><div><div class="sig-word">${esc(sp.text.trim())}</div><div class="sig-score">score ${sp.score.toFixed(2)}</div></div><div class="bars">` +
+        bar("confidence", sp.p, sp.p >= 0.5, `${(sp.p * 100).toFixed(0)}%`) +
+        bar("decided at", sp.d, sp.d < 0.7, `${(sp.d * 100).toFixed(0)}% depth`) +
+        bar("in workspace", sp.s, sp.s >= 0.3, `${(sp.s * 100).toFixed(0)}%`) +
+        bar("instability", sp.i, sp.i < 0.3, `${(sp.i * 100).toFixed(0)}% · ${sp.f} flips`) +
+      `</div></div>`).join("")
+    : `<div class="sig-empty">no generated word is over the threshold</div>`;
+  $("signals-card").hidden = false;
+  $("fix-card").hidden = false;
+  $("right-empty").hidden = true;
   panel.hidden = false;
   $("verify-out").textContent = "";
   $("verify-out").className = "";
@@ -562,8 +574,8 @@ $("fix").addEventListener("click", async () => {
     // layer-contrast re-decode is kept as a measured negative result (see docs §9b).
     const v = $("verify-out").className;
     const rows = [["original", esc(orig)]];
-    rows.push(["✔ verified fix", v === "wrong" ? esc($("verify-out").textContent) : v === "correct" ? '<span class="same">judge says the original is correct</span>' : '<span class="same">press Verify answer first — the judge supplies the correction</span>']);
-    rows.push(["✔ safer answer", f.abstain ? esc(f.abstain) : '<span class="same">risk is low — no need to abstain</span>']);
+    rows.push(["<span class=\"ok\">✔ verified fix</span>", v === "wrong" ? esc($("verify-out").textContent) : v === "correct" ? '<span class="same">judge says the original is correct</span>' : '<span class="same">press Verify answer first — the judge supplies the correction</span>']);
+    rows.push(["<span class=\"ok\">✔ safer answer</span>", f.abstain ? esc(f.abstain) : '<span class="same">risk is low — no need to abstain</span>']);
     const fs = INFO && INFO.fix_summary;
     const note = fs ? ` — measured on ${fs.n} questions: fixed ${fs.fixed}, broke ${fs.broken}, changed ${fs.changed}` : "";
     rows.push(["✘ DoLa re-decode<br><span class=\"k\">(experimental)</span>", (f.dola === orig ? '<span class="same">same answer</span>' : esc(f.dola)) + `<br><span class="k">re-ranks words by how much they emerged through the layers; can only pick among answers the model already had${esc(note)}</span>`]);
@@ -592,7 +604,26 @@ $("halu-thresh").addEventListener("input", () => {
   renderGrid();
 });
 
+// Half-arc gauge: needle at P(wrong), arc coloured by band.
+function drawGauge(svg, v, band) {
+  const cx = 120, cy = 118, R = 92, w = 14;
+  const col = band === "low" ? "#adc642" : band === "mid" ? "#ffee9b" : "#e95500";
+  const pt = (f, r) => { const a = Math.PI * (1 - f); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
+  const arc = (f0, f1, r) => { const [x0, y0] = pt(f0, r), [x1, y1] = pt(f1, r); return `M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${f1 - f0 > 0.5 ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)}`; };
+  const v1 = Math.max(0.005, Math.min(1, v));
+  const [nx, ny] = pt(v1, R - w / 2 - 6);
+  svg.innerHTML =
+    `<path d="${arc(0, 1, R)}" fill="none" stroke="#34373e" stroke-width="${w}" stroke-linecap="round"/>` +
+    `<path d="${arc(0, v1, R)}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>` +
+    `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#ecebe6" stroke-width="2" stroke-linecap="round"/>` +
+    `<circle cx="${cx}" cy="${cy}" r="4" fill="#ecebe6"/>` +
+    `<text x="14" y="134" fill="#8f9299" font-size="10" font-family="Inter,system-ui">reliable</text>` +
+    `<text x="${cx}" y="18" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="middle">uncertain</text>` +
+    `<text x="226" y="134" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="end">hallucinated</text>`;
+}
+
 function renderMetrics() {
+  $("metrics").hidden = false;
   const ms = data.layer_metrics;
   drawChart($("m-acc"), ms.map((m) => m.next_token_acc), 0, 1);
   drawChart($("m-kurt"), ms.map((m) => m.mean_kurtosis), 0, null, true);
@@ -615,21 +646,21 @@ function drawChart(svg, ys, ymin, ymax, shadeBand = false) {
       const inBand = i < ys.length && ys[i] >= cut;
       if (inBand && start === null) start = i;
       if (!inBand && start !== null) {
-        out += `<rect x="${x(start)}" y="${padT}" width="${x(i - 1) - x(start)}" height="${H - padB - padT}" fill="rgba(255,166,87,.12)"/>`;
+        out += `<rect x="${x(start)}" y="${padT}" width="${x(i - 1) - x(start)}" height="${H - padB - padT}" fill="rgba(255,238,155,.10)"/>`;
         start = null;
       }
     }
   }
-  out += `<line x1="${padL}" y1="${H - padB}" x2="${W - 6}" y2="${H - padB}" stroke="#30363d"/>`;
-  out += `<text x="${padL - 4}" y="${y(hi) + 4}" fill="#8b949e" font-size="9" text-anchor="end">${hi.toFixed(hi >= 10 ? 0 : 2)}</text>`;
-  out += `<text x="${padL - 4}" y="${H - padB}" fill="#8b949e" font-size="9" text-anchor="end">${lo.toFixed(lo >= 10 ? 0 : 2)}</text>`;
+  out += `<line x1="${padL}" y1="${H - padB}" x2="${W - 6}" y2="${H - padB}" stroke="#26282e"/>`;
+  out += `<text x="${padL - 4}" y="${y(hi) + 4}" fill="#8f9299" font-size="9" text-anchor="end">${hi.toFixed(hi >= 10 ? 0 : 2)}</text>`;
+  out += `<text x="${padL - 4}" y="${H - padB}" fill="#8f9299" font-size="9" text-anchor="end">${lo.toFixed(lo >= 10 ? 0 : 2)}</text>`;
   const lastFitted = ys.length - 2; // final entry is the output row (J = I)
-  out += `<polyline fill="none" stroke="#58a6ff" stroke-width="1.5" points="${ys
+  out += `<polyline fill="none" stroke="#96a0ff" stroke-width="1.5" points="${ys
     .slice(0, lastFitted + 1).map((v, i) => `${x(i)},${y(v)}`).join(" ")}"/>`;
-  out += `<circle cx="${x(ys.length - 1)}" cy="${y(ys[ys.length - 1])}" r="2.5" fill="#ffa657"/>`;
+  out += `<circle cx="${x(ys.length - 1)}" cy="${y(ys[ys.length - 1])}" r="2.5" fill="#ffee9b"/>`;
   const L = data.layers;
-  out += `<text x="${padL}" y="${H - 4}" fill="#8b949e" font-size="9">L${L[0]}</text>`;
-  out += `<text x="${W - 6}" y="${H - 4}" fill="#8b949e" font-size="9" text-anchor="end">out</text>`;
+  out += `<text x="${padL}" y="${H - 4}" fill="#8f9299" font-size="9">L${L[0]}</text>`;
+  out += `<text x="${W - 6}" y="${H - 4}" fill="#8f9299" font-size="9" text-anchor="end">out</text>`;
   svg.innerHTML = out;
 }
 

@@ -42,6 +42,7 @@ def read_grid(
     generate_continuation: bool = True,
     max_new_tokens: int = 32,
     threshold: float = 0.6,
+    continuation_ids: list[int] | None = None,
 ) -> dict[str, Any]:
     """One forward pass, then per-layer lens readouts at every position.
 
@@ -77,7 +78,12 @@ def read_grid(
     # thinking *while it speaks* (the paper's monitoring use case). Skipped
     # for latency-sensitive live-typing reads.
     continuation = None
-    if generate_continuation:
+    if generate_continuation and continuation_ids:
+        # cached from an earlier read of the same prompt: skip the (dominant) generation cost
+        generated = torch.cat([input_ids, torch.tensor([continuation_ids], device=input_ids.device)], dim=1)
+        continuation = model.tokenizer.decode(continuation_ids, skip_special_tokens=True)
+        input_ids = generated
+    elif generate_continuation:
         generated = model.hf_model.generate(
             input_ids,
             max_new_tokens=max_new_tokens,
@@ -191,6 +197,7 @@ def read_grid(
     )
     return {
         "continuation": continuation,
+        "continuation_ids": ids_list[prompt_len:] if continuation is not None else None,
         "hallucination": hallucination,
         "prompt_len": prompt_len,
         **({"ranks": ranks} if ranks is not None else {}),

@@ -31,6 +31,9 @@ state: dict[str, Any] = {}
 # MPS is not safe to drive from two threads at once (Metal command-buffer
 # assertion); FastAPI runs sync endpoints in a pool, so serialize model use.
 _model_lock = threading.Lock()
+# Greedy generation is deterministic, so re-reads of the same prompt (lens toggle,
+# pin, slider) reuse the generated ids and skip ~2/3 of the read time.
+_gen_cache: dict[tuple[str, bool, int], list[int]] = {}
 
 
 def _idle_watchdog(idle_seconds: float) -> None:
@@ -167,9 +170,10 @@ def read(req: ReadRequest) -> dict[str, Any]:
     if req.mode not in ("jlens", "logit"):
         raise HTTPException(400, "mode must be 'jlens' or 'logit'")
     state["last_read"] = time.monotonic()
+    key = (req.prompt, req.chat, req.max_new_tokens)
     try:
         with _model_lock:
-            return read_grid(
+            out = read_grid(
                 state["model"],
                 state["lens"],
                 req.prompt,
@@ -181,7 +185,13 @@ def read(req: ReadRequest) -> dict[str, Any]:
                 generate_continuation=req.continuation,
                 max_new_tokens=req.max_new_tokens,
                 threshold=req.threshold,
+                continuation_ids=_gen_cache.get(key) if req.continuation else None,
             )
+        if out.get("continuation_ids"):
+            if len(_gen_cache) > 64:
+                _gen_cache.pop(next(iter(_gen_cache)))
+            _gen_cache[key] = out["continuation_ids"]
+        return out
     except Exception as exc:  # surfaced to the UI status line
         logger.exception("read failed")
         raise HTTPException(500, str(exc)) from exc

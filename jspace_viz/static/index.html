@@ -4,65 +4,103 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>haluviz — J-space + hallucination detector</title>
-<link rel="stylesheet" href="static/app.css?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="static/app.css?v=3">
 </head>
 <body>
-<header>
+<header id="topbar">
   <h1>haluviz</h1>
-  <span class="sub">J-space readout + hallucination detection &middot; <a href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a></span>
+  <span class="sub">what the model is thinking, and where it's making things up &middot; <a href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a></span>
+  <span class="spacer"></span>
   <span id="model-chip" class="chip">loading&hellip;</span>
   <span id="lens-chip" class="chip"></span>
 </header>
 
-<section id="controls">
-  <textarea id="prompt" rows="4" spellcheck="false" placeholder="Type anything — a question, half a sentence, some code — then press Read (⌘↵) to see what every layer of the model is thinking at every word."></textarea>
-  <div class="row">
-    <select id="examples"><option value="">examples&hellip;</option></select>
-    <div class="toggle" id="mode-toggle">
+<section id="toolbar">
+  <div class="prompt-row">
+    <textarea id="prompt" rows="3" spellcheck="false" placeholder="Ask the model a factual question, then press Read (⌘↵). One sentence is plenty."></textarea>
+    <button id="read" class="primary">Read</button>
+  </div>
+  <div class="pills">
+    <select id="examples" class="pill"><option value="">examples&hellip;</option></select>
+    <div class="segment" id="mode-toggle">
       <button data-mode="jlens" class="active" title="transport with J_l before unembedding">J-lens</button>
       <button data-mode="logit" title="unembed the raw residual (J = I baseline)">logit lens</button>
     </div>
-    <label>top-k <input id="topk" type="number" min="1" max="20" value="8"></label>
-    <label title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox" checked> chat</label>
-    <label title="how many tokens the model generates">new tokens <input id="newtok" type="number" min="1" max="128" value="32"></label>
-    <label title="per cell, show the highest-ranked English token instead of the raw top-1 (early layers of a bilingual model read as noise under the logit lens)"><input id="english" type="checkbox" checked> english only</label>
-    <label id="live-label" title="re-read automatically while you type — watch the thoughts change"><input id="live" type="checkbox"> live</label>
-    <button id="read" class="primary">Read</button>
-    <button id="jump-gen" hidden title="scroll the grid to the model's own generated words — its thoughts while it speaks">→ what it wrote</button>
+    <label class="pill" title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox" checked><span>chat</span></label>
+    <label class="pill num" title="how many tokens the model generates"><span>new tokens</span><input id="newtok" type="number" min="1" max="128" value="32"></label>
+    <label class="pill num" title="how many candidate words each cell keeps for the hover list, english-only lookup, and workspace chips"><span>candidates per cell</span><input id="topk" type="number" min="1" max="20" value="8"></label>
+    <label class="pill" title="per cell, show the highest-ranked English token instead of the raw top-1"><input id="english" type="checkbox" checked><span>english only</span></label>
+    <label class="pill" id="live-label" title="re-read automatically while you type"><input id="live" type="checkbox"><span>live</span></label>
+    <button id="jump-gen" class="pill ok" hidden title="scroll the grid to the model's own generated words">→ what it wrote</button>
     <span id="status"></span>
   </div>
-  <div class="row" id="pinned-row" hidden>
-    <span class="hint">pinned:</span>
+  <div class="pills" id="pinned-row" hidden>
+    <span class="hint">pinned</span>
     <span id="pinned-chips"></span>
-    <button id="view-top1" hidden>back to top-1 view</button>
+    <button id="view-top1" class="pill" hidden>back to top-1 view</button>
   </div>
 </section>
 
-<section id="workspace-panel" hidden>
-  <h3 title="Concepts active in the middle layers that are neither words from your prompt nor the model's literal next word — the J-space content. Click one to trace where it lives.">🧠 in the workspace right now</h3>
-  <div id="workspace-chips"></div>
-</section>
+<main id="main">
+  <div id="left">
+    <section class="card" id="grid-card">
+      <div class="card-head">
+        <h2>layer × position</h2>
+        <span class="legend"><i class="sw gen"></i>generated<i class="sw flag"></i>flagged<i class="sw flip"></i>changed mind vs layer above</span>
+      </div>
+      <div id="grid-wrap"><div id="grid"></div></div>
+    </section>
+    <section id="metrics" hidden>
+      <div class="card metric"><h2 title="fraction of positions where the lens top-1 equals the actual next token">next-token accuracy</h2><svg id="m-acc"></svg></div>
+      <div class="card metric"><h2 title="mean excess kurtosis of lens logits — the paper's workspace-layer signature">excess kurtosis</h2><svg id="m-kurt"></svg></div>
+      <div class="card metric"><h2 title="fraction of adjacent positions sharing the same lens top-1 token">top-1 autocorrelation</h2><svg id="m-auto"></svg></div>
+    </section>
+  </div>
 
-<section id="halu-panel" hidden>
-  <h3 title="Generated tokens the model said with low confidence, decided only in its last layers, and never had in its mid-layer workspace. Score = mean of those three signals."><span id="halu-verdict">hallucination check</span></h3>
-  <div id="halu-answer"></div>
-  <div class="hint" style="margin-bottom:6px">in the grid, an orange top edge marks a cell whose top word differs from the layer above — a zigzag column means the model kept changing its mind</div>
-  <div class="row"><label>threshold <input id="halu-thresh" type="range" min="0" max="1" step="0.05" value="0.8"><span id="halu-thresh-val" class="hint">0.80</span></label><span id="halu-summary" class="hint"></span></div>
-  <div id="halu-chips"></div>
-  <div class="row"><button id="verify" title="ask a stronger model (Gemini) whether this answer is factually correct">Verify answer</button><span id="verify-out"></span></div>
-  <div class="row"><button id="fix" title="phase 2: a safer abstaining answer, a layer-contrast (DoLa) re-decode, and the judge's correction">Suggest a fix</button></div>
-  <div id="fix-out" hidden></div>
-</section>
+  <aside id="right">
+    <section class="card" id="right-empty">
+      <div class="card-head"><h2>how it works</h2></div>
+      <ol class="steps">
+        <li><b>Ask</b> a factual question and press <b>Read</b>.</li>
+        <li>The model answers; every layer's thinking appears in the grid, generated words in green.</li>
+        <li>The verdict gauge shows the calibrated chance the answer is wrong, and the words that drove it.</li>
+        <li><b>Verify</b> asks a stronger model for the truth; <b>Suggest a fix</b> offers a safer answer.</li>
+      </ol>
+    </section>
+    <section class="card" id="halu-panel" hidden>
+      <div class="card-head"><h2>hallucination check</h2><span id="halu-summary" class="hint"></span></div>
+      <svg id="halu-gauge" viewBox="0 0 240 140" aria-hidden="true"></svg>
+      <div id="halu-verdict" class="verdict"></div>
+      <div id="halu-answer"></div>
+      <label class="slider"><span title="words scoring above this are highlighted; the gauge does not depend on it">flag words above</span><input id="halu-thresh" type="range" min="0" max="1" step="0.05" value="0.8"><b id="halu-thresh-val">0.80</b></label>
+    </section>
 
-<section id="grid-wrap"><div id="grid"></div></section>
+    <section class="card" id="signals-card" hidden>
+      <div class="card-head"><h2 title="For each flagged word: the model's confidence in it, how deep it was decided, whether it was in the mid-layer workspace, and how much the prediction kept changing in the last layers.">signals</h2></div>
+      <div id="halu-chips"></div>
+    </section>
 
-<section id="metrics">
-  <div class="metric"><h3 title="fraction of positions where the lens top-1 equals the actual next token">next-token accuracy</h3><svg id="m-acc"></svg></div>
-  <div class="metric"><h3 title="mean excess kurtosis of lens logits — the paper's workspace-layer signature">excess kurtosis</h3><svg id="m-kurt"></svg></div>
-  <div class="metric"><h3 title="fraction of adjacent positions sharing the same lens top-1 token">top-1 autocorrelation</h3><svg id="m-auto"></svg></div>
-</section>
+    <section class="card" id="workspace-panel" hidden>
+      <div class="card-head"><h2 title="Concepts active in the middle layers that are neither prompt words nor the literal next word — the J-space. Click one to trace it.">in the workspace</h2></div>
+      <div id="workspace-chips"></div>
+    </section>
+
+    <section class="card" id="fix-card" hidden>
+      <div class="card-head"><h2>fix</h2></div>
+      <div class="pills">
+        <button id="verify" class="pill" title="ask a stronger model (Gemini) whether this answer is factually correct">Verify answer</button>
+        <button id="fix" class="pill" title="a safer abstaining answer, the judge's correction, and an experimental layer-contrast re-decode">Suggest a fix</button>
+      </div>
+      <div id="verify-out"></div>
+      <div id="fix-out" hidden></div>
+    </section>
+  </aside>
+</main>
 
 <div id="tooltip" hidden></div>
-<script src="static/app.js?v=2"></script>
+<script src="static/app.js?v=3"></script>
 </body>
 </html>
