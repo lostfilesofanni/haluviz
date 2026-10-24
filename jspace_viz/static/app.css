@@ -138,12 +138,12 @@ label.slider input[type=range] { flex: 1; accent-color: var(--act); }
 label.slider b { font: 500 12px var(--mono); color: var(--fg); min-width: 32px; text-align: right; }
 
 /* ---- signals ---- */
-.sig-row { display: grid; grid-template-columns: minmax(64px, auto) 1fr; gap: 4px 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
+.sig-row { display: grid; grid-template-columns: 72px 1fr; gap: 4px 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
 .sig-row:first-child { border-top: 0; padding-top: 0; }
 .sig-word { font: 500 13px var(--mono); color: var(--risk-text); }
 .sig-score { font: 11px var(--mono); color: var(--dim); }
-.bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.bar { font: 10px/1.2 var(--sans); color: var(--dim); }
+.bars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; }
+.bar { font: 10.5px/1.2 var(--sans); color: var(--dim); white-space: nowrap; }
 .bar i { display: block; height: 4px; border-radius: 2px; background: var(--line-strong); margin: 3px 0 2px; overflow: hidden; position: relative; }
 .bar i::after { content: ""; position: absolute; inset: 0; width: var(--w, 0%); background: var(--risk); border-radius: 2px; }
 .bar.good i::after { background: var(--ok); }

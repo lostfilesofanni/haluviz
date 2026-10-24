@@ -606,10 +606,10 @@ $("halu-thresh").addEventListener("input", () => {
 
 // Half-arc gauge: needle at P(wrong), arc coloured by band.
 function drawGauge(svg, v, band) {
-  const cx = 120, cy = 118, R = 92, w = 14;
+  const cx = 120, cy = 122, R = 88, w = 14;
   const col = band === "low" ? "#adc642" : band === "mid" ? "#ffee9b" : "#e95500";
   const pt = (f, r) => { const a = Math.PI * (1 - f); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
-  const arc = (f0, f1, r) => { const [x0, y0] = pt(f0, r), [x1, y1] = pt(f1, r); return `M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${f1 - f0 > 0.5 ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)}`; };
+  const arc = (f0, f1, r) => { const [x0, y0] = pt(f0, r), [x1, y1] = pt(f1, r); return `M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0 1 ${x1.toFixed(1)},${y1.toFixed(1)}`; };
   const v1 = Math.max(0.005, Math.min(1, v));
   const [nx, ny] = pt(v1, R - w / 2 - 6);
   svg.innerHTML =
@@ -617,9 +617,9 @@ function drawGauge(svg, v, band) {
     `<path d="${arc(0, v1, R)}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>` +
     `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#ecebe6" stroke-width="2" stroke-linecap="round"/>` +
     `<circle cx="${cx}" cy="${cy}" r="4" fill="#ecebe6"/>` +
-    `<text x="14" y="134" fill="#8f9299" font-size="10" font-family="Inter,system-ui">reliable</text>` +
-    `<text x="${cx}" y="18" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="middle">uncertain</text>` +
-    `<text x="226" y="134" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="end">hallucinated</text>`;
+    `<text x="14" y="138" fill="#8f9299" font-size="10" font-family="Inter,system-ui">reliable</text>` +
+    `<text x="${cx}" y="14" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="middle">uncertain</text>` +
+    `<text x="226" y="138" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="end">hallucinated</text>`;
 }
 
 function renderMetrics() {
