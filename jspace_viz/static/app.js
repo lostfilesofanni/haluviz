@@ -363,7 +363,8 @@ function renderGrid() {
         text = i < 0 ? "·" : tokStr(vocab[row.top_ids[t][i]]);
         bg = i < 0 ? "transparent" : probColor(row.top_probs[t][i]);
       }
-      parts.push(`<div class="cell${cls}${genCls(t)}" data-l="${li}" data-t="${t}" style="background:${bg}">${esc(text)}</div>`);
+      const flip = t >= promptLen - 1 && li > 0 && pi < 0 && rows[li - 1].top_ids[t][0] !== row.top_ids[t][0];
+      parts.push(`<div class="cell${cls}${genCls(t)}${flip ? " flip" : ""}" data-l="${li}" data-t="${t}" style="background:${bg}">${esc(text)}</div>`);
     }
   }
   const wrap = $("grid-wrap");
@@ -509,7 +510,7 @@ function renderHalu() {
     .map((t) => {
       const s = esc(t.token);
       if (!t.flag) return s;
-      return `<mark title="score ${t.score} · p=${(t.p_final * 100).toFixed(0)}% · committed at ${(t.commit_depth * 100).toFixed(0)}% depth · workspace support ${(t.support * 100).toFixed(0)}%">${s}</mark>`;
+      return `<mark title="score ${t.score} · p=${(t.p_final * 100).toFixed(0)}% · committed at ${(t.commit_depth * 100).toFixed(0)}% depth · workspace support ${(t.support * 100).toFixed(0)}% · instability ${(100 * (t.instability ?? 0)).toFixed(0)}% (${t.flips ?? 0} flips in the last third)">${s}</mark>`;
     })
     .join("");
   // contiguous flagged tokens -> spans
@@ -517,7 +518,7 @@ function renderHalu() {
   let cur = null;
   for (const t of toks) {
     if (t.flag && cur && cur.end === t.pos - 1) { cur.end = t.pos; cur.text += t.token; cur.score = Math.max(cur.score, t.score); cur.n++; }
-    else if (t.flag) { cur = { start: t.pos, end: t.pos, text: t.token, score: t.score, n: 1, p: t.p_final, d: t.commit_depth, s: t.support }; spans.push(cur); }
+    else if (t.flag) { cur = { start: t.pos, end: t.pos, text: t.token, score: t.score, n: 1, p: t.p_final, d: t.commit_depth, s: t.support, i: t.instability ?? 0, f: t.flips ?? 0 }; spans.push(cur); }
     else cur = null;
   }
   // Verdict: calibrated P(wrong) from PopQA bins when available, else the raw score.
@@ -534,7 +535,7 @@ function renderHalu() {
   const nFlag = toks.filter((t) => t.flag).length;
   $("halu-summary").textContent = `${nFlag}/${nWord} tokens flagged · max score ${H.max_score.toFixed(2)}`;
   $("halu-chips").innerHTML = spans
-    .map((sp) => `<span class="halu-chip">${esc(sp.text.trim())}<span class="sig">score ${sp.score.toFixed(2)} · p ${(sp.p * 100).toFixed(0)}% · depth ${(sp.d * 100).toFixed(0)}% · support ${(sp.s * 100).toFixed(0)}%</span></span>`)
+    .map((sp) => `<span class="halu-chip">${esc(sp.text.trim())}<span class="sig">score ${sp.score.toFixed(2)} · p ${(sp.p * 100).toFixed(0)}% · depth ${(sp.d * 100).toFixed(0)}% · support ${(sp.s * 100).toFixed(0)}% · instability ${(sp.i * 100).toFixed(0)}% (${sp.f} flips)</span></span>`)
     .join("");
   panel.hidden = false;
   $("verify-out").textContent = "";
@@ -646,7 +647,7 @@ $("grid").addEventListener("mousemove", (e) => {
   tip.innerHTML =
     `<table>${rows}</table>` +
     `<div class="meta">${row.is_output ? "output" : "L" + row.layer} · pos ${t} · ` +
-    `H=${row.entropy[t]} · kurt=${row.kurtosis[t]}<br>click to pin “${esc(tokStr(data.vocab[row.top_ids[t][0]]))}”</div>`;
+    `H=${row.entropy[t]} · kurt=${row.kurtosis[t]}${row.jsd_prev ? ` · Δprev=${(100 * row.jsd_prev[t]).toFixed(0)}%` : ""}<br>click to pin “${esc(tokStr(data.vocab[row.top_ids[t][0]]))}”</div>`;
   tip.hidden = false;
   const w = tip.offsetWidth, h = tip.offsetHeight;
   tip.style.left = Math.min(e.clientX + 14, innerWidth - w - 8) + "px";

@@ -106,6 +106,7 @@ def read_grid(
     token_ids_seen: set[int] = set(ids_list) | set(pinned)
     pinned_t = torch.tensor(pinned, dtype=torch.long, device=model.device) if pinned else None
     rank_tables: dict[int, torch.Tensor] = {}  # layer -> [seq, vocab] full ranks
+    prev_probs: torch.Tensor | None = None  # for layer-to-layer divergence
     tracked_ids: set[int] = set()
 
     for layer in layers:
@@ -120,6 +121,15 @@ def read_grid(
         token_ids_seen.update(top_ids.flatten().tolist())
 
         entropy = -(probs.clamp_min(1e-12).log() * probs).sum(-1)
+        # how much this layer's prediction moved since the previous read layer
+        # (Jensen–Shannon divergence in bits, 0 = identical, 1 = disjoint)
+        if prev_probs is not None:
+            m = 0.5 * (probs + prev_probs)
+            jsd = 0.5 * ((probs * (probs.clamp_min(1e-12).log() - m.clamp_min(1e-12).log())).sum(-1)
+                         + (prev_probs * (prev_probs.clamp_min(1e-12).log() - m.clamp_min(1e-12).log())).sum(-1)) / 0.6931
+        else:
+            jsd = torch.zeros(probs.shape[0], device=probs.device)
+        prev_probs = probs
         # probability this layer assigns to the token that actually came next
         next_prob = probs[:-1].gather(1, next_ids.unsqueeze(1)).squeeze(1)
         kurt = _excess_kurtosis(logits)
@@ -132,6 +142,7 @@ def read_grid(
             "entropy": [round(e, 3) for e in entropy.cpu().tolist()],
             "kurtosis": [round(k, 2) for k in kurt.cpu().tolist()],
             "next_prob": [round(p, 5) for p in next_prob.cpu().tolist()],
+            "jsd_prev": [round(j, 4) for j in jsd.cpu().tolist()],
         }
         if pinned_t is not None:
             # rank of each pinned token at each position (0 = top)
@@ -163,7 +174,7 @@ def read_grid(
                 "top1_autocorr": round(autocorr.float().mean().item(), 4) if autocorr.numel() else 0.0,
             }
         )
-        del logits, probs
+        del logits
 
     decode = model.tokenizer.decode
     vocab = {int(t): decode([int(t)]) for t in token_ids_seen}

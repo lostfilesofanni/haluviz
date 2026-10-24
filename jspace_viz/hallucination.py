@@ -1,5 +1,10 @@
 """Per-token hallucination signals read off the layer x position grid.
 
+A fourth, *instability*, is reported but not scored until measured: the mean
+Jensen–Shannon divergence between adjacent layers' predictions over the last
+third of the network (how much the model's mind kept changing), plus the
+number of top-1 flips there.
+
 For every *generated* token we ask three questions of the readout column that
 produced it (position t-1 predicts token t):
 
@@ -52,6 +57,9 @@ def hallucination_signals(
                 break
             commit = i
         support = max((fitted[i]["next_prob"][col] for i in range(lo, hi)), default=0.0)
+        tail = grid[-max(1, len(grid) // 3):]  # last third incl. output row
+        instability = sum(r.get("jsd_prev", [0] * (col + 1))[col] for r in tail) / len(tail)
+        flips = sum(tail[i]["top_ids"][col][0] != tail[i - 1]["top_ids"][col][0] for i in range(1, len(tail)))
         score = ((1 - p_final) + commit / max(n, 1) + (1 - support)) / 3
         tokens.append(
             {
@@ -60,6 +68,8 @@ def hallucination_signals(
                 "p_final": round(p_final, 4),
                 "commit_depth": round(commit / max(n, 1), 3),
                 "support": round(support, 4),
+                "instability": round(instability, 3),  # 4th signal, displayed, not yet in score
+                "flips": flips,
                 "score": round(score, 3),
                 "in_prompt": tid in prompt_ids,
                 "flag": bool(score >= threshold and WORDLIKE.search(s) and tid not in prompt_ids),
