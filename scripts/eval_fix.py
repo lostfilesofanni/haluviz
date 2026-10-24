@@ -31,8 +31,14 @@ def main() -> None:
     ap.add_argument("--max-new-tokens", type=int, default=32)
     args = ap.parse_args()
     qs = json.load(open(args.questions, encoding="utf-8"))
-    rows, n_g, n_d = [], 0, 0
+    out_path = os.path.join(ROOT, "data", "fix_results.json")
+    rows = json.load(open(out_path))["rows"] if os.path.exists(out_path) else []  # resume
+    done = {r["q"] for r in rows}
+    n_g = sum(r["greedy_verdict"] == "correct" for r in rows)
+    n_d = sum(r["dola_verdict"] == "correct" for r in rows)
     for q in qs:
+        if q["q"] in done:
+            continue
         g = post(args.url, "/api/read", {"prompt": q["q"], "mode": "logit", "chat": True, "top_k": 1, "max_new_tokens": args.max_new_tokens})
         d = post(args.url, "/api/fix", {"prompt": q["q"], "max_new_tokens": args.max_new_tokens})
         ga, da = (g["continuation"] or "").strip(), d["dola"]
@@ -42,12 +48,13 @@ def main() -> None:
         n_d += jd == "correct"
         rows.append({"q": q["q"], "greedy": ga, "greedy_verdict": jg, "dola": da, "dola_verdict": jd, "changed": da != ga})
         print(f"greedy {jg:7} dola {jd:7} {'≠' if da != ga else '='}  {q['q'][:45]:<45} → {da[:60]!r}")
+        json.dump({"rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)  # save every question
     summary = {"n": len(rows), "greedy_correct": n_g, "dola_correct": n_d,
                "changed": sum(r["changed"] for r in rows),
                "fixed": sum(r["greedy_verdict"] != "correct" and r["dola_verdict"] == "correct" for r in rows),
                "broken": sum(r["greedy_verdict"] == "correct" and r["dola_verdict"] != "correct" for r in rows)}
     print(json.dumps(summary, indent=2))
-    json.dump({"summary": summary, "rows": rows}, open(os.path.join(ROOT, "data", "fix_results.json"), "w"), indent=1, ensure_ascii=False)
+    json.dump({"summary": summary, "rows": rows}, open(out_path, "w"), indent=1, ensure_ascii=False)
 
 
 if __name__ == "__main__":
