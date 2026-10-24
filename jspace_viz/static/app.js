@@ -557,11 +557,15 @@ $("fix").addEventListener("click", async () => {
     if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
     const f = await res.json();
     const orig = data.continuation.trim();
-    const rows = [["original", esc(orig)]];
-    rows.push(["abstain", f.abstain ? esc(f.abstain) : '<span class="same">risk is low — no need to abstain</span>']);
-    rows.push(["DoLa re-decode", f.dola === orig ? '<span class="same">same answer — layer contrast agrees with the original</span>' : esc(f.dola) + ` <span class="k">(premature layers ${[...new Set(f.premature_layers)].sort((a,b)=>a-b).join(",")})</span>`]);
+    // Order = what actually works on this model: verified correction, then abstention; the
+    // layer-contrast re-decode is kept as a measured negative result (see docs §9b).
     const v = $("verify-out").className;
-    rows.push(["verified", v === "wrong" ? esc($("verify-out").textContent) : v === "correct" ? '<span class="same">judge says the original is correct</span>' : '<span class="same">press Verify answer for the judge\u2019s correction</span>']);
+    const rows = [["original", esc(orig)]];
+    rows.push(["✔ verified fix", v === "wrong" ? esc($("verify-out").textContent) : v === "correct" ? '<span class="same">judge says the original is correct</span>' : '<span class="same">press Verify answer first — the judge supplies the correction</span>']);
+    rows.push(["✔ safer answer", f.abstain ? esc(f.abstain) : '<span class="same">risk is low — no need to abstain</span>']);
+    const fs = INFO && INFO.fix_summary;
+    const note = fs ? ` — measured on ${fs.n} questions: fixed ${fs.fixed}, broke ${fs.broken}, changed ${fs.changed}` : "";
+    rows.push(["✘ DoLa re-decode<br><span class=\"k\">(experimental)</span>", (f.dola === orig ? '<span class="same">same answer</span>' : esc(f.dola)) + `<br><span class="k">re-ranks words by how much they emerged through the layers; can only pick among answers the model already had${esc(note)}</span>`]);
     out.innerHTML = rows.map(([k, v]) => `<span class="k">${k}</span><span>${v}</span>`).join("");
   } catch (e) { out.innerHTML = `<span class="k">error</span><span>${esc(e.message)}</span>`; }
   finally { $("fix").disabled = false; }

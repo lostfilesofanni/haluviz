@@ -1,0 +1,6 @@
+greedy correct dola correct ≠  What is the capital of France?                → 'Paris is the capital of France. It is located in the norther'
+greedy correct dola correct ≠  What is the capital of Australia?             → 'The capital of Australia is Canberra. It is located in the A'
+greedy correct dola correct =  How many legs does a spider have?             → 'A spider has eight legs.'
+greedy correct dola wrong   ≠  What is the chemical symbol for gold?         → 'The chemical symbol for gold is Au. Gold is a chemical eleme'
+greedy correct dola correct =  Who wrote the play Romeo and Juliet?          → 'Romeo and Juliet is a play written by William Shakespeare.'
+greedy correct dola correct ≠  What is the largest planet in our solar syste → 'The largest planet in our solar system is Jupiter, with a ma'

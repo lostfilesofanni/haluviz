@@ -74,7 +74,18 @@ def info() -> dict[str, Any]:
         "verifier": api_key() is not None,
         "calibration": load_calibration(),
         "calibration_jlens": load_calibration("_jlens"),
+        "fix_summary": load_json("fix_results.json", "summary"),
     }
+
+
+def load_json(name: str, key: str | None = None) -> Any:
+    path = Path(__file__).parent.parent / "data" / name
+    if not path.exists():
+        return None
+    import json
+
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    return doc.get(key) if key else doc
 
 
 def load_calibration(tag: str = "") -> dict[str, Any] | None:
