@@ -130,6 +130,15 @@ predicts token t) across layers:
 
 `score = mean(1 − p_final, commit_depth, 1 − support)` ∈ [0, 1].
 
+A fourth signal, **instability** (added 10-24), is displayed but not yet
+scored: the mean Jensen–Shannon divergence between adjacent layers'
+next-token distributions over the last third of the network, plus the count
+of top-1 flips there. It captures "the model kept changing its mind" — the
+raspberry column (two → four → 8 → 6 → 12) vs the Paris column (Paris from
+the middle down). The grid marks every flip with an orange top edge in the
+generated columns. Its question-level AUROC is to be measured on the same
+111 questions before it enters the score.
+
 Rules learned from data:
 - Punctuation/whitespace tokens are never flagged.
 - Tokens **copied from the prompt** are never flagged (copying ≠ hallucinating).
