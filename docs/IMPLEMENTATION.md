@@ -243,15 +243,34 @@ knowledge. The verifier (§6) exists for exactly this case and caught it.
 
 ## 8. UI
 
-- Layer × position grid; blue intensity = confidence; hover for top-k,
-  entropy, kurtosis. Click to pin a token and view its rank at every cell.
-- **english only** toggle: show the highest-ranked English token per cell
-  (hides bilingual-noise cells of the logit lens).
-- Workspace chips: mid-band concepts not in the prompt.
-- Hallucination panel: answer with flagged words marked, spans with the three
-  signals, threshold slider (re-flags client-side), Verify button.
-- Generated columns are green; the page scrolls to them after a read.
-- `live` (re-read while typing) off by default: each read is ~20–30 s here.
+Redesigned 10-24 as its own product rather than a re-skinned jspace-viz.
+Operate-mode surface: dark base, one card column, pill controls, Inter +
+JetBrains Mono, and a four-colour meaning system from the user's palette:
+
+| colour | role |
+|---|---|
+| carrot `#e95500` | risk: flagged words, flip markers, "likely hallucinated", wrong verdicts |
+| sour gummy `#adc642` | reliable: generated columns, "likely reliable", correct verdicts, verified fix |
+| summer freeze `#3546ff` | interactive: Read, active segment, pinned, cell-confidence ramp |
+| butter milk `#ffee9b` | attention: workspace chips, header tokens, uncertain band |
+
+Layout: toolbar (prompt + Read, pills) · left: **layer × position** grid
+card with uniform 80 px columns and a legend, charts beneath · right:
+**hallucination check** (half-arc gauge at the calibrated P(wrong), verdict,
+answer with flagged words marked, "flag words above" slider) · **signals**
+(per flagged word: confidence, decided-at depth, in-workspace, instability as
+bars) · **in the workspace** (chips with English glosses) · **fix** (Verify,
+Suggest a fix). Before the first read the right column shows a four-step
+"how it works" card and the charts are hidden. Below 1100 px everything
+stacks in reading order: grid, verdict, signals, workspace, fix, charts.
+
+Interaction costs: first read of a question ≈ 30 s on the M1; re-reads of
+the same question (lens toggle, pin, slider) reuse the cached greedy
+generation and take ≈ 5–15 s. "live" is off by default.
+
+Craft checks: Impeccable's detector reports no slop/quality findings
+(skipped heading, side-tab border and bounce easing from the vendored CSS are
+gone); browser surfaces (selection, scrollbar, focus ring, caret) are themed.
 
 ## 9. Fitting the J-lens (`colab/fit_lens_colab.ipynb`)
 
@@ -404,4 +423,6 @@ is produced by `scripts/eval_fix.py` → `data/fix_results.json`
 | 10-23 | Judge labels replace substring labels | 11/81 PopQA substring labels were wrong |
 | 10-23 | Pool PopQA + hand set for calibration | PopQA alone bakes in a 12 % base rate |
 | 10-23 | answer_score = (max+mean)/2 | most robust aggregate across both sets |
+| 10-24 | Own visual identity: dark base + palette meaning system | user: must not read as a jspace-viz/TradingView clone |
+| 10-24 | Cache greedy generations server-side | re-reads were paying 2/3 of their time regenerating an identical answer |
 | 10-24 | Report J-lens as explanatory, not a better detector | AUROC 0.87 vs 0.90 logit on 111 judged questions; workspace signals near chance under both |
