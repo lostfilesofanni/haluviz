@@ -278,6 +278,13 @@ def main() -> None:
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    # Refuse early if another server holds the port: loading a second copy of the
+    # model into an 8 GB machine is the worst thing this process could do.
+    import socket
+
+    with socket.socket() as probe:
+        if probe.connect_ex((args.host, args.port)) == 0:
+            raise SystemExit(f"port {args.port} is already in use — another haluviz is running (stop it with: pkill -f 'haluviz --preset')")
     load(args.preset, args.model_id, args.lens, args.dtype)
     state["last_read"] = time.monotonic()
     if args.idle_timeout > 0:
