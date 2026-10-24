@@ -1,0 +1,7730 @@
+{
+ "summary": {
+  "mode": "logit",
+  "n": 30,
+  "n_wrong": 10,
+  "threshold": 0.6,
+  "auroc": 0.89,
+  "precision": 0.333,
+  "recall": 1.0,
+  "best_threshold": 0.928,
+  "best_f1": 0.75
+ },
+ "rows": [
+  {
+   "q": "What is the capital of France?",
+   "tier": "easy",
+   "answer": "The capital of France is Paris.",
+   "correct": true,
+   "max_score": 0.639,
+   "spans": [
+    "Paris"
+   ],
+   "tokens": [
+    {
+     "pos": 26,
+     "token": "The",
+     "p_final": 0.8728,
+     "commit_depth": 0.913,
+     "support": 0.4543,
+     "score": 0.529,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 27,
+     "token": " capital",
+     "p_final": 0.9977,
+     "commit_depth": 0.739,
+     "support": 0.9984,
+     "score": 0.248,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " of",
+     "p_final": 0.9899,
+     "commit_depth": 0.609,
+     "support": 0.9888,
+     "score": 0.21,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " France",
+     "p_final": 0.9997,
+     "commit_depth": 0.739,
+     "support": 0.6775,
+     "score": 0.354,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " is",
+     "p_final": 0.999,
+     "commit_depth": 0.739,
+     "support": 0.8612,
+     "score": 0.293,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Paris",
+     "p_final": 0.9931,
+     "commit_depth": 0.913,
+     "support": 0.002,
+     "score": 0.639,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 32,
+     "token": ".",
+     "p_final": 0.9875,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.627,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "<|im_end|>",
+     "p_final": 0.8969,
+     "commit_depth": 1.0,
+     "support": 0.5037,
+     "score": 0.533,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Paris",
+    "explanation": "Paris is the officially recognized capital city of France.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the capital of Australia?",
+   "tier": "easy",
+   "answer": "The capital of Australia is Canberra.",
+   "correct": true,
+   "max_score": 0.772,
+   "spans": [
+    "Canberra"
+   ],
+   "tokens": [
+    {
+     "pos": 26,
+     "token": "The",
+     "p_final": 0.9541,
+     "commit_depth": 0.913,
+     "support": 0.3108,
+     "score": 0.549,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 27,
+     "token": " capital",
+     "p_final": 0.9984,
+     "commit_depth": 0.739,
+     "support": 0.9994,
+     "score": 0.247,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " of",
+     "p_final": 0.9774,
+     "commit_depth": 0.696,
+     "support": 0.9366,
+     "score": 0.261,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " Australia",
+     "p_final": 0.9986,
+     "commit_depth": 0.739,
+     "support": 0.8655,
+     "score": 0.292,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " is",
+     "p_final": 0.9994,
+     "commit_depth": 0.739,
+     "support": 0.9119,
+     "score": 0.276,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Canberra",
+     "p_final": 0.6821,
+     "commit_depth": 1.0,
+     "support": 0.0014,
+     "score": 0.772,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 32,
+     "token": ".",
+     "p_final": 0.9151,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.651,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "<|im_end|>",
+     "p_final": 0.8233,
+     "commit_depth": 1.0,
+     "support": 0.2029,
+     "score": 0.658,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Canberra",
+    "explanation": "Canberra is the officially designated capital city of Australia.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "How many legs does a spider have?",
+   "tier": "easy",
+   "answer": "A spider has eight legs.",
+   "correct": true,
+   "max_score": 0.817,
+   "spans": [
+    "A",
+    "has eight"
+   ],
+   "tokens": [
+    {
+     "pos": 27,
+     "token": "A",
+     "p_final": 0.4631,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.817,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 28,
+     "token": " spider",
+     "p_final": 0.996,
+     "commit_depth": 0.913,
+     "support": 0.2071,
+     "score": 0.57,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " has",
+     "p_final": 0.8926,
+     "commit_depth": 0.913,
+     "support": 0.0003,
+     "score": 0.673,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 30,
+     "token": " eight",
+     "p_final": 0.8047,
+     "commit_depth": 1.0,
+     "support": 0.0102,
+     "score": 0.728,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 31,
+     "token": " legs",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.9067,
+     "score": 0.278,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": ".",
+     "p_final": 0.9763,
+     "commit_depth": 0.87,
+     "support": 0.0001,
+     "score": 0.631,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "<|im_end|>",
+     "p_final": 0.8703,
+     "commit_depth": 0.739,
+     "support": 0.385,
+     "score": 0.495,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "8",
+    "explanation": "Spiders are arachnids, which are biologically defined by having eight legs.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the chemical symbol for gold?",
+   "tier": "easy",
+   "answer": "The chemical symbol for gold is Au.",
+   "correct": true,
+   "max_score": 0.66,
+   "spans": [
+    "Au"
+   ],
+   "tokens": [
+    {
+     "pos": 27,
+     "token": "The",
+     "p_final": 0.9745,
+     "commit_depth": 0.913,
+     "support": 0.2596,
+     "score": 0.56,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " chemical",
+     "p_final": 0.9985,
+     "commit_depth": 0.87,
+     "support": 0.2342,
+     "score": 0.546,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " symbol",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.4613,
+     "score": 0.426,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " for",
+     "p_final": 0.9996,
+     "commit_depth": 0.696,
+     "support": 0.9991,
+     "score": 0.232,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " gold",
+     "p_final": 0.9997,
+     "commit_depth": 0.783,
+     "support": 0.6671,
+     "score": 0.372,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " is",
+     "p_final": 0.9956,
+     "commit_depth": 0.783,
+     "support": 0.6619,
+     "score": 0.375,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " Au",
+     "p_final": 0.9637,
+     "commit_depth": 0.957,
+     "support": 0.0118,
+     "score": 0.66,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 34,
+     "token": ".",
+     "p_final": 0.9319,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.675,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "<|im_end|>",
+     "p_final": 0.8527,
+     "commit_depth": 1.0,
+     "support": 0.2061,
+     "score": 0.647,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Au",
+    "explanation": "The chemical symbol for gold is indeed Au, derived from the Latin word 'aurum'.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who wrote the play Romeo and Juliet?",
+   "tier": "easy",
+   "answer": "Romeo and Juliet is a play written by William Shakespeare.",
+   "correct": true,
+   "max_score": 0.749,
+   "spans": [
+    "Rome",
+    "is",
+    "written",
+    "William"
+   ],
+   "tokens": [
+    {
+     "pos": 27,
+     "token": "R",
+     "p_final": 0.6661,
+     "commit_depth": 0.913,
+     "support": 0.0006,
+     "score": 0.749,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 28,
+     "token": "ome",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0002,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 29,
+     "token": "o",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.5921,
+     "score": 0.397,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " and",
+     "p_final": 0.9974,
+     "commit_depth": 0.826,
+     "support": 0.0022,
+     "score": 0.609,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Juliet",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.9253,
+     "score": 0.286,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " is",
+     "p_final": 0.8065,
+     "commit_depth": 0.826,
+     "support": 0.0057,
+     "score": 0.671,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 33,
+     "token": " a",
+     "p_final": 0.9643,
+     "commit_depth": 0.783,
+     "support": 0.1646,
+     "score": 0.551,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " play",
+     "p_final": 0.7938,
+     "commit_depth": 0.826,
+     "support": 0.0781,
+     "score": 0.651,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " written",
+     "p_final": 0.8713,
+     "commit_depth": 0.913,
+     "support": 0.0024,
+     "score": 0.68,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": " by",
+     "p_final": 0.9967,
+     "commit_depth": 0.696,
+     "support": 0.9782,
+     "score": 0.24,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " William",
+     "p_final": 0.9938,
+     "commit_depth": 0.957,
+     "support": 0.0005,
+     "score": 0.654,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": " Shakespeare",
+     "p_final": 0.9997,
+     "commit_depth": 0.739,
+     "support": 0.9667,
+     "score": 0.258,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": ".",
+     "p_final": 0.9288,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.647,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "<|im_end|>",
+     "p_final": 0.7154,
+     "commit_depth": 1.0,
+     "support": 0.3416,
+     "score": 0.648,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "William Shakespeare",
+    "explanation": "William Shakespeare is the widely recognized author of the play Romeo and Juliet.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the largest planet in our solar system?",
+   "tier": "easy",
+   "answer": "The largest planet in our solar system is Jupiter. It is the fifth planet from the sun and has a mass that is about 318 times greater than that of Earth. Jupiter is the largest planet in the solar system by volume and",
+   "correct": true,
+   "max_score": 0.898,
+   "spans": [
+    "Jupiter",
+    "It",
+    "fifth",
+    "from",
+    "sun and has",
+    "mass that",
+    "about",
+    "318",
+    "greater",
+    "that",
+    "Earth",
+    "Jupiter",
+    "by volume and"
+   ],
+   "tokens": [
+    {
+     "pos": 29,
+     "token": "The",
+     "p_final": 0.8836,
+     "commit_depth": 0.696,
+     "support": 0.6401,
+     "score": 0.391,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " largest",
+     "p_final": 0.9819,
+     "commit_depth": 0.739,
+     "support": 0.9184,
+     "score": 0.28,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " planet",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.8709,
+     "score": 0.304,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " in",
+     "p_final": 0.9999,
+     "commit_depth": 0.696,
+     "support": 0.998,
+     "score": 0.233,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " our",
+     "p_final": 0.9923,
+     "commit_depth": 0.696,
+     "support": 0.976,
+     "score": 0.242,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " solar",
+     "p_final": 0.9997,
+     "commit_depth": 0.826,
+     "support": 0.11,
+     "score": 0.572,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " system",
+     "p_final": 0.9998,
+     "commit_depth": 0.913,
+     "support": 0.4408,
+     "score": 0.491,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " is",
+     "p_final": 0.9896,
+     "commit_depth": 0.739,
+     "support": 0.8598,
+     "score": 0.297,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Jupiter",
+     "p_final": 0.8801,
+     "commit_depth": 0.913,
+     "support": 0.0025,
+     "score": 0.677,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": ".",
+     "p_final": 0.5717,
+     "commit_depth": 1.0,
+     "support": 0.0008,
+     "score": 0.809,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " It",
+     "p_final": 0.848,
+     "commit_depth": 0.913,
+     "support": 0.0017,
+     "score": 0.688,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": " is",
+     "p_final": 0.7217,
+     "commit_depth": 0.826,
+     "support": 0.0644,
+     "score": 0.68,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " the",
+     "p_final": 0.6823,
+     "commit_depth": 0.957,
+     "support": 0.0021,
+     "score": 0.757,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " fifth",
+     "p_final": 0.8548,
+     "commit_depth": 0.826,
+     "support": 0.0444,
+     "score": 0.642,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": " planet",
+     "p_final": 0.9182,
+     "commit_depth": 0.957,
+     "support": 0.0167,
+     "score": 0.674,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " from",
+     "p_final": 0.9588,
+     "commit_depth": 0.826,
+     "support": 0.0045,
+     "score": 0.621,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " the",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0346,
+     "score": 0.641,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " sun",
+     "p_final": 0.9428,
+     "commit_depth": 0.957,
+     "support": 0.0167,
+     "score": 0.666,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": " and",
+     "p_final": 0.9424,
+     "commit_depth": 0.826,
+     "support": 0.0034,
+     "score": 0.627,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": " has",
+     "p_final": 0.3855,
+     "commit_depth": 1.0,
+     "support": 0.0064,
+     "score": 0.869,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": " a",
+     "p_final": 0.9179,
+     "commit_depth": 0.783,
+     "support": 0.5665,
+     "score": 0.433,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": " mass",
+     "p_final": 0.4941,
+     "commit_depth": 0.957,
+     "support": 0.0005,
+     "score": 0.821,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": " that",
+     "p_final": 0.3627,
+     "commit_depth": 0.913,
+     "support": 0.0011,
+     "score": 0.85,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 52,
+     "token": " is",
+     "p_final": 0.9915,
+     "commit_depth": 0.913,
+     "support": 0.0032,
+     "score": 0.639,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": " about",
+     "p_final": 0.3167,
+     "commit_depth": 0.913,
+     "support": 0.0014,
+     "score": 0.865,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": " ",
+     "p_final": 0.9213,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.678,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": "3",
+     "p_final": 0.5838,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.805,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 56,
+     "token": "1",
+     "p_final": 0.4874,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.838,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 57,
+     "token": "8",
+     "p_final": 0.8279,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.71,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 58,
+     "token": " times",
+     "p_final": 0.9435,
+     "commit_depth": 0.783,
+     "support": 0.4557,
+     "score": 0.461,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 59,
+     "token": " greater",
+     "p_final": 0.423,
+     "commit_depth": 1.0,
+     "support": 0.1703,
+     "score": 0.802,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": " than",
+     "p_final": 0.9998,
+     "commit_depth": 0.13,
+     "support": 1.0,
+     "score": 0.044,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 61,
+     "token": " that",
+     "p_final": 0.5598,
+     "commit_depth": 0.826,
+     "support": 0.1263,
+     "score": 0.713,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 62,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.9992,
+     "score": 0.247,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " Earth",
+     "p_final": 0.8302,
+     "commit_depth": 0.957,
+     "support": 0.128,
+     "score": 0.666,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 64,
+     "token": ".",
+     "p_final": 0.9719,
+     "commit_depth": 0.826,
+     "support": 0.0061,
+     "score": 0.616,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 65,
+     "token": " Jupiter",
+     "p_final": 0.8454,
+     "commit_depth": 1.0,
+     "support": 0.0491,
+     "score": 0.702,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 66,
+     "token": " is",
+     "p_final": 0.8986,
+     "commit_depth": 0.826,
+     "support": 0.2731,
+     "score": 0.551,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 67,
+     "token": " the",
+     "p_final": 0.3068,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.898,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 68,
+     "token": " largest",
+     "p_final": 0.8336,
+     "commit_depth": 1.0,
+     "support": 0.7828,
+     "score": 0.461,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 69,
+     "token": " planet",
+     "p_final": 0.9724,
+     "commit_depth": 0.957,
+     "support": 0.0336,
+     "score": 0.65,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 70,
+     "token": " in",
+     "p_final": 0.9132,
+     "commit_depth": 0.87,
+     "support": 0.2014,
+     "score": 0.585,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " the",
+     "p_final": 0.3919,
+     "commit_depth": 0.957,
+     "support": 0.1181,
+     "score": 0.816,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " solar",
+     "p_final": 0.8578,
+     "commit_depth": 0.957,
+     "support": 0.0034,
+     "score": 0.698,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 73,
+     "token": " system",
+     "p_final": 0.9988,
+     "commit_depth": 0.826,
+     "support": 0.0796,
+     "score": 0.583,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 74,
+     "token": " by",
+     "p_final": 0.4248,
+     "commit_depth": 1.0,
+     "support": 0.0005,
+     "score": 0.858,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 75,
+     "token": " volume",
+     "p_final": 0.4191,
+     "commit_depth": 0.826,
+     "support": 0.0166,
+     "score": 0.797,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 76,
+     "token": " and",
+     "p_final": 0.5265,
+     "commit_depth": 0.826,
+     "support": 0.0032,
+     "score": 0.765,
+     "in_prompt": false,
+     "flag": true
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Jupiter",
+    "explanation": "Jupiter is scientifically recognized as the largest planet in our solar system by both mass and volume.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "In what year did World War II end?",
+   "tier": "easy",
+   "answer": "World War II ended in 1945.",
+   "correct": true,
+   "max_score": 0.711,
+   "spans": [
+    "World",
+    "in",
+    "1945"
+   ],
+   "tokens": [
+    {
+     "pos": 28,
+     "token": "World",
+     "p_final": 0.9372,
+     "commit_depth": 0.913,
+     "support": 0.0036,
+     "score": 0.657,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 29,
+     "token": " War",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.3422,
+     "score": 0.509,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " II",
+     "p_final": 0.9999,
+     "commit_depth": 0.783,
+     "support": 0.9562,
+     "score": 0.276,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " ended",
+     "p_final": 0.9823,
+     "commit_depth": 0.826,
+     "support": 0.3153,
+     "score": 0.509,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " in",
+     "p_final": 0.8561,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.686,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 33,
+     "token": " ",
+     "p_final": 0.9544,
+     "commit_depth": 0.87,
+     "support": 0.0003,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 35,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "4",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": "5",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": ".",
+     "p_final": 0.8406,
+     "commit_depth": 0.87,
+     "support": 0.0002,
+     "score": 0.676,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "<|im_end|>",
+     "p_final": 0.6313,
+     "commit_depth": 1.0,
+     "support": 0.2347,
+     "score": 0.711,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "1945",
+    "explanation": "World War II officially concluded in 1945 with the surrender of Germany in May and Japan in September.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "At what temperature in Celsius does water boil at sea level?",
+   "tier": "easy",
+   "answer": "Water boils at 100 degrees Celsius (212 degrees Fahrenheit) at sea level.",
+   "correct": true,
+   "max_score": 0.857,
+   "spans": [
+    "Water boils",
+    "100 degrees",
+    "212"
+   ],
+   "tokens": [
+    {
+     "pos": 31,
+     "token": "Water",
+     "p_final": 0.4105,
+     "commit_depth": 1.0,
+     "support": 0.0171,
+     "score": 0.857,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 32,
+     "token": " boils",
+     "p_final": 0.9683,
+     "commit_depth": 1.0,
+     "support": 0.0004,
+     "score": 0.677,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 33,
+     "token": " at",
+     "p_final": 0.9994,
+     "commit_depth": 0.826,
+     "support": 0.1118,
+     "score": 0.572,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " ",
+     "p_final": 0.6328,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.775,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "1",
+     "p_final": 0.9947,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.654,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "0",
+     "p_final": 0.9999,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": "0",
+     "p_final": 0.9999,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": " degrees",
+     "p_final": 0.6046,
+     "commit_depth": 0.957,
+     "support": 0.001,
+     "score": 0.784,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 39,
+     "token": " Celsius",
+     "p_final": 0.9997,
+     "commit_depth": 0.652,
+     "support": 0.989,
+     "score": 0.221,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " (",
+     "p_final": 0.6552,
+     "commit_depth": 0.957,
+     "support": 0.6996,
+     "score": 0.534,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": "2",
+     "p_final": 0.9979,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": "1",
+     "p_final": 0.9998,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": "2",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " degrees",
+     "p_final": 0.998,
+     "commit_depth": 0.783,
+     "support": 0.6475,
+     "score": 0.379,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": " Fahrenheit",
+     "p_final": 0.9999,
+     "commit_depth": 0.652,
+     "support": 0.9349,
+     "score": 0.239,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": ")",
+     "p_final": 0.9713,
+     "commit_depth": 0.826,
+     "support": 0.0024,
+     "score": 0.617,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": " at",
+     "p_final": 0.9905,
+     "commit_depth": 0.783,
+     "support": 0.2677,
+     "score": 0.508,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": " sea",
+     "p_final": 0.9961,
+     "commit_depth": 0.739,
+     "support": 0.969,
+     "score": 0.258,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": " level",
+     "p_final": 0.9992,
+     "commit_depth": 0.609,
+     "support": 0.9548,
+     "score": 0.218,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": ".",
+     "p_final": 0.9033,
+     "commit_depth": 0.826,
+     "support": 0.0011,
+     "score": 0.641,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 51,
+     "token": "<|im_end|>",
+     "p_final": 0.4966,
+     "commit_depth": 1.0,
+     "support": 0.0289,
+     "score": 0.825,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "100 degrees Celsius",
+    "explanation": "At standard atmospheric pressure at sea level, the boiling point of water is defined as 100 degrees Celsius.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who painted the Mona Lisa?",
+   "tier": "easy",
+   "answer": "The Mona Lisa is a painting by the Italian artist Leonardo da Vinci. It was painted in the early 16th century and is considered one of the most famous and iconic paintings in the world. The painting is currently owned by the Lou",
+   "correct": true,
+   "max_score": 0.888,
+   "spans": [
+    "is",
+    "painting",
+    "Italian artist Leonardo da",
+    "It was",
+    "in",
+    "early",
+    "16th",
+    "and is considered",
+    "and iconic paintings in",
+    "The painting is currently owned",
+    "Lou"
+   ],
+   "tokens": [
+    {
+     "pos": 25,
+     "token": "The",
+     "p_final": 0.9808,
+     "commit_depth": 0.739,
+     "support": 0.9203,
+     "score": 0.279,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 26,
+     "token": " Mona",
+     "p_final": 0.9973,
+     "commit_depth": 0.87,
+     "support": 0.0032,
+     "score": 0.623,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 27,
+     "token": " Lisa",
+     "p_final": 0.9999,
+     "commit_depth": 0.652,
+     "support": 0.2725,
+     "score": 0.46,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " is",
+     "p_final": 0.8671,
+     "commit_depth": 0.826,
+     "support": 0.0216,
+     "score": 0.646,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 29,
+     "token": " a",
+     "p_final": 0.8954,
+     "commit_depth": 0.913,
+     "support": 0.0064,
+     "score": 0.67,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " painting",
+     "p_final": 0.6906,
+     "commit_depth": 1.0,
+     "support": 0.0719,
+     "score": 0.746,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 31,
+     "token": " by",
+     "p_final": 0.9028,
+     "commit_depth": 0.826,
+     "support": 0.1724,
+     "score": 0.584,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " the",
+     "p_final": 0.5282,
+     "commit_depth": 0.957,
+     "support": 0.0032,
+     "score": 0.808,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " Italian",
+     "p_final": 0.9498,
+     "commit_depth": 0.957,
+     "support": 0.0064,
+     "score": 0.667,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 34,
+     "token": " artist",
+     "p_final": 0.662,
+     "commit_depth": 0.957,
+     "support": 0.001,
+     "score": 0.764,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 35,
+     "token": " Leonardo",
+     "p_final": 0.9922,
+     "commit_depth": 0.87,
+     "support": 0.0009,
+     "score": 0.625,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": " da",
+     "p_final": 0.9979,
+     "commit_depth": 0.913,
+     "support": 0.0066,
+     "score": 0.636,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": " Vinci",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.9465,
+     "score": 0.264,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": ".",
+     "p_final": 0.735,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.726,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " It",
+     "p_final": 0.6533,
+     "commit_depth": 0.87,
+     "support": 0.0038,
+     "score": 0.737,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": " was",
+     "p_final": 0.6361,
+     "commit_depth": 0.783,
+     "support": 0.163,
+     "score": 0.661,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": " painted",
+     "p_final": 0.4429,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.852,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " in",
+     "p_final": 0.8166,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.713,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": " the",
+     "p_final": 0.9749,
+     "commit_depth": 0.957,
+     "support": 0.0007,
+     "score": 0.66,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " early",
+     "p_final": 0.9358,
+     "commit_depth": 0.87,
+     "support": 0.0219,
+     "score": 0.637,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " ",
+     "p_final": 0.9987,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": "1",
+     "p_final": 0.9998,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": "6",
+     "p_final": 0.9843,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.657,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": "th",
+     "p_final": 0.9202,
+     "commit_depth": 0.913,
+     "support": 0.0422,
+     "score": 0.65,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": " century",
+     "p_final": 0.9999,
+     "commit_depth": 0.696,
+     "support": 0.9878,
+     "score": 0.236,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": " and",
+     "p_final": 0.4827,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.796,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": " is",
+     "p_final": 0.9637,
+     "commit_depth": 0.913,
+     "support": 0.0031,
+     "score": 0.649,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 52,
+     "token": " considered",
+     "p_final": 0.288,
+     "commit_depth": 1.0,
+     "support": 0.0482,
+     "score": 0.888,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 53,
+     "token": " one",
+     "p_final": 0.9597,
+     "commit_depth": 0.783,
+     "support": 0.9993,
+     "score": 0.275,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 54,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.696,
+     "support": 0.7263,
+     "score": 0.323,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": " the",
+     "p_final": 0.9865,
+     "commit_depth": 0.696,
+     "support": 0.9796,
+     "score": 0.243,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 56,
+     "token": " most",
+     "p_final": 0.9658,
+     "commit_depth": 0.87,
+     "support": 0.1568,
+     "score": 0.582,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": " famous",
+     "p_final": 0.8734,
+     "commit_depth": 0.826,
+     "support": 0.2152,
+     "score": 0.579,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 58,
+     "token": " and",
+     "p_final": 0.709,
+     "commit_depth": 0.957,
+     "support": 0.0061,
+     "score": 0.747,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 59,
+     "token": " iconic",
+     "p_final": 0.4928,
+     "commit_depth": 1.0,
+     "support": 0.0009,
+     "score": 0.835,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": " paintings",
+     "p_final": 0.6005,
+     "commit_depth": 1.0,
+     "support": 0.0004,
+     "score": 0.8,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 61,
+     "token": " in",
+     "p_final": 0.9604,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.651,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 62,
+     "token": " the",
+     "p_final": 0.9867,
+     "commit_depth": 0.913,
+     "support": 0.0069,
+     "score": 0.64,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " world",
+     "p_final": 0.9973,
+     "commit_depth": 0.652,
+     "support": 0.9987,
+     "score": 0.219,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 64,
+     "token": ".",
+     "p_final": 0.997,
+     "commit_depth": 0.826,
+     "support": 0.0092,
+     "score": 0.607,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 65,
+     "token": " The",
+     "p_final": 0.4647,
+     "commit_depth": 0.957,
+     "support": 0.0057,
+     "score": 0.829,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 66,
+     "token": " painting",
+     "p_final": 0.952,
+     "commit_depth": 0.826,
+     "support": 0.0056,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 67,
+     "token": " is",
+     "p_final": 0.5817,
+     "commit_depth": 0.957,
+     "support": 0.0007,
+     "score": 0.791,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 68,
+     "token": " currently",
+     "p_final": 0.3953,
+     "commit_depth": 0.826,
+     "support": 0.0359,
+     "score": 0.798,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 69,
+     "token": " owned",
+     "p_final": 0.3633,
+     "commit_depth": 1.0,
+     "support": 0.0042,
+     "score": 0.877,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 70,
+     "token": " by",
+     "p_final": 0.9955,
+     "commit_depth": 0.696,
+     "support": 0.9631,
+     "score": 0.246,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " the",
+     "p_final": 0.9938,
+     "commit_depth": 0.87,
+     "support": 0.0125,
+     "score": 0.621,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " Lou",
+     "p_final": 0.4828,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.839,
+     "in_prompt": false,
+     "flag": true
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Leonardo da Vinci",
+    "explanation": "The model correctly identifies Leonardo da Vinci as the painter of the Mona Lisa.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the square root of 144?",
+   "tier": "easy",
+   "answer": "The square root of 144 is 12.",
+   "correct": true,
+   "max_score": 0.638,
+   "spans": [
+    "2"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.9377,
+     "commit_depth": 0.739,
+     "support": 0.8081,
+     "score": 0.331,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " square",
+     "p_final": 0.9997,
+     "commit_depth": 0.739,
+     "support": 0.9839,
+     "score": 0.252,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " root",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.8356,
+     "score": 0.272,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.348,
+     "support": 0.9939,
+     "score": 0.118,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " ",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.9999,
+     "score": 0.246,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.9541,
+     "score": 0.276,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": "4",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.181,
+     "score": 0.534,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": "4",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.3475,
+     "score": 0.464,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " is",
+     "p_final": 0.9844,
+     "commit_depth": 0.739,
+     "support": 0.969,
+     "score": 0.262,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " ",
+     "p_final": 0.9508,
+     "commit_depth": 0.87,
+     "support": 0.0009,
+     "score": 0.639,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": "2",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": ".",
+     "p_final": 0.9838,
+     "commit_depth": 0.826,
+     "support": 0.0014,
+     "score": 0.614,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": "<|im_end|>",
+     "p_final": 0.9695,
+     "commit_depth": 0.826,
+     "support": 0.1019,
+     "score": 0.585,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "12",
+    "explanation": "The square root of 144 is 12 because 12 multiplied by 12 equals 144.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the currency of Japan?",
+   "tier": "easy",
+   "answer": "The currency of Japan is the Japanese yen (JPY).",
+   "correct": true,
+   "max_score": 0.796,
+   "spans": [
+    "yen",
+    "JPY"
+   ],
+   "tokens": [
+    {
+     "pos": 26,
+     "token": "The",
+     "p_final": 0.9327,
+     "commit_depth": 0.87,
+     "support": 0.5323,
+     "score": 0.468,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 27,
+     "token": " currency",
+     "p_final": 0.719,
+     "commit_depth": 1.0,
+     "support": 0.9599,
+     "score": 0.44,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " of",
+     "p_final": 0.9994,
+     "commit_depth": 0.783,
+     "support": 0.6627,
+     "score": 0.374,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " Japan",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.994,
+     "score": 0.248,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " is",
+     "p_final": 0.9958,
+     "commit_depth": 0.826,
+     "support": 0.1152,
+     "score": 0.572,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " the",
+     "p_final": 0.9972,
+     "commit_depth": 0.826,
+     "support": 0.0728,
+     "score": 0.585,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " Japanese",
+     "p_final": 0.984,
+     "commit_depth": 0.783,
+     "support": 0.3888,
+     "score": 0.47,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " yen",
+     "p_final": 0.5878,
+     "commit_depth": 1.0,
+     "support": 0.0253,
+     "score": 0.796,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 34,
+     "token": " (",
+     "p_final": 0.9017,
+     "commit_depth": 0.783,
+     "support": 0.9765,
+     "score": 0.301,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "JP",
+     "p_final": 0.7043,
+     "commit_depth": 1.0,
+     "support": 0.0002,
+     "score": 0.765,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "Y",
+     "p_final": 0.9998,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": ").",
+     "p_final": 0.9451,
+     "commit_depth": 0.826,
+     "support": 0.0056,
+     "score": 0.625,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": "<|im_end|>",
+     "p_final": 0.4044,
+     "commit_depth": 1.0,
+     "support": 0.4238,
+     "score": 0.724,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Japanese yen",
+    "explanation": "The Japanese yen is the official currency of Japan.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Which element has atomic number 1?",
+   "tier": "easy",
+   "answer": "The element with atomic number 1 is hydrogen (H).",
+   "correct": true,
+   "max_score": 0.863,
+   "spans": [
+    "The",
+    "with",
+    "hydrogen"
+   ],
+   "tokens": [
+    {
+     "pos": 27,
+     "token": "The",
+     "p_final": 0.8626,
+     "commit_depth": 0.957,
+     "support": 0.0193,
+     "score": 0.692,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 28,
+     "token": " element",
+     "p_final": 0.9882,
+     "commit_depth": 0.913,
+     "support": 0.0737,
+     "score": 0.617,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " with",
+     "p_final": 0.9704,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.648,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 30,
+     "token": " atomic",
+     "p_final": 0.9833,
+     "commit_depth": 0.826,
+     "support": 0.2662,
+     "score": 0.526,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " number",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.263,
+     "score": 0.507,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " ",
+     "p_final": 0.9999,
+     "commit_depth": 0.783,
+     "support": 0.9892,
+     "score": 0.265,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.6409,
+     "score": 0.381,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " is",
+     "p_final": 0.9979,
+     "commit_depth": 0.826,
+     "support": 0.2931,
+     "score": 0.512,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " hydrogen",
+     "p_final": 0.3682,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.863,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": " (",
+     "p_final": 0.5412,
+     "commit_depth": 0.783,
+     "support": 0.8599,
+     "score": 0.46,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": "H",
+     "p_final": 0.9718,
+     "commit_depth": 0.957,
+     "support": 0.3934,
+     "score": 0.53,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": ").",
+     "p_final": 0.9774,
+     "commit_depth": 0.826,
+     "support": 0.0046,
+     "score": 0.615,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "<|im_end|>",
+     "p_final": 0.7641,
+     "commit_depth": 1.0,
+     "support": 0.2266,
+     "score": 0.67,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Hydrogen",
+    "explanation": "Hydrogen is the first element in the periodic table and has an atomic number of 1.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who won the Nobel Prize in Literature in 1907?",
+   "tier": "hard",
+   "answer": "The Nobel Prize in Literature in 1907 was awarded to Fyodor Dostoevsky.",
+   "correct": false,
+   "max_score": 0.9,
+   "spans": [
+    "The",
+    "to Fyodor D",
+    "v"
+   ],
+   "tokens": [
+    {
+     "pos": 33,
+     "token": "The",
+     "p_final": 0.3854,
+     "commit_depth": 0.957,
+     "support": 0.0298,
+     "score": 0.847,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 34,
+     "token": " Nobel",
+     "p_final": 0.9867,
+     "commit_depth": 0.913,
+     "support": 0.0144,
+     "score": 0.637,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " Prize",
+     "p_final": 0.9999,
+     "commit_depth": 0.87,
+     "support": 0.129,
+     "score": 0.58,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " in",
+     "p_final": 0.9972,
+     "commit_depth": 0.783,
+     "support": 0.9998,
+     "score": 0.262,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Literature",
+     "p_final": 0.9994,
+     "commit_depth": 0.957,
+     "support": 0.0008,
+     "score": 0.652,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " in",
+     "p_final": 0.8892,
+     "commit_depth": 0.957,
+     "support": 0.0021,
+     "score": 0.688,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " ",
+     "p_final": 0.9998,
+     "commit_depth": 0.696,
+     "support": 0.9535,
+     "score": 0.247,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.9417,
+     "score": 0.28,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.5154,
+     "score": 0.451,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": "0",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.9891,
+     "score": 0.25,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": "7",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.9499,
+     "score": 0.234,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " was",
+     "p_final": 0.9805,
+     "commit_depth": 0.826,
+     "support": 0.3259,
+     "score": 0.507,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": " awarded",
+     "p_final": 0.9923,
+     "commit_depth": 0.87,
+     "support": 0.0775,
+     "score": 0.6,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " to",
+     "p_final": 0.9995,
+     "commit_depth": 0.87,
+     "support": 0.0003,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": " F",
+     "p_final": 0.2578,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.9,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": "y",
+     "p_final": 0.9063,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.683,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": "odor",
+     "p_final": 0.9998,
+     "commit_depth": 0.87,
+     "support": 0.0107,
+     "score": 0.62,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 50,
+     "token": " D",
+     "p_final": 0.987,
+     "commit_depth": 0.957,
+     "support": 0.0004,
+     "score": 0.656,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": "ost",
+     "p_final": 0.999,
+     "commit_depth": 0.826,
+     "support": 0.0809,
+     "score": 0.582,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": "oe",
+     "p_final": 0.9999,
+     "commit_depth": 0.783,
+     "support": 0.117,
+     "score": 0.555,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": "v",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0038,
+     "score": 0.622,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": "sky",
+     "p_final": 0.9999,
+     "commit_depth": 0.261,
+     "support": 0.9993,
+     "score": 0.087,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": ".",
+     "p_final": 0.7457,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.708,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 56,
+     "token": "<|im_end|>",
+     "p_final": 0.8641,
+     "commit_depth": 1.0,
+     "support": 0.0796,
+     "score": 0.685,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Rudyard Kipling",
+    "explanation": "The Nobel Prize in Literature in 1907 was awarded to Rudyard Kipling, while Fyodor Dostoevsky died in 1881.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the capital of the Canadian territory of Nunavut?",
+   "tier": "hard",
+   "answer": "The capital of the Canadian territory of Nunavut is Red Lake.",
+   "correct": false,
+   "max_score": 0.88,
+   "spans": [
+    "Red Lake"
+   ],
+   "tokens": [
+    {
+     "pos": 32,
+     "token": "The",
+     "p_final": 0.9337,
+     "commit_depth": 0.957,
+     "support": 0.471,
+     "score": 0.517,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " capital",
+     "p_final": 0.998,
+     "commit_depth": 0.739,
+     "support": 0.9892,
+     "score": 0.251,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " of",
+     "p_final": 0.9958,
+     "commit_depth": 0.696,
+     "support": 0.9475,
+     "score": 0.251,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " the",
+     "p_final": 0.9823,
+     "commit_depth": 0.609,
+     "support": 0.9995,
+     "score": 0.209,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " Canadian",
+     "p_final": 0.9988,
+     "commit_depth": 0.913,
+     "support": 0.096,
+     "score": 0.606,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " territory",
+     "p_final": 0.9988,
+     "commit_depth": 0.783,
+     "support": 0.0318,
+     "score": 0.584,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.565,
+     "support": 0.9994,
+     "score": 0.189,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " Nun",
+     "p_final": 0.9936,
+     "commit_depth": 0.957,
+     "support": 0.0228,
+     "score": 0.647,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "av",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.3615,
+     "score": 0.459,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": "ut",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.029,
+     "score": 0.614,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " is",
+     "p_final": 0.9988,
+     "commit_depth": 0.783,
+     "support": 0.925,
+     "score": 0.286,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": " Red",
+     "p_final": 0.3591,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.88,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " Lake",
+     "p_final": 0.4686,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.844,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": ".",
+     "p_final": 0.5059,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.817,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": "<|im_end|>",
+     "p_final": 0.926,
+     "commit_depth": 0.739,
+     "support": 0.4881,
+     "score": 0.442,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Iqaluit",
+    "explanation": "The capital of Nunavut is Iqaluit, not Red Lake.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who was the first woman to win the Fields Medal?",
+   "tier": "hard",
+   "answer": "The first woman to win the Fields Medal was Ada Lovelace. She was born in 1842 in London, England, and is considered one of the most important figures in the history of computing. Lovelace is best",
+   "correct": false,
+   "max_score": 0.955,
+   "spans": [
+    "The",
+    "Ada Lovelace",
+    "She",
+    "born in",
+    "1842 in London",
+    "is considered",
+    "most important figures",
+    "computing",
+    "Lovel",
+    "is best"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.7442,
+     "commit_depth": 0.957,
+     "support": 0.3149,
+     "score": 0.632,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 31,
+     "token": " first",
+     "p_final": 0.9832,
+     "commit_depth": 0.696,
+     "support": 0.979,
+     "score": 0.244,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " woman",
+     "p_final": 0.9981,
+     "commit_depth": 0.739,
+     "support": 0.9771,
+     "score": 0.255,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " to",
+     "p_final": 0.9992,
+     "commit_depth": 0.739,
+     "support": 0.9927,
+     "score": 0.249,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " win",
+     "p_final": 0.9984,
+     "commit_depth": 0.783,
+     "support": 0.2399,
+     "score": 0.515,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " the",
+     "p_final": 0.9974,
+     "commit_depth": 0.609,
+     "support": 0.9996,
+     "score": 0.204,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " Fields",
+     "p_final": 0.9861,
+     "commit_depth": 0.826,
+     "support": 0.0062,
+     "score": 0.611,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Medal",
+     "p_final": 0.9996,
+     "commit_depth": 0.696,
+     "support": 0.946,
+     "score": 0.25,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " was",
+     "p_final": 0.6758,
+     "commit_depth": 0.826,
+     "support": 0.0276,
+     "score": 0.708,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " Ada",
+     "p_final": 0.134,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.955,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": " Lov",
+     "p_final": 0.9879,
+     "commit_depth": 0.826,
+     "support": 0.0368,
+     "score": 0.6,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": "el",
+     "p_final": 0.9997,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": "ace",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0076,
+     "score": 0.635,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": ".",
+     "p_final": 0.4691,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.844,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " She",
+     "p_final": 0.9327,
+     "commit_depth": 0.913,
+     "support": 0.0283,
+     "score": 0.651,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " was",
+     "p_final": 0.5638,
+     "commit_depth": 0.739,
+     "support": 0.3156,
+     "score": 0.62,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " born",
+     "p_final": 0.7288,
+     "commit_depth": 1.0,
+     "support": 0.3857,
+     "score": 0.628,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": " in",
+     "p_final": 0.8937,
+     "commit_depth": 0.957,
+     "support": 0.0002,
+     "score": 0.688,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": " ",
+     "p_final": 0.3458,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.885,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": "1",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0137,
+     "score": 0.648,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 50,
+     "token": "8",
+     "p_final": 0.984,
+     "commit_depth": 0.957,
+     "support": 0.0004,
+     "score": 0.657,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": "4",
+     "p_final": 0.7246,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.744,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 52,
+     "token": "2",
+     "p_final": 0.7355,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.74,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 53,
+     "token": " in",
+     "p_final": 0.7563,
+     "commit_depth": 0.957,
+     "support": 0.0069,
+     "score": 0.731,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": " London",
+     "p_final": 0.4297,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.857,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 55,
+     "token": ",",
+     "p_final": 0.8657,
+     "commit_depth": 1.0,
+     "support": 0.2326,
+     "score": 0.634,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 56,
+     "token": " England",
+     "p_final": 0.9879,
+     "commit_depth": 0.739,
+     "support": 0.8661,
+     "score": 0.295,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": ",",
+     "p_final": 0.8929,
+     "commit_depth": 0.696,
+     "support": 0.6467,
+     "score": 0.385,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 58,
+     "token": " and",
+     "p_final": 0.9866,
+     "commit_depth": 0.609,
+     "support": 0.9871,
+     "score": 0.212,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 59,
+     "token": " is",
+     "p_final": 0.6451,
+     "commit_depth": 0.957,
+     "support": 0.0002,
+     "score": 0.77,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": " considered",
+     "p_final": 0.4063,
+     "commit_depth": 1.0,
+     "support": 0.138,
+     "score": 0.819,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 61,
+     "token": " one",
+     "p_final": 0.4169,
+     "commit_depth": 0.913,
+     "support": 0.8474,
+     "score": 0.55,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 62,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.696,
+     "support": 0.9589,
+     "score": 0.246,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " the",
+     "p_final": 0.9992,
+     "commit_depth": 0.696,
+     "support": 0.9993,
+     "score": 0.232,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 64,
+     "token": " most",
+     "p_final": 0.7314,
+     "commit_depth": 0.957,
+     "support": 0.0017,
+     "score": 0.741,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 65,
+     "token": " important",
+     "p_final": 0.5007,
+     "commit_depth": 1.0,
+     "support": 0.0313,
+     "score": 0.823,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 66,
+     "token": " figures",
+     "p_final": 0.8739,
+     "commit_depth": 0.826,
+     "support": 0.1087,
+     "score": 0.615,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 67,
+     "token": " in",
+     "p_final": 0.9981,
+     "commit_depth": 0.783,
+     "support": 0.9896,
+     "score": 0.265,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 68,
+     "token": " the",
+     "p_final": 0.897,
+     "commit_depth": 0.783,
+     "support": 0.9974,
+     "score": 0.296,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 69,
+     "token": " history",
+     "p_final": 0.9845,
+     "commit_depth": 0.957,
+     "support": 0.2474,
+     "score": 0.575,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 70,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.522,
+     "support": 1.0,
+     "score": 0.174,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " computing",
+     "p_final": 0.5217,
+     "commit_depth": 1.0,
+     "support": 0.1974,
+     "score": 0.76,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 72,
+     "token": ".",
+     "p_final": 0.9532,
+     "commit_depth": 0.87,
+     "support": 0.0002,
+     "score": 0.639,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 73,
+     "token": " Lov",
+     "p_final": 0.8312,
+     "commit_depth": 0.826,
+     "support": 0.0006,
+     "score": 0.665,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 74,
+     "token": "el",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0018,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 75,
+     "token": "ace",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.3255,
+     "score": 0.486,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 76,
+     "token": " is",
+     "p_final": 0.7545,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.734,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 77,
+     "token": " best",
+     "p_final": 0.653,
+     "commit_depth": 0.87,
+     "support": 0.223,
+     "score": 0.665,
+     "in_prompt": false,
+     "flag": true
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Maryam Mirzakhani",
+    "explanation": "Maryam Mirzakhani was the first woman to win the Fields Medal in 2014, whereas Ada Lovelace died in 1852, long before the award was established in 1936.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the smallest country in South America by area?",
+   "tier": "hard",
+   "answer": "The smallest country in South America by area is Chile, which has an area of 274,811 square kilometers (115,400 square miles).",
+   "correct": false,
+   "max_score": 0.959,
+   "spans": [
+    "Chile",
+    "has an",
+    "of",
+    "274",
+    "811",
+    "kilometers",
+    "115",
+    "400",
+    "miles"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.9404,
+     "commit_depth": 0.826,
+     "support": 0.1672,
+     "score": 0.573,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " smallest",
+     "p_final": 0.9938,
+     "commit_depth": 0.87,
+     "support": 0.22,
+     "score": 0.552,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " country",
+     "p_final": 0.9992,
+     "commit_depth": 0.739,
+     "support": 0.9256,
+     "score": 0.271,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " in",
+     "p_final": 0.9314,
+     "commit_depth": 0.739,
+     "support": 0.9923,
+     "score": 0.272,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " South",
+     "p_final": 0.9982,
+     "commit_depth": 0.783,
+     "support": 0.9771,
+     "score": 0.269,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " America",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.6096,
+     "score": 0.42,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " by",
+     "p_final": 0.9977,
+     "commit_depth": 0.696,
+     "support": 0.9947,
+     "score": 0.234,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " area",
+     "p_final": 0.9935,
+     "commit_depth": 0.826,
+     "support": 0.4149,
+     "score": 0.473,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " is",
+     "p_final": 0.9956,
+     "commit_depth": 0.826,
+     "support": 0.1765,
+     "score": 0.551,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " Chile",
+     "p_final": 0.1242,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.959,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": ",",
+     "p_final": 0.6034,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.77,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " which",
+     "p_final": 0.6488,
+     "commit_depth": 1.0,
+     "support": 0.8902,
+     "score": 0.487,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " has",
+     "p_final": 0.8299,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.709,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": " an",
+     "p_final": 0.863,
+     "commit_depth": 1.0,
+     "support": 0.0003,
+     "score": 0.712,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " area",
+     "p_final": 0.9994,
+     "commit_depth": 0.826,
+     "support": 0.0042,
+     "score": 0.607,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": " of",
+     "p_final": 0.9999,
+     "commit_depth": 0.826,
+     "support": 0.0,
+     "score": 0.609,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 46,
+     "token": " ",
+     "p_final": 0.5541,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.801,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": "2",
+     "p_final": 0.3495,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.884,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": "7",
+     "p_final": 0.6418,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.786,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": "4",
+     "p_final": 0.2079,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.931,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 50,
+     "token": ",",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 51,
+     "token": "8",
+     "p_final": 0.3485,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.869,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 52,
+     "token": "1",
+     "p_final": 0.2162,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.928,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 53,
+     "token": "1",
+     "p_final": 0.2846,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.905,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": " square",
+     "p_final": 0.9969,
+     "commit_depth": 0.783,
+     "support": 0.7313,
+     "score": 0.351,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": " kilometers",
+     "p_final": 0.9994,
+     "commit_depth": 0.913,
+     "support": 0.0055,
+     "score": 0.636,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 56,
+     "token": " (",
+     "p_final": 0.5267,
+     "commit_depth": 0.783,
+     "support": 0.3226,
+     "score": 0.644,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": "1",
+     "p_final": 0.9926,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.64,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 58,
+     "token": "1",
+     "p_final": 0.7348,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.741,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 59,
+     "token": "5",
+     "p_final": 0.1923,
+     "commit_depth": 1.0,
+     "support": 0.0002,
+     "score": 0.936,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": ",",
+     "p_final": 0.9958,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.639,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 61,
+     "token": "4",
+     "p_final": 0.1235,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.959,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 62,
+     "token": "0",
+     "p_final": 0.1361,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.955,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 63,
+     "token": "0",
+     "p_final": 0.2331,
+     "commit_depth": 0.87,
+     "support": 0.0078,
+     "score": 0.876,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 64,
+     "token": " square",
+     "p_final": 0.9963,
+     "commit_depth": 0.783,
+     "support": 0.2159,
+     "score": 0.523,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 65,
+     "token": " miles",
+     "p_final": 0.9993,
+     "commit_depth": 0.913,
+     "support": 0.0519,
+     "score": 0.621,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 66,
+     "token": ").",
+     "p_final": 0.9887,
+     "commit_depth": 0.826,
+     "support": 0.0004,
+     "score": 0.612,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 67,
+     "token": "<|im_end|>",
+     "p_final": 0.5861,
+     "commit_depth": 1.0,
+     "support": 0.1071,
+     "score": 0.769,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Suriname",
+    "explanation": "Suriname is the smallest sovereign state in South America by area, covering approximately 163,820 square kilometers.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Which river flows through Baghdad?",
+   "tier": "hard",
+   "answer": "The river that flows through Baghdad is the Tigris River.",
+   "correct": true,
+   "max_score": 0.853,
+   "spans": [
+    "the Tigris River"
+   ],
+   "tokens": [
+    {
+     "pos": 25,
+     "token": "The",
+     "p_final": 0.8655,
+     "commit_depth": 0.913,
+     "support": 0.6196,
+     "score": 0.476,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 26,
+     "token": " river",
+     "p_final": 0.8931,
+     "commit_depth": 0.783,
+     "support": 0.4531,
+     "score": 0.479,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 27,
+     "token": " that",
+     "p_final": 0.9863,
+     "commit_depth": 0.739,
+     "support": 0.8704,
+     "score": 0.294,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 28,
+     "token": " flows",
+     "p_final": 0.9985,
+     "commit_depth": 0.826,
+     "support": 0.1537,
+     "score": 0.558,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " through",
+     "p_final": 0.9999,
+     "commit_depth": 0.826,
+     "support": 0.3755,
+     "score": 0.484,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " Baghdad",
+     "p_final": 0.9911,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.67,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " is",
+     "p_final": 0.9827,
+     "commit_depth": 0.826,
+     "support": 0.3365,
+     "score": 0.502,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " the",
+     "p_final": 0.8935,
+     "commit_depth": 0.913,
+     "support": 0.0056,
+     "score": 0.671,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 33,
+     "token": " T",
+     "p_final": 0.4399,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.853,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 34,
+     "token": "igr",
+     "p_final": 0.9993,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 35,
+     "token": "is",
+     "p_final": 0.9953,
+     "commit_depth": 0.957,
+     "support": 0.0055,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": " River",
+     "p_final": 0.8394,
+     "commit_depth": 0.87,
+     "support": 0.0825,
+     "score": 0.649,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": ".",
+     "p_final": 0.9532,
+     "commit_depth": 0.826,
+     "support": 0.0326,
+     "score": 0.613,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": "<|im_end|>",
+     "p_final": 0.5451,
+     "commit_depth": 1.0,
+     "support": 0.0443,
+     "score": 0.804,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Tigris River",
+    "explanation": "The Tigris River flows directly through the center of Baghdad.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who directed the 1927 film Metropolis?",
+   "tier": "hard",
+   "answer": "The 1927 film Metropolis was directed by F.W. Murnau.",
+   "correct": false,
+   "max_score": 0.937,
+   "spans": [
+    "The",
+    "was",
+    "F.W",
+    "Murnau"
+   ],
+   "tokens": [
+    {
+     "pos": 31,
+     "token": "The",
+     "p_final": 0.6872,
+     "commit_depth": 0.957,
+     "support": 0.0388,
+     "score": 0.744,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 32,
+     "token": " ",
+     "p_final": 0.927,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.677,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0668,
+     "score": 0.586,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0114,
+     "score": 0.619,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "2",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0547,
+     "score": 0.59,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": "7",
+     "p_final": 0.9999,
+     "commit_depth": 0.913,
+     "support": 0.3432,
+     "score": 0.523,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " film",
+     "p_final": 0.9974,
+     "commit_depth": 0.739,
+     "support": 0.8524,
+     "score": 0.296,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " Met",
+     "p_final": 0.969,
+     "commit_depth": 0.957,
+     "support": 0.0007,
+     "score": 0.662,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "ropolis",
+     "p_final": 1.0,
+     "commit_depth": 0.565,
+     "support": 0.8528,
+     "score": 0.237,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " was",
+     "p_final": 0.8966,
+     "commit_depth": 0.826,
+     "support": 0.0167,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": " directed",
+     "p_final": 0.9997,
+     "commit_depth": 0.87,
+     "support": 0.012,
+     "score": 0.619,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " by",
+     "p_final": 0.9996,
+     "commit_depth": 0.739,
+     "support": 0.4899,
+     "score": 0.417,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": " F",
+     "p_final": 0.1463,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.937,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": ".W",
+     "p_final": 0.9638,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.679,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": ".",
+     "p_final": 0.9983,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.653,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " M",
+     "p_final": 0.9862,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.657,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": "urn",
+     "p_final": 0.9843,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.672,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": "au",
+     "p_final": 0.9995,
+     "commit_depth": 0.87,
+     "support": 0.0375,
+     "score": 0.611,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": ".",
+     "p_final": 0.9772,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.645,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": "<|im_end|>",
+     "p_final": 0.9605,
+     "commit_depth": 1.0,
+     "support": 0.258,
+     "score": 0.594,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Fritz Lang",
+    "explanation": "The 1927 film Metropolis was directed by Fritz Lang, not F.W. Murnau.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the capital of Kyrgyzstan?",
+   "tier": "hard",
+   "answer": "The capital of Kyrgyzstan is Bishkek.",
+   "correct": true,
+   "max_score": 0.678,
+   "spans": [
+    "Bish"
+   ],
+   "tokens": [
+    {
+     "pos": 28,
+     "token": "The",
+     "p_final": 0.9704,
+     "commit_depth": 0.913,
+     "support": 0.2443,
+     "score": 0.566,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " capital",
+     "p_final": 0.9984,
+     "commit_depth": 0.739,
+     "support": 0.9992,
+     "score": 0.247,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " of",
+     "p_final": 0.9861,
+     "commit_depth": 0.696,
+     "support": 0.9961,
+     "score": 0.238,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Ky",
+     "p_final": 0.9952,
+     "commit_depth": 0.783,
+     "support": 0.1567,
+     "score": 0.544,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": "rgyz",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.3069,
+     "score": 0.477,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "stan",
+     "p_final": 0.9999,
+     "commit_depth": 0.826,
+     "support": 0.3232,
+     "score": 0.501,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " is",
+     "p_final": 0.9991,
+     "commit_depth": 0.739,
+     "support": 0.9495,
+     "score": 0.264,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " B",
+     "p_final": 0.9661,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.678,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "ish",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": "kek",
+     "p_final": 0.9995,
+     "commit_depth": 0.826,
+     "support": 0.0471,
+     "score": 0.593,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": ".",
+     "p_final": 0.8755,
+     "commit_depth": 0.87,
+     "support": 0.0001,
+     "score": 0.665,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "<|im_end|>",
+     "p_final": 0.9403,
+     "commit_depth": 1.0,
+     "support": 0.2575,
+     "score": 0.601,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Bishkek",
+    "explanation": "Bishkek is the capital and largest city of Kyrgyzstan.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who was the second person to walk on the Moon?",
+   "tier": "hard",
+   "answer": "The second person to walk on the Moon was Neil Armstrong, who accomplished this feat on July 20, 1969. Armstrong became the first human to set foot on the lunar surface on the Apollo 11 mission,",
+   "correct": false,
+   "max_score": 0.933,
+   "spans": [
+    "The",
+    "Neil Armstrong",
+    "accomplished",
+    "July",
+    "20",
+    "1969",
+    "Armstrong became",
+    "human",
+    "set",
+    "lunar",
+    "Apollo",
+    "11"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.6845,
+     "commit_depth": 0.957,
+     "support": 0.0107,
+     "score": 0.754,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 31,
+     "token": " second",
+     "p_final": 0.9877,
+     "commit_depth": 0.739,
+     "support": 0.9328,
+     "score": 0.273,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " person",
+     "p_final": 0.9987,
+     "commit_depth": 0.696,
+     "support": 0.9853,
+     "score": 0.237,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " to",
+     "p_final": 0.9986,
+     "commit_depth": 0.696,
+     "support": 1.0,
+     "score": 0.232,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " walk",
+     "p_final": 0.9979,
+     "commit_depth": 0.87,
+     "support": 0.1219,
+     "score": 0.583,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " on",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.9784,
+     "score": 0.225,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " the",
+     "p_final": 0.9999,
+     "commit_depth": 0.565,
+     "support": 0.9987,
+     "score": 0.189,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Moon",
+     "p_final": 0.9918,
+     "commit_depth": 0.87,
+     "support": 0.0344,
+     "score": 0.614,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " was",
+     "p_final": 0.9204,
+     "commit_depth": 0.783,
+     "support": 0.6651,
+     "score": 0.399,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " Neil",
+     "p_final": 0.3442,
+     "commit_depth": 1.0,
+     "support": 0.0002,
+     "score": 0.885,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": " Armstrong",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0214,
+     "score": 0.616,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": ",",
+     "p_final": 0.5737,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.765,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " who",
+     "p_final": 0.538,
+     "commit_depth": 1.0,
+     "support": 0.7621,
+     "score": 0.567,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": " accomplished",
+     "p_final": 0.1976,
+     "commit_depth": 1.0,
+     "support": 0.0026,
+     "score": 0.933,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " this",
+     "p_final": 0.8181,
+     "commit_depth": 0.783,
+     "support": 0.9728,
+     "score": 0.331,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": " feat",
+     "p_final": 0.7981,
+     "commit_depth": 0.826,
+     "support": 0.8707,
+     "score": 0.386,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " on",
+     "p_final": 0.9906,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.641,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": " July",
+     "p_final": 0.9908,
+     "commit_depth": 0.826,
+     "support": 0.0317,
+     "score": 0.601,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": " ",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.8212,
+     "score": 0.32,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": "2",
+     "p_final": 0.9999,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 50,
+     "token": "0",
+     "p_final": 0.9998,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": ",",
+     "p_final": 0.9994,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": " ",
+     "p_final": 0.9999,
+     "commit_depth": 0.826,
+     "support": 0.0059,
+     "score": 0.607,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 55,
+     "token": "6",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 56,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 57,
+     "token": ".",
+     "p_final": 0.6446,
+     "commit_depth": 1.0,
+     "support": 0.0004,
+     "score": 0.785,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 58,
+     "token": " Armstrong",
+     "p_final": 0.9238,
+     "commit_depth": 0.957,
+     "support": 0.0021,
+     "score": 0.677,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 59,
+     "token": " became",
+     "p_final": 0.2497,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.917,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": " the",
+     "p_final": 0.9881,
+     "commit_depth": 0.826,
+     "support": 0.0282,
+     "score": 0.603,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 61,
+     "token": " first",
+     "p_final": 0.9993,
+     "commit_depth": 0.87,
+     "support": 0.3346,
+     "score": 0.512,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 62,
+     "token": " human",
+     "p_final": 0.524,
+     "commit_depth": 1.0,
+     "support": 0.0049,
+     "score": 0.824,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 63,
+     "token": " to",
+     "p_final": 0.8791,
+     "commit_depth": 0.783,
+     "support": 0.9024,
+     "score": 0.334,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 64,
+     "token": " set",
+     "p_final": 0.927,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.677,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 65,
+     "token": " foot",
+     "p_final": 0.9967,
+     "commit_depth": 0.739,
+     "support": 0.897,
+     "score": 0.282,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 66,
+     "token": " on",
+     "p_final": 0.9998,
+     "commit_depth": 0.826,
+     "support": 0.2559,
+     "score": 0.523,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 67,
+     "token": " the",
+     "p_final": 0.9871,
+     "commit_depth": 0.739,
+     "support": 0.2929,
+     "score": 0.486,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 68,
+     "token": " lunar",
+     "p_final": 0.5192,
+     "commit_depth": 1.0,
+     "support": 0.0019,
+     "score": 0.826,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 69,
+     "token": " surface",
+     "p_final": 0.9967,
+     "commit_depth": 0.826,
+     "support": 0.5518,
+     "score": 0.426,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 70,
+     "token": " on",
+     "p_final": 0.4372,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.825,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " the",
+     "p_final": 0.3615,
+     "commit_depth": 0.913,
+     "support": 0.0007,
+     "score": 0.85,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " Apollo",
+     "p_final": 0.3768,
+     "commit_depth": 1.0,
+     "support": 0.0002,
+     "score": 0.874,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 73,
+     "token": " ",
+     "p_final": 0.999,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.653,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 74,
+     "token": "1",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 75,
+     "token": "1",
+     "p_final": 0.9998,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 76,
+     "token": " mission",
+     "p_final": 0.9767,
+     "commit_depth": 0.739,
+     "support": 0.5982,
+     "score": 0.388,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 77,
+     "token": ",",
+     "p_final": 0.5098,
+     "commit_depth": 0.87,
+     "support": 0.0009,
+     "score": 0.786,
+     "in_prompt": false,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Buzz Aldrin",
+    "explanation": "Neil Armstrong was the first person to walk on the Moon, while Buzz Aldrin was the second.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the atomic number of tungsten?",
+   "tier": "hard",
+   "answer": "The atomic number of tungsten is 74.",
+   "correct": true,
+   "max_score": 0.717,
+   "spans": [
+    "74"
+   ],
+   "tokens": [
+    {
+     "pos": 28,
+     "token": "The",
+     "p_final": 0.9309,
+     "commit_depth": 0.826,
+     "support": 0.4466,
+     "score": 0.483,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 29,
+     "token": " atomic",
+     "p_final": 0.9996,
+     "commit_depth": 0.739,
+     "support": 0.729,
+     "score": 0.337,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " number",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.146,
+     "score": 0.56,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " of",
+     "p_final": 0.9999,
+     "commit_depth": 0.652,
+     "support": 0.9977,
+     "score": 0.218,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " tung",
+     "p_final": 0.9999,
+     "commit_depth": 0.826,
+     "support": 0.0384,
+     "score": 0.596,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "sten",
+     "p_final": 1.0,
+     "commit_depth": 0.609,
+     "support": 0.8886,
+     "score": 0.24,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " is",
+     "p_final": 0.9702,
+     "commit_depth": 0.739,
+     "support": 0.9016,
+     "score": 0.289,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " ",
+     "p_final": 0.9993,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": "7",
+     "p_final": 0.9911,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.655,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": "4",
+     "p_final": 0.8046,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.717,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": ".",
+     "p_final": 0.9964,
+     "commit_depth": 0.826,
+     "support": 0.0044,
+     "score": 0.608,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "<|im_end|>",
+     "p_final": 0.8612,
+     "commit_depth": 0.783,
+     "support": 0.2012,
+     "score": 0.573,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "74",
+    "explanation": "Tungsten is a chemical element with the symbol W and atomic number 74.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who wrote the novel The Master and Margarita?",
+   "tier": "hard",
+   "answer": "The Master and Margarita is a novel by Mikhail Bulgakov, published in 1934. It is a satirical novel that satirizes the Russian government and society, and is considered one of Bulgakov's most important",
+   "correct": true,
+   "max_score": 0.907,
+   "spans": [
+    "is",
+    "Mikhail Bulg",
+    "published in",
+    "1934",
+    "It is",
+    "sat",
+    "that sat",
+    "izes",
+    "Russian government",
+    "society",
+    "is",
+    "Bulg",
+    "most important"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.7038,
+     "commit_depth": 0.696,
+     "support": 0.9384,
+     "score": 0.351,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Master",
+     "p_final": 0.9905,
+     "commit_depth": 0.87,
+     "support": 0.0024,
+     "score": 0.626,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " and",
+     "p_final": 0.9992,
+     "commit_depth": 0.696,
+     "support": 0.6175,
+     "score": 0.36,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " Marg",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.4297,
+     "score": 0.437,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": "ar",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.9889,
+     "score": 0.221,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "ita",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.8808,
+     "score": 0.257,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " is",
+     "p_final": 0.8311,
+     "commit_depth": 0.826,
+     "support": 0.0079,
+     "score": 0.662,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": " a",
+     "p_final": 0.9285,
+     "commit_depth": 0.826,
+     "support": 0.0925,
+     "score": 0.602,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " novel",
+     "p_final": 0.9093,
+     "commit_depth": 0.957,
+     "support": 0.0225,
+     "score": 0.675,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " by",
+     "p_final": 0.6518,
+     "commit_depth": 0.783,
+     "support": 0.4096,
+     "score": 0.574,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " Mikhail",
+     "p_final": 0.6572,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.781,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": " Bulg",
+     "p_final": 0.9923,
+     "commit_depth": 0.913,
+     "support": 0.0009,
+     "score": 0.64,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": "akov",
+     "p_final": 0.9907,
+     "commit_depth": 0.652,
+     "support": 0.595,
+     "score": 0.355,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": ",",
+     "p_final": 0.4686,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.844,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " published",
+     "p_final": 0.3212,
+     "commit_depth": 1.0,
+     "support": 0.0012,
+     "score": 0.893,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " in",
+     "p_final": 0.9736,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.646,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 46,
+     "token": " ",
+     "p_final": 0.8271,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.724,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": "1",
+     "p_final": 0.9992,
+     "commit_depth": 0.826,
+     "support": 0.0,
+     "score": 0.609,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 48,
+     "token": "9",
+     "p_final": 0.9974,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.639,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": "3",
+     "p_final": 0.3533,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.882,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 50,
+     "token": "4",
+     "p_final": 0.2777,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.907,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": ".",
+     "p_final": 0.9521,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.639,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": " It",
+     "p_final": 0.4555,
+     "commit_depth": 0.826,
+     "support": 0.0207,
+     "score": 0.783,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 53,
+     "token": " is",
+     "p_final": 0.7682,
+     "commit_depth": 0.87,
+     "support": 0.0021,
+     "score": 0.7,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": " a",
+     "p_final": 0.3948,
+     "commit_depth": 0.957,
+     "support": 0.0021,
+     "score": 0.853,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": " sat",
+     "p_final": 0.5717,
+     "commit_depth": 1.0,
+     "support": 0.0004,
+     "score": 0.809,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 56,
+     "token": "irical",
+     "p_final": 0.9994,
+     "commit_depth": 0.696,
+     "support": 0.8394,
+     "score": 0.286,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": " novel",
+     "p_final": 0.2895,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.889,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 58,
+     "token": " that",
+     "p_final": 0.7857,
+     "commit_depth": 0.913,
+     "support": 0.0089,
+     "score": 0.706,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 59,
+     "token": " sat",
+     "p_final": 0.2903,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.889,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": "ir",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0324,
+     "score": 0.598,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 61,
+     "token": "izes",
+     "p_final": 0.9992,
+     "commit_depth": 0.913,
+     "support": 0.0168,
+     "score": 0.632,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 62,
+     "token": " the",
+     "p_final": 0.5419,
+     "commit_depth": 0.783,
+     "support": 0.38,
+     "score": 0.62,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " Russian",
+     "p_final": 0.3855,
+     "commit_depth": 1.0,
+     "support": 0.0081,
+     "score": 0.869,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 64,
+     "token": " government",
+     "p_final": 0.1366,
+     "commit_depth": 1.0,
+     "support": 0.1752,
+     "score": 0.896,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 65,
+     "token": " and",
+     "p_final": 0.719,
+     "commit_depth": 0.783,
+     "support": 0.7707,
+     "score": 0.431,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 66,
+     "token": " society",
+     "p_final": 0.4841,
+     "commit_depth": 1.0,
+     "support": 0.1146,
+     "score": 0.8,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 67,
+     "token": ",",
+     "p_final": 0.4865,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.823,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 68,
+     "token": " and",
+     "p_final": 0.5545,
+     "commit_depth": 0.913,
+     "support": 0.0761,
+     "score": 0.761,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 69,
+     "token": " is",
+     "p_final": 0.3542,
+     "commit_depth": 0.913,
+     "support": 0.0032,
+     "score": 0.852,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 70,
+     "token": " considered",
+     "p_final": 0.7063,
+     "commit_depth": 0.739,
+     "support": 0.9364,
+     "score": 0.365,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " one",
+     "p_final": 0.7855,
+     "commit_depth": 0.783,
+     "support": 0.9688,
+     "score": 0.343,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.7867,
+     "score": 0.346,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 73,
+     "token": " Bulg",
+     "p_final": 0.911,
+     "commit_depth": 1.0,
+     "support": 0.0003,
+     "score": 0.696,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 74,
+     "token": "akov",
+     "p_final": 0.9992,
+     "commit_depth": 1.0,
+     "support": 0.3161,
+     "score": 0.562,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 75,
+     "token": "'s",
+     "p_final": 0.9994,
+     "commit_depth": 0.783,
+     "support": 0.9901,
+     "score": 0.264,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 76,
+     "token": " most",
+     "p_final": 0.6091,
+     "commit_depth": 0.913,
+     "support": 0.0039,
+     "score": 0.767,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 77,
+     "token": " important",
+     "p_final": 0.6196,
+     "commit_depth": 0.913,
+     "support": 0.0907,
+     "score": 0.734,
+     "in_prompt": false,
+     "flag": true
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Mikhail Bulgakov",
+    "explanation": "While Mikhail Bulgakov is the correct author, the novel was not published in 1934; it was written between 1928 and 1940 and first published posthumously in 1966-1967.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "In which year did the Chernobyl disaster occur?",
+   "tier": "hard",
+   "answer": "The Chernobyl disaster occurred on April 26, 1986.",
+   "correct": true,
+   "max_score": 0.657,
+   "spans": [
+    "on April",
+    "26",
+    "1986"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.9756,
+     "commit_depth": 0.696,
+     "support": 0.9701,
+     "score": 0.25,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Chern",
+     "p_final": 0.9965,
+     "commit_depth": 0.826,
+     "support": 0.0287,
+     "score": 0.6,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": "ob",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.1375,
+     "score": 0.548,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "yl",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0018,
+     "score": 0.637,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " disaster",
+     "p_final": 0.999,
+     "commit_depth": 0.87,
+     "support": 0.0469,
+     "score": 0.608,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " occurred",
+     "p_final": 0.9886,
+     "commit_depth": 0.826,
+     "support": 0.1252,
+     "score": 0.571,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " on",
+     "p_final": 0.9431,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.657,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": " April",
+     "p_final": 0.9915,
+     "commit_depth": 0.826,
+     "support": 0.0081,
+     "score": 0.609,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": " ",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.1979,
+     "score": 0.557,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "2",
+     "p_final": 0.9914,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.655,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": "6",
+     "p_final": 0.9995,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": ",",
+     "p_final": 0.9982,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " ",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0016,
+     "score": 0.608,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": "1",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": "9",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0004,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": "8",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 46,
+     "token": "6",
+     "p_final": 1.0,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": ".",
+     "p_final": 0.8915,
+     "commit_depth": 0.87,
+     "support": 0.0001,
+     "score": 0.659,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": "<|im_end|>",
+     "p_final": 0.889,
+     "commit_depth": 1.0,
+     "support": 0.1923,
+     "score": 0.64,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "1986",
+    "explanation": "The Chernobyl disaster took place on April 26, 1986, at the Chernobyl Nuclear Power Plant in the Ukrainian SSR.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the name of the deepest point in the world's oceans?",
+   "tier": "hard",
+   "answer": "The deepest point in the world's oceans is the Challenger Deep, which is located in the Mariana Trench in the Pacific Ocean. It is the deepest point on Earth, with a depth of approximately 36,070 feet",
+   "correct": true,
+   "max_score": 0.857,
+   "spans": [
+    "Challenger",
+    "Mariana Trench",
+    "Pacific",
+    "It",
+    "on",
+    "with",
+    "approximately",
+    "36",
+    "07",
+    "feet"
+   ],
+   "tokens": [
+    {
+     "pos": 33,
+     "token": "The",
+     "p_final": 0.8899,
+     "commit_depth": 0.696,
+     "support": 0.8835,
+     "score": 0.307,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " deepest",
+     "p_final": 0.9869,
+     "commit_depth": 0.739,
+     "support": 0.8446,
+     "score": 0.303,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " point",
+     "p_final": 0.9991,
+     "commit_depth": 0.739,
+     "support": 0.8109,
+     "score": 0.31,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " in",
+     "p_final": 0.9992,
+     "commit_depth": 0.783,
+     "support": 0.9879,
+     "score": 0.265,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " the",
+     "p_final": 0.9999,
+     "commit_depth": 0.522,
+     "support": 0.9997,
+     "score": 0.174,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": " world",
+     "p_final": 0.9995,
+     "commit_depth": 0.609,
+     "support": 0.9992,
+     "score": 0.203,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "'s",
+     "p_final": 0.9998,
+     "commit_depth": 0.609,
+     "support": 0.999,
+     "score": 0.203,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " oceans",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.9133,
+     "score": 0.275,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " is",
+     "p_final": 0.991,
+     "commit_depth": 0.783,
+     "support": 0.6324,
+     "score": 0.386,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " the",
+     "p_final": 0.5292,
+     "commit_depth": 1.0,
+     "support": 0.0003,
+     "score": 0.823,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": " Challenger",
+     "p_final": 0.8715,
+     "commit_depth": 0.957,
+     "support": 0.0002,
+     "score": 0.695,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " Deep",
+     "p_final": 0.999,
+     "commit_depth": 0.826,
+     "support": 0.0433,
+     "score": 0.595,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": ",",
+     "p_final": 0.9707,
+     "commit_depth": 0.87,
+     "support": 0.0013,
+     "score": 0.632,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " which",
+     "p_final": 0.5927,
+     "commit_depth": 0.652,
+     "support": 0.8964,
+     "score": 0.388,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": " is",
+     "p_final": 0.8539,
+     "commit_depth": 0.826,
+     "support": 0.1299,
+     "score": 0.614,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": " located",
+     "p_final": 0.9922,
+     "commit_depth": 0.783,
+     "support": 0.4705,
+     "score": 0.44,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": " in",
+     "p_final": 0.9668,
+     "commit_depth": 0.913,
+     "support": 0.0028,
+     "score": 0.648,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": " the",
+     "p_final": 0.9958,
+     "commit_depth": 0.957,
+     "support": 0.6127,
+     "score": 0.449,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 51,
+     "token": " Mar",
+     "p_final": 0.9151,
+     "commit_depth": 0.957,
+     "support": 0.0003,
+     "score": 0.68,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 52,
+     "token": "iana",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0016,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 53,
+     "token": " T",
+     "p_final": 0.9986,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.653,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": "rench",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0008,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 55,
+     "token": " in",
+     "p_final": 0.851,
+     "commit_depth": 0.913,
+     "support": 0.0025,
+     "score": 0.687,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 56,
+     "token": " the",
+     "p_final": 0.9942,
+     "commit_depth": 0.957,
+     "support": 0.1362,
+     "score": 0.609,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": " Pacific",
+     "p_final": 0.6174,
+     "commit_depth": 1.0,
+     "support": 0.0014,
+     "score": 0.794,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 58,
+     "token": " Ocean",
+     "p_final": 0.9998,
+     "commit_depth": 0.696,
+     "support": 0.8729,
+     "score": 0.274,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 59,
+     "token": ".",
+     "p_final": 0.805,
+     "commit_depth": 0.913,
+     "support": 0.0037,
+     "score": 0.701,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 60,
+     "token": " It",
+     "p_final": 0.8671,
+     "commit_depth": 0.87,
+     "support": 0.1081,
+     "score": 0.631,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 61,
+     "token": " is",
+     "p_final": 0.6441,
+     "commit_depth": 0.826,
+     "support": 0.2302,
+     "score": 0.651,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 62,
+     "token": " the",
+     "p_final": 0.3749,
+     "commit_depth": 0.957,
+     "support": 0.0101,
+     "score": 0.857,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " deepest",
+     "p_final": 0.812,
+     "commit_depth": 0.826,
+     "support": 0.0614,
+     "score": 0.651,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 64,
+     "token": " point",
+     "p_final": 0.4566,
+     "commit_depth": 0.913,
+     "support": 0.0072,
+     "score": 0.816,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 65,
+     "token": " on",
+     "p_final": 0.7347,
+     "commit_depth": 0.957,
+     "support": 0.0006,
+     "score": 0.74,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 66,
+     "token": " Earth",
+     "p_final": 0.9766,
+     "commit_depth": 0.913,
+     "support": 0.4413,
+     "score": 0.498,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 67,
+     "token": ",",
+     "p_final": 0.6617,
+     "commit_depth": 0.913,
+     "support": 0.0214,
+     "score": 0.743,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 68,
+     "token": " with",
+     "p_final": 0.6215,
+     "commit_depth": 0.957,
+     "support": 0.0034,
+     "score": 0.777,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 69,
+     "token": " a",
+     "p_final": 0.9805,
+     "commit_depth": 0.913,
+     "support": 0.004,
+     "score": 0.643,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 70,
+     "token": " depth",
+     "p_final": 0.9543,
+     "commit_depth": 0.696,
+     "support": 0.9892,
+     "score": 0.251,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " of",
+     "p_final": 0.9998,
+     "commit_depth": 0.826,
+     "support": 0.0001,
+     "score": 0.609,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " approximately",
+     "p_final": 0.7498,
+     "commit_depth": 1.0,
+     "support": 0.0006,
+     "score": 0.75,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 73,
+     "token": " ",
+     "p_final": 0.9969,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.639,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 74,
+     "token": "3",
+     "p_final": 0.9643,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.664,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 75,
+     "token": "6",
+     "p_final": 0.9983,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.653,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 76,
+     "token": ",",
+     "p_final": 0.9998,
+     "commit_depth": 0.913,
+     "support": 0.0001,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 77,
+     "token": "0",
+     "p_final": 0.9983,
+     "commit_depth": 0.957,
+     "support": 0.0075,
+     "score": 0.65,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 78,
+     "token": "7",
+     "p_final": 0.9997,
+     "commit_depth": 0.957,
+     "support": 0.0002,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 79,
+     "token": "0",
+     "p_final": 0.9444,
+     "commit_depth": 0.87,
+     "support": 0.1868,
+     "score": 0.579,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 80,
+     "token": " feet",
+     "p_final": 0.9942,
+     "commit_depth": 0.826,
+     "support": 0.014,
+     "score": 0.606,
+     "in_prompt": false,
+     "flag": true
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Challenger Deep",
+    "explanation": "The Challenger Deep in the Mariana Trench is widely recognized as the deepest point in the Earth's oceans.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Who was the Roman emperor when Pompeii was buried in 79 AD?",
+   "tier": "hard",
+   "answer": "Pompeii was buried in 79 AD under the Roman emperor Augustus.",
+   "correct": false,
+   "max_score": 0.834,
+   "spans": [
+    "Pompe",
+    "under",
+    "August"
+   ],
+   "tokens": [
+    {
+     "pos": 35,
+     "token": "P",
+     "p_final": 0.4969,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.834,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "om",
+     "p_final": 0.9903,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.655,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": "pe",
+     "p_final": 0.9996,
+     "commit_depth": 0.913,
+     "support": 0.0017,
+     "score": 0.637,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": "ii",
+     "p_final": 0.9991,
+     "commit_depth": 0.87,
+     "support": 0.0399,
+     "score": 0.61,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " was",
+     "p_final": 0.996,
+     "commit_depth": 0.826,
+     "support": 0.3966,
+     "score": 0.478,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " buried",
+     "p_final": 0.981,
+     "commit_depth": 1.0,
+     "support": 0.0003,
+     "score": 0.673,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " in",
+     "p_final": 0.9883,
+     "commit_depth": 0.913,
+     "support": 0.0161,
+     "score": 0.636,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 42,
+     "token": " ",
+     "p_final": 0.9958,
+     "commit_depth": 0.696,
+     "support": 0.9938,
+     "score": 0.235,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": "7",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.9187,
+     "score": 0.273,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": "9",
+     "p_final": 0.9997,
+     "commit_depth": 0.826,
+     "support": 0.0679,
+     "score": 0.586,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 45,
+     "token": " AD",
+     "p_final": 0.9996,
+     "commit_depth": 0.696,
+     "support": 0.9502,
+     "score": 0.249,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " under",
+     "p_final": 0.4664,
+     "commit_depth": 0.826,
+     "support": 0.246,
+     "score": 0.705,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": " the",
+     "p_final": 0.9305,
+     "commit_depth": 0.783,
+     "support": 0.6789,
+     "score": 0.391,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": " Roman",
+     "p_final": 0.8973,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.686,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": " emperor",
+     "p_final": 0.6159,
+     "commit_depth": 0.913,
+     "support": 0.008,
+     "score": 0.763,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": " August",
+     "p_final": 0.6292,
+     "commit_depth": 0.913,
+     "support": 0.0002,
+     "score": 0.761,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 51,
+     "token": "us",
+     "p_final": 0.9995,
+     "commit_depth": 0.609,
+     "support": 0.995,
+     "score": 0.205,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": ".",
+     "p_final": 0.8677,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.682,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": "<|im_end|>",
+     "p_final": 0.8262,
+     "commit_depth": 0.826,
+     "support": 0.0813,
+     "score": 0.64,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Titus",
+    "explanation": "Pompeii was buried during the eruption of Mount Vesuvius in 79 AD, which occurred during the reign of Emperor Titus, not Augustus.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the capital city of Palau?",
+   "tier": "hard",
+   "answer": "The capital city of Palau is Nha Trang.",
+   "correct": false,
+   "max_score": 0.835,
+   "spans": [
+    "The",
+    "Nha Trang"
+   ],
+   "tokens": [
+    {
+     "pos": 28,
+     "token": "The",
+     "p_final": 0.825,
+     "commit_depth": 0.913,
+     "support": 0.2114,
+     "score": 0.626,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 29,
+     "token": " capital",
+     "p_final": 0.9991,
+     "commit_depth": 0.739,
+     "support": 0.999,
+     "score": 0.247,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " city",
+     "p_final": 0.998,
+     "commit_depth": 0.739,
+     "support": 0.861,
+     "score": 0.293,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " of",
+     "p_final": 1.0,
+     "commit_depth": 0.522,
+     "support": 0.9994,
+     "score": 0.174,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " Pal",
+     "p_final": 0.9995,
+     "commit_depth": 0.826,
+     "support": 0.0347,
+     "score": 0.597,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "au",
+     "p_final": 1.0,
+     "commit_depth": 0.783,
+     "support": 0.0725,
+     "score": 0.57,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " is",
+     "p_final": 0.9939,
+     "commit_depth": 0.783,
+     "support": 0.1091,
+     "score": 0.56,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " N",
+     "p_final": 0.9558,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.681,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": "ha",
+     "p_final": 0.4941,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.835,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 37,
+     "token": " Tr",
+     "p_final": 0.6906,
+     "commit_depth": 0.957,
+     "support": 0.001,
+     "score": 0.755,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": "ang",
+     "p_final": 0.9957,
+     "commit_depth": 0.913,
+     "support": 0.0681,
+     "score": 0.616,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 39,
+     "token": ".",
+     "p_final": 0.9077,
+     "commit_depth": 0.826,
+     "support": 0.0001,
+     "score": 0.639,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "<|im_end|>",
+     "p_final": 0.9814,
+     "commit_depth": 0.783,
+     "support": 0.5985,
+     "score": 0.401,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Ngerulmud",
+    "explanation": "Nha Trang is a city in Vietnam, whereas the capital of Palau is Ngerulmud.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "Which composer wrote the opera The Cunning Little Vixen?",
+   "tier": "hard",
+   "answer": "The opera \"The Cunning Little Vixen\" was written by Wolfgang Amadeus Mozart.",
+   "correct": false,
+   "max_score": 0.945,
+   "spans": [
+    "was written",
+    "Wolfgang Amade",
+    "Mozart"
+   ],
+   "tokens": [
+    {
+     "pos": 31,
+     "token": "The",
+     "p_final": 0.7933,
+     "commit_depth": 0.739,
+     "support": 0.7959,
+     "score": 0.383,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " opera",
+     "p_final": 0.6888,
+     "commit_depth": 0.957,
+     "support": 0.002,
+     "score": 0.755,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": " \"",
+     "p_final": 0.5349,
+     "commit_depth": 0.957,
+     "support": 0.0133,
+     "score": 0.803,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": "The",
+     "p_final": 0.9972,
+     "commit_depth": 0.696,
+     "support": 0.8604,
+     "score": 0.279,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " Cunning",
+     "p_final": 0.8073,
+     "commit_depth": 1.0,
+     "support": 0.002,
+     "score": 0.73,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " Little",
+     "p_final": 0.9931,
+     "commit_depth": 0.87,
+     "support": 0.0218,
+     "score": 0.618,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " V",
+     "p_final": 0.9992,
+     "commit_depth": 0.87,
+     "support": 0.0001,
+     "score": 0.623,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": "ix",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0201,
+     "score": 0.602,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": "en",
+     "p_final": 0.9999,
+     "commit_depth": 0.696,
+     "support": 0.3533,
+     "score": 0.447,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": "\"",
+     "p_final": 0.9988,
+     "commit_depth": 0.783,
+     "support": 0.6271,
+     "score": 0.386,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " was",
+     "p_final": 0.8863,
+     "commit_depth": 0.826,
+     "support": 0.0306,
+     "score": 0.636,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": " written",
+     "p_final": 0.712,
+     "commit_depth": 0.826,
+     "support": 0.007,
+     "score": 0.702,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": " by",
+     "p_final": 0.9981,
+     "commit_depth": 0.739,
+     "support": 0.9309,
+     "score": 0.27,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 44,
+     "token": " Wolfgang",
+     "p_final": 0.1662,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.945,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " Am",
+     "p_final": 0.9877,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.656,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 46,
+     "token": "ade",
+     "p_final": 1.0,
+     "commit_depth": 0.87,
+     "support": 0.0019,
+     "score": 0.623,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": "us",
+     "p_final": 0.9999,
+     "commit_depth": 0.652,
+     "support": 0.9952,
+     "score": 0.219,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": " Mozart",
+     "p_final": 0.9998,
+     "commit_depth": 0.87,
+     "support": 0.022,
+     "score": 0.616,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": ".",
+     "p_final": 0.9809,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.63,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": "<|im_end|>",
+     "p_final": 0.8921,
+     "commit_depth": 1.0,
+     "support": 0.313,
+     "score": 0.598,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "Leoš Janáček",
+    "explanation": "The opera The Cunning Little Vixen was composed by the Czech composer Leoš Janáček, not Wolfgang Amadeus Mozart.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the official language of Suriname?",
+   "tier": "hard",
+   "answer": "The official language of Suriname is Dutch. Suriname is a country located in South America, and Dutch is the official language of the country. Dutch is spoken by the majority of the population, and it is also the language of government,",
+   "correct": true,
+   "max_score": 0.909,
+   "spans": [
+    "The",
+    "Dutch",
+    "country located in South America",
+    "Dutch",
+    "Dutch",
+    "spoken by",
+    "and",
+    "government"
+   ],
+   "tokens": [
+    {
+     "pos": 28,
+     "token": "The",
+     "p_final": 0.9365,
+     "commit_depth": 0.957,
+     "support": 0.2108,
+     "score": 0.603,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 29,
+     "token": " official",
+     "p_final": 0.9995,
+     "commit_depth": 0.609,
+     "support": 0.9975,
+     "score": 0.204,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " language",
+     "p_final": 0.9996,
+     "commit_depth": 0.826,
+     "support": 0.3432,
+     "score": 0.494,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " of",
+     "p_final": 0.9996,
+     "commit_depth": 0.609,
+     "support": 0.9984,
+     "score": 0.204,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " Sur",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.3964,
+     "score": 0.448,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "iname",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.1855,
+     "score": 0.518,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " is",
+     "p_final": 0.996,
+     "commit_depth": 0.783,
+     "support": 0.22,
+     "score": 0.522,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " Dutch",
+     "p_final": 0.7486,
+     "commit_depth": 1.0,
+     "support": 0.0163,
+     "score": 0.745,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 36,
+     "token": ".",
+     "p_final": 0.7997,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.704,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Sur",
+     "p_final": 0.2724,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.909,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 38,
+     "token": "iname",
+     "p_final": 0.9994,
+     "commit_depth": 0.783,
+     "support": 0.057,
+     "score": 0.575,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " is",
+     "p_final": 0.842,
+     "commit_depth": 0.739,
+     "support": 0.4691,
+     "score": 0.476,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 40,
+     "token": " a",
+     "p_final": 0.8856,
+     "commit_depth": 0.783,
+     "support": 0.3617,
+     "score": 0.512,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": " country",
+     "p_final": 0.3345,
+     "commit_depth": 0.957,
+     "support": 0.0263,
+     "score": 0.865,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": " located",
+     "p_final": 0.8444,
+     "commit_depth": 1.0,
+     "support": 0.0056,
+     "score": 0.717,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": " in",
+     "p_final": 0.9583,
+     "commit_depth": 0.913,
+     "support": 0.098,
+     "score": 0.619,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": " South",
+     "p_final": 0.6847,
+     "commit_depth": 1.0,
+     "support": 0.3504,
+     "score": 0.655,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": " America",
+     "p_final": 0.9986,
+     "commit_depth": 0.913,
+     "support": 0.1027,
+     "score": 0.604,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 46,
+     "token": ",",
+     "p_final": 0.7122,
+     "commit_depth": 0.739,
+     "support": 0.3009,
+     "score": 0.575,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 47,
+     "token": " and",
+     "p_final": 0.8884,
+     "commit_depth": 0.826,
+     "support": 0.1484,
+     "score": 0.596,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": " Dutch",
+     "p_final": 0.6541,
+     "commit_depth": 1.0,
+     "support": 0.037,
+     "score": 0.77,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 49,
+     "token": " is",
+     "p_final": 0.9737,
+     "commit_depth": 0.739,
+     "support": 0.6708,
+     "score": 0.365,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": " the",
+     "p_final": 0.7704,
+     "commit_depth": 0.739,
+     "support": 0.9553,
+     "score": 0.338,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 51,
+     "token": " official",
+     "p_final": 0.3592,
+     "commit_depth": 0.913,
+     "support": 0.2196,
+     "score": 0.778,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": " language",
+     "p_final": 0.9995,
+     "commit_depth": 0.739,
+     "support": 0.6098,
+     "score": 0.377,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": " of",
+     "p_final": 0.7952,
+     "commit_depth": 0.913,
+     "support": 0.0054,
+     "score": 0.704,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 54,
+     "token": " the",
+     "p_final": 0.6614,
+     "commit_depth": 0.826,
+     "support": 0.2869,
+     "score": 0.626,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 55,
+     "token": " country",
+     "p_final": 0.8842,
+     "commit_depth": 0.739,
+     "support": 0.8871,
+     "score": 0.323,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 56,
+     "token": ".",
+     "p_final": 0.7817,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.725,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": " Dutch",
+     "p_final": 0.5741,
+     "commit_depth": 1.0,
+     "support": 0.0025,
+     "score": 0.808,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 58,
+     "token": " is",
+     "p_final": 0.9458,
+     "commit_depth": 0.783,
+     "support": 0.3646,
+     "score": 0.491,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 59,
+     "token": " spoken",
+     "p_final": 0.4365,
+     "commit_depth": 1.0,
+     "support": 0.0121,
+     "score": 0.85,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 60,
+     "token": " by",
+     "p_final": 0.948,
+     "commit_depth": 0.826,
+     "support": 0.0018,
+     "score": 0.625,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 61,
+     "token": " the",
+     "p_final": 0.9029,
+     "commit_depth": 0.957,
+     "support": 0.0003,
+     "score": 0.684,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 62,
+     "token": " majority",
+     "p_final": 0.9487,
+     "commit_depth": 0.565,
+     "support": 0.9933,
+     "score": 0.208,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 63,
+     "token": " of",
+     "p_final": 0.9996,
+     "commit_depth": 0.609,
+     "support": 0.9997,
+     "score": 0.203,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 64,
+     "token": " the",
+     "p_final": 0.8073,
+     "commit_depth": 1.0,
+     "support": 0.0114,
+     "score": 0.727,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 65,
+     "token": " population",
+     "p_final": 0.9857,
+     "commit_depth": 0.696,
+     "support": 0.9902,
+     "score": 0.24,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 66,
+     "token": ",",
+     "p_final": 0.5811,
+     "commit_depth": 0.957,
+     "support": 0.0001,
+     "score": 0.792,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 67,
+     "token": " and",
+     "p_final": 0.4631,
+     "commit_depth": 0.913,
+     "support": 0.0706,
+     "score": 0.793,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 68,
+     "token": " it",
+     "p_final": 0.9466,
+     "commit_depth": 0.739,
+     "support": 0.7896,
+     "score": 0.334,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 69,
+     "token": " is",
+     "p_final": 0.9931,
+     "commit_depth": 0.826,
+     "support": 0.0163,
+     "score": 0.606,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 70,
+     "token": " also",
+     "p_final": 0.7626,
+     "commit_depth": 0.87,
+     "support": 0.886,
+     "score": 0.407,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 71,
+     "token": " the",
+     "p_final": 0.4408,
+     "commit_depth": 0.913,
+     "support": 0.032,
+     "score": 0.813,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 72,
+     "token": " language",
+     "p_final": 0.7498,
+     "commit_depth": 0.957,
+     "support": 0.2587,
+     "score": 0.649,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 73,
+     "token": " of",
+     "p_final": 0.6651,
+     "commit_depth": 0.913,
+     "support": 0.0003,
+     "score": 0.749,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 74,
+     "token": " government",
+     "p_final": 0.3514,
+     "commit_depth": 1.0,
+     "support": 0.0253,
+     "score": 0.874,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 75,
+     "token": ",",
+     "p_final": 0.6353,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.774,
+     "in_prompt": false,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Dutch",
+    "explanation": "Dutch is the sole official language of Suriname and is used in government, education, and media.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "In what year was the Rubik's Cube invented?",
+   "tier": "hard",
+   "answer": "The Rubik's Cube was invented in the early 1900s by a匈牙利数学家 named Ernő Rubik.",
+   "correct": false,
+   "max_score": 0.928,
+   "spans": [
+    "in",
+    "early",
+    "1900",
+    "by",
+    "named Ern"
+   ],
+   "tokens": [
+    {
+     "pos": 30,
+     "token": "The",
+     "p_final": 0.9929,
+     "commit_depth": 0.696,
+     "support": 0.9246,
+     "score": 0.259,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " Rub",
+     "p_final": 0.9938,
+     "commit_depth": 0.826,
+     "support": 0.0026,
+     "score": 0.61,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": "ik",
+     "p_final": 1.0,
+     "commit_depth": 0.913,
+     "support": 0.0017,
+     "score": 0.637,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "'s",
+     "p_final": 0.9999,
+     "commit_depth": 0.652,
+     "support": 0.9996,
+     "score": 0.218,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " Cube",
+     "p_final": 0.9997,
+     "commit_depth": 0.87,
+     "support": 0.1749,
+     "score": 0.565,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": " was",
+     "p_final": 0.989,
+     "commit_depth": 0.783,
+     "support": 0.32,
+     "score": 0.491,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " invented",
+     "p_final": 0.9743,
+     "commit_depth": 1.0,
+     "support": 0.011,
+     "score": 0.672,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " in",
+     "p_final": 0.9483,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.669,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": " the",
+     "p_final": 0.7142,
+     "commit_depth": 0.87,
+     "support": 0.0101,
+     "score": 0.715,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 39,
+     "token": " early",
+     "p_final": 0.4558,
+     "commit_depth": 0.913,
+     "support": 0.0021,
+     "score": 0.818,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": " ",
+     "p_final": 0.9978,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 41,
+     "token": "1",
+     "p_final": 0.8215,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.697,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": "9",
+     "p_final": 0.9998,
+     "commit_depth": 0.913,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 43,
+     "token": "0",
+     "p_final": 0.2892,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.904,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 44,
+     "token": "0",
+     "p_final": 0.9996,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.652,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 45,
+     "token": "s",
+     "p_final": 0.9981,
+     "commit_depth": 0.826,
+     "support": 0.0512,
+     "score": 0.592,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 46,
+     "token": " by",
+     "p_final": 0.5263,
+     "commit_depth": 0.826,
+     "support": 0.0,
+     "score": 0.767,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 47,
+     "token": " a",
+     "p_final": 0.3845,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.872,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 48,
+     "token": "匈",
+     "p_final": 0.5194,
+     "commit_depth": 0.913,
+     "support": 0.0002,
+     "score": 0.798,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 49,
+     "token": "牙",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.9647,
+     "score": 0.229,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 50,
+     "token": "利",
+     "p_final": 1.0,
+     "commit_depth": 0.739,
+     "support": 0.6044,
+     "score": 0.378,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 51,
+     "token": "数学",
+     "p_final": 0.6093,
+     "commit_depth": 1.0,
+     "support": 0.0008,
+     "score": 0.797,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 52,
+     "token": "家",
+     "p_final": 0.9999,
+     "commit_depth": 0.739,
+     "support": 0.2708,
+     "score": 0.489,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 53,
+     "token": " named",
+     "p_final": 0.8037,
+     "commit_depth": 0.957,
+     "support": 0.0003,
+     "score": 0.717,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 54,
+     "token": " Er",
+     "p_final": 0.2171,
+     "commit_depth": 1.0,
+     "support": 0.0001,
+     "score": 0.928,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 55,
+     "token": "n",
+     "p_final": 0.5591,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.814,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 56,
+     "token": "ő",
+     "p_final": 0.9675,
+     "commit_depth": 0.957,
+     "support": 0.0099,
+     "score": 0.66,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 57,
+     "token": " Rub",
+     "p_final": 0.8276,
+     "commit_depth": 0.957,
+     "support": 0.0006,
+     "score": 0.709,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 58,
+     "token": "ik",
+     "p_final": 0.9999,
+     "commit_depth": 0.913,
+     "support": 0.0003,
+     "score": 0.638,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 59,
+     "token": ".",
+     "p_final": 0.9558,
+     "commit_depth": 0.87,
+     "support": 0.0,
+     "score": 0.638,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 60,
+     "token": "<|im_end|>",
+     "p_final": 0.3256,
+     "commit_depth": 1.0,
+     "support": 0.0177,
+     "score": 0.886,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "wrong",
+    "correct_answer": "1974",
+    "explanation": "Ernő Rubik invented the Rubik's Cube in 1974, not in the early 1900s.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  },
+  {
+   "q": "What is the capital of Burkina Faso?",
+   "tier": "hard",
+   "answer": "The capital of Burkina Faso is Ouagadougou.",
+   "correct": true,
+   "max_score": 0.667,
+   "spans": [
+    "Ouagadougou"
+   ],
+   "tokens": [
+    {
+     "pos": 29,
+     "token": "The",
+     "p_final": 0.9618,
+     "commit_depth": 0.913,
+     "support": 0.2273,
+     "score": 0.575,
+     "in_prompt": false,
+     "flag": false
+    },
+    {
+     "pos": 30,
+     "token": " capital",
+     "p_final": 0.9995,
+     "commit_depth": 0.739,
+     "support": 0.9994,
+     "score": 0.247,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 31,
+     "token": " of",
+     "p_final": 0.989,
+     "commit_depth": 0.696,
+     "support": 0.9388,
+     "score": 0.256,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 32,
+     "token": " Burk",
+     "p_final": 0.9981,
+     "commit_depth": 0.783,
+     "support": 0.2807,
+     "score": 0.501,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 33,
+     "token": "ina",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0088,
+     "score": 0.606,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 34,
+     "token": " F",
+     "p_final": 1.0,
+     "commit_depth": 0.652,
+     "support": 0.5811,
+     "score": 0.357,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 35,
+     "token": "aso",
+     "p_final": 1.0,
+     "commit_depth": 0.826,
+     "support": 0.0436,
+     "score": 0.594,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 36,
+     "token": " is",
+     "p_final": 0.999,
+     "commit_depth": 0.783,
+     "support": 0.5979,
+     "score": 0.395,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 37,
+     "token": " Ou",
+     "p_final": 0.9855,
+     "commit_depth": 0.913,
+     "support": 0.0007,
+     "score": 0.642,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 38,
+     "token": "ag",
+     "p_final": 0.9988,
+     "commit_depth": 1.0,
+     "support": 0.0,
+     "score": 0.667,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 39,
+     "token": "ad",
+     "p_final": 0.9986,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.653,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 40,
+     "token": "oug",
+     "p_final": 0.9901,
+     "commit_depth": 0.87,
+     "support": 0.0007,
+     "score": 0.626,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 41,
+     "token": "ou",
+     "p_final": 0.9946,
+     "commit_depth": 0.957,
+     "support": 0.0,
+     "score": 0.654,
+     "in_prompt": false,
+     "flag": true
+    },
+    {
+     "pos": 42,
+     "token": ".",
+     "p_final": 0.985,
+     "commit_depth": 0.826,
+     "support": 0.0002,
+     "score": 0.614,
+     "in_prompt": true,
+     "flag": false
+    },
+    {
+     "pos": 43,
+     "token": "<|im_end|>",
+     "p_final": 0.9762,
+     "commit_depth": 0.783,
+     "support": 0.6146,
+     "score": 0.397,
+     "in_prompt": true,
+     "flag": false
+    }
+   ],
+   "judge": {
+    "verdict": "correct",
+    "correct_answer": "Ouagadougou",
+    "explanation": "Ouagadougou is the official capital and largest city of Burkina Faso.",
+    "judge": "gemini-3.1-flash-lite"
+   }
+  }
+ ]
+}

@@ -30,4 +30,4 @@ haluviz = "jspace_viz.server:main"
 packages = ["jspace_viz"]
 
 [tool.setuptools.package-data]
-jspace_viz = ["static/*", "data/chip_baselines/*"]
+jspace_viz = ["static/*"]
