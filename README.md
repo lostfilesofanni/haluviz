@@ -1,112 +1,212 @@
 # haluviz
 
-A J-space visualizer with **hallucination detection** for the original
-**Qwen-1.8B-Chat** (2023). Built on [jspace-viz](https://github.com/Festyve/jspace-viz)
-and the Jacobian-lens method from Anthropic's
-[global workspace paper](https://transformer-circuits.pub/2026/workspace/index.html).
+**See what a language model is thinking at every layer, and catch it making things up.**
 
-Every cell of the grid shows what one layer of the model is *disposed to say*
-at one token. Generated tokens are scored for hallucination from that same
-grid and highlighted in red.
+haluviz runs the original **Qwen-1.8B-Chat** (2023), shows what each of its 24
+layers is about to say at every word, scores every generated word for
+hallucination from those same internals, and turns the score into a
+calibrated *"estimated chance this answer is wrong"*. A stronger model can then
+verify the answer and suggest a fix.
+
+![haluviz after a read: the layer × position grid on the left; verdict gauge, signals, workspace and fix cards on the right](docs/img/screenshot.png)
+
+It is built on the **Jacobian lens** from Anthropic's
+[*Verbalizable Representations Form a Global Workspace in Language Models*](https://transformer-circuits.pub/2026/workspace/index.html)
+and on [Festyve/jspace-viz](https://github.com/Festyve/jspace-viz) (Apache-2.0),
+which is vendored and extended here.
+
+---
+
+## What you see
+
+| panel | meaning |
+|---|---|
+| **layer × position grid** | one column per word, one row per layer. Each cell is the word that layer is leaning toward; blue intensity is confidence. Green columns are the model's own generated words. An orange header means that word was flagged. An orange top edge on a cell means the layer above disagreed, so the model changed its mind there. |
+| **hallucination check** | a gauge from *reliable* to *hallucinated* with the calibrated chance the answer is wrong, the answer with suspicious words marked, and a slider for how strict the word-level flags are. The gauge does not depend on the slider. |
+| **signals** | for every flagged word: the model's confidence in it, how deep in the network it was decided, whether it was in the mid-layer workspace beforehand, and how unstable the prediction was in the last layers. |
+| **in the workspace** | concepts active in the middle layers that are neither in the prompt nor the literal next word: the model's working memory, with English glosses for non-English tokens. |
+| **fix** | **Verify answer** asks Gemini whether the answer is true and what the truth is. **Suggest a fix** shows a safer abstaining answer, the verified correction, and an experimental layer-contrast re-decode. |
+
+Two lenses are available with the segmented control. **Logit lens** reads each
+layer's state directly and is noise in the early layers. **J-lens** reads it
+through a fitted matrix that accounts for what the remaining layers will do,
+so the middle of the network becomes readable (see *Results*).
+
+Before the first read, the right column explains the flow:
+
+![welcome state with the four-step how-it-works card](docs/img/welcome.png)
+
+---
+
+## Quick start
+
+Tested on an Apple-Silicon Mac with 8 GB of RAM; Linux with a GPU works too.
+You need [`uv`](https://docs.astral.sh/uv/) and about 8 GB of free disk.
+
+**1. Install**
+
+```sh
+git clone https://github.com/lostfilesofanni/haluviz && cd haluviz
+uv venv --python 3.12 && uv pip install -e '.[fit]'
+```
+
+**2. Get the model.** One time, about 5 minutes: downloads the 3.7 GB
+community GGUF and converts it into a native Transformers checkpoint under
+`models/`.
+
+```sh
+.venv/bin/python scripts/convert_gguf_to_hf.py
+```
+
+It must end with `self-check answer: The capital of France is Paris.`
+
+**3. Optional: the verifier.** Create a file named `.env` in the project
+folder containing one line. It is git-ignored.
+
+```
+GEMINI_API_KEY=your-key
+```
+
+**4. Optional: the J-lens.** Either download `qwen-1_8b-chat_jlens_wikitext.pt`
+from this repo's Releases page into `lenses/`, or fit your own on a free GPU
+with `colab/fit_lens_colab.ipynb` (Google Colab) or
+`colab/fit_lens_kaggle.ipynb` (Kaggle), about 45 minutes. Without it the app
+runs in logit-lens mode.
+
+**5. Run**
+
+```sh
+.venv/bin/haluviz
+```
+
+Open <http://127.0.0.1:8321>, pick an example or type a factual question,
+press **Read**.
+
+- The first read of a question takes about 30 s on an M1; generation
+  dominates, so set *new tokens* to 16 for one-sentence answers.
+- Re-reads of the same question, for example after switching lens or
+  pinning a word, reuse the cached answer and take a few seconds.
+- The server holds about 2.4 GB of memory while it runs and exits by itself
+  after 10 idle minutes (`--idle-timeout 0` disables that). Run only one
+  model-loading process at a time on an 8 GB machine.
+
+The layout works on narrow screens too; the cards stack in reading order.
+
+<img src="docs/img/narrow.png" alt="narrow layout: grid, then verdict gauge" width="360">
+
+---
 
 ## How the detector works
 
-For each token the model generates, three signals are read off the column that
-produced it:
+For each generated word, four signals are read off the column that produced it:
 
 | signal | question it answers |
 |---|---|
-| `p_final` | how confident was the output layer in the token it chose |
-| `commit_depth` | how deep into the network did that token become (and stay) top-1 — 0 = early, 1 = only at the output |
-| `support` | the max probability the token had in the mid-depth "workspace" band (25–85% of layers) before being emitted |
+| **confidence** (`p_final`) | how sure the output layer was of the word it chose |
+| **decided at** (`commit_depth`) | how deep in the network the word became, and stayed, the top choice; 100 % means only at the very end |
+| **in workspace** (`support`) | the best probability the word had in the middle layers before being spoken |
+| **instability** | how much the prediction kept changing across the last third of the layers (shown, not yet scored) |
 
-`score = mean(1 - p_final, commit_depth, 1 - support)`. Tokens over the
-threshold are flagged, except punctuation and tokens copied from the prompt.
-Contiguous flagged tokens become spans. Code: `jspace_viz/hallucination.py`.
+`score = mean(1 − confidence, decided-at, 1 − in-workspace)`. Punctuation
+and words copied from the prompt are never flagged, and flags apply to whole
+words. The answer-level risk is `(max + mean) / 2` of the word scores, mapped
+through a calibration table measured on real answers (below).
 
-Example, logit-lens mode:
+The detector reads only the model's internals, so it catches *guessing*. A
+confident false belief looks like knowledge from the inside; that is what
+the verifier is for.
 
-```
-Q: What is the capital city of Palau?
-A: The capital city of Palau is Nha Trang.        ← flagged: "Nha Trang" (0.84)
-Q: Who won the Nobel Prize in Literature in 1907?
-A: Ernest Hemingway won the Nobel Prize ...       ← flagged: "Ernest Heming" (0.89)
-```
+### Two kinds of failure it shows
 
-Both are wrong (Ngerulmud; Kipling). The detector has no access to the truth:
-it only reads the model's internals. `scripts/eval_detector.py` measures how
-well that works on `data/questions.json`.
+**Fabricated fact.** *"What is the capital city of Palau?"* → *Nha Trang* (a
+city in Vietnam). The word is flagged, the gauge reads 80 %, and the J-lens
+column that produced it shows the model was thinking *city → island,
+archipelago → Koror* before "Nha" appeared with no support anywhere.
 
-### Measured (logit-lens mode, labels from the Gemini judge)
+**Task drift.** *"How many r's in freshness?"* → a definition of food
+freshness. The gauge reads 94 %, and the workspace shows the food-safety
+cluster (*food, pantry, safety, regulation*) that hijacked the answer. The
+counting part of the question never appears.
 
-| set | answers | wrong | AUROC |
+![task drift: the model defines food freshness instead of counting letters; the workspace shows the food-safety cluster](docs/img/task-drift.png)
+
+---
+
+## Results
+
+Labels come from the Gemini judge, not hand labeling. Honest refusals
+("I don't have information on…") are excluded.
+
+| evaluation | answers | wrong | AUROC |
 |---|---|---|---|
-| PopQA, 100 sampled (19 refusals excluded) | 81 | 71 | 0.80 |
-| hand set | 30 | 11 | — |
-| pooled | 111 | 82 | **0.90** |
+| PopQA, 100 long-tail questions sampled | 81 | 71 (12 % accuracy) | 0.80 |
+| hand set, 30 questions | 30 | 11 | 0.92 |
+| **pooled, logit lens** | 111 | 82 | **0.90** |
+| pooled, J-lens | 111 | 82 | 0.87 |
 
-Calibrated risk shown in the UI (pooled): answer score < 0.70 → 8 % wrong,
-0.70–0.75 → 36 %, 0.75–0.80 → 75 %, 0.80–0.85 → 91 %, ≥ 0.85 → 100 %.
+Calibrated risk shown by the gauge (pooled): answer score < 0.70 → 8 % wrong
+· 0.70–0.75 → 36 % · 0.75–0.80 → 75 % · 0.80–0.85 → 91 % · ≥ 0.85 → 100 %.
 
-With the fitted J-lens (30 WikiText prompts, Colab T4) the same 111
-questions give AUROC 0.87: the J-lens makes the middle layers *readable*
-(the Palau column shows city → island/archipelago → Koror before "Nha"
-appears with zero support) but does not detect more hallucinations than
-output confidence on this model. Confident errors are invisible to the
-detector by construction, which is what the **Verify** button (Gemini judge)
-is for. Full details: `docs/IMPLEMENTATION.md`.
+**What the J-lens changes.** It does not detect more hallucinations than
+output confidence on this model, but it makes them legible: the two
+workspace signals stay near chance at the question level under both lenses,
+while the per-layer readout becomes meaningful instead of noise.
 
-## Setup (Apple Silicon, 8 GB is enough)
+**What the fixes do.** Abstention and the verified correction work. The
+DoLa-style re-decode changes wording but does not repair facts the model
+never had; it is kept, labelled experimental, as a measured negative result.
 
-```sh
-uv venv --python 3.12 && uv pip install -e '.[fit]'
-.venv/bin/python scripts/convert_gguf_to_hf.py     # ~2 min; downloads the f16 GGUF
-.venv/bin/haluviz                                  # http://127.0.0.1:8321
-```
+Full method, numbers, and the decisions log: [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md).
 
-`convert_gguf_to_hf.py` turns the community GGUF of Qwen-1.8B-Chat into a
-native `Qwen2ForCausalLM` checkpoint (the architectures are identical), so no
-2023-era remote code is needed. The server loads it with int8 weights
-(`dtype="int8"` in `jspace_viz/presets.py`): fp16 weights swap on an 8 GB
-machine; int8 does not.
+---
 
-A read with 32 generated tokens takes ~30 s on an M1.
+## Evaluate it yourself
 
-The server holds ~2.4 GB of wired memory while it runs. Run it in the
-foreground and Ctrl+C when done; it also exits by itself after 10 minutes
-without a read (`--idle-timeout 0` to disable).
-
-## J-lens vs logit lens
-
-Without a fitted lens the server runs in **logit-lens** mode (raw residual
-→ unembed). To get the real J-lens, fit one (hours, resumable):
+All evaluations talk to a running server, so start `haluviz` first.
 
 ```sh
-.venv/bin/python scripts/fit_lens.py --preset qwen-1.8b-chat --n-prompts 20 --max-seq-len 64
+.venv/bin/python scripts/eval_detector.py --url http://127.0.0.1:8321          # hand set (data/questions.json)
+.venv/bin/python scripts/eval_popqa.py    --url http://127.0.0.1:8321 --n 100  # PopQA + calibration table
+.venv/bin/python scripts/judge_labels.py  data/popqa_results.json              # re-label with the Gemini judge
+.venv/bin/python scripts/eval_fix.py      --url http://127.0.0.1:8321          # greedy vs DoLa re-decode
 ```
 
-It lands in `lenses/` and the server picks it up on restart. Run the fit, the
-server, and the eval one at a time — each loads its own copy of the model.
+Add your own questions to `data/questions.json` as
+`{"q": "...", "answers": ["accepted", "aliases"]}`. Re-running
+`eval_popqa.py` rewrites `data/calibration.json`, which the gauge reads live.
 
-## Evaluate the detector
+---
 
-```sh
-.venv/bin/python scripts/eval_detector.py        # stop the server first
+## Limitations
+
+- The model is deliberately weak: 2023, 1.8 B parameters, wrong on 88 % of
+  long-tail facts. Letter-counting questions are unwinnable for it because it
+  never sees letters, only word pieces.
+- Confident errors are invisible to the detector by construction.
+- The lens was fitted on 30 prompts, where the paper uses 1000. 111 labeled
+  questions is enough to show the effect, not to tune a learned combination.
+- Gemini is the ground truth for labels and verification, with its own error
+  rate. It agreed with simple alias matching on 70 of 81 PopQA answers and
+  was right on inspection where they disagreed.
+- Speed is bounded by memory on an 8 GB laptop, not by the code.
+
+---
+
+## Project layout
+
+```
+jspace_viz/              server, int8 model loading, lens, grid readout, detector, verifier, fixes, static UI
+scripts/                 convert_gguf_to_hf.py · fit_lens.py · eval_detector.py · eval_popqa.py · judge_labels.py · eval_fix.py
+colab/                   notebooks that fit the J-lens on a free GPU (Colab, Kaggle)
+data/                    question sets, evaluation results, calibration tables
+docs/IMPLEMENTATION.md   the full write-up
+docs/img/                screenshots
+models/  lenses/         created locally; git-ignored
 ```
 
-Runs every question in `data/questions.json`, labels the answer right/wrong by
-substring match, and reports AUROC / precision / recall of the max token score.
-Add your own questions there.
-
-## Roadmap
-
-- **Phase 1 (this):** detect and highlight.
-- Phase 2: suggest a fix — DoLa-style layer-contrast re-decoding using the
-  per-layer logits already computed, plus abstention when the score is high.
-- Phase 3: J-space steering — inject the lens vector of the correct concept
-  mid-network and regenerate.
-
-## Credits
+## Credits and license
 
 `jspace_viz/` is vendored from [Festyve/jspace-viz](https://github.com/Festyve/jspace-viz)
-(Apache-2.0) with modifications; see `NOTICE`.
+(Apache-2.0, Michael Zhang) with modifications; the lens method follows
+[anthropics/jacobian-lens](https://github.com/anthropics/jacobian-lens). See
+`NOTICE`. This project is Apache-2.0.
