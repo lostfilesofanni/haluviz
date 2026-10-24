@@ -73,12 +73,13 @@ def info() -> dict[str, Any]:
         "chip_baseline": state.get("chip_baseline", {}),
         "verifier": api_key() is not None,
         "calibration": load_calibration(),
+        "calibration_jlens": load_calibration("_jlens"),
     }
 
 
-def load_calibration() -> dict[str, Any] | None:
+def load_calibration(tag: str = "") -> dict[str, Any] | None:
     """Score-bin -> P(wrong) table from scripts/eval_popqa.py, if it has been run."""
-    path = Path(__file__).parent.parent / "data" / "calibration.json"
+    path = Path(__file__).parent.parent / "data" / f"calibration{tag}.json"
     if path.exists():
         import json
 

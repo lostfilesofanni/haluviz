@@ -1,0 +1,67 @@
+{
+  "source": "PopQA + hand set",
+  "mode": "jlens",
+  "n": 111,
+  "metric": "answer_score",
+  "bins": [
+    {
+      "lo": 0.0,
+      "hi": 0.7,
+      "n": 18,
+      "p_wrong": 0.167
+    },
+    {
+      "lo": 0.7,
+      "hi": 0.75,
+      "n": 13,
+      "p_wrong": 0.538
+    },
+    {
+      "lo": 0.75,
+      "hi": 0.8,
+      "n": 25,
+      "p_wrong": 0.8
+    },
+    {
+      "lo": 0.8,
+      "hi": 0.85,
+      "n": 31,
+      "p_wrong": 0.935
+    },
+    {
+      "lo": 0.85,
+      "hi": 0.9,
+      "n": 22,
+      "p_wrong": 0.955
+    },
+    {
+      "lo": 0.9,
+      "hi": 0.95,
+      "n": 2,
+      "p_wrong": 1.0
+    },
+    {
+      "lo": 0.95,
+      "hi": 1.0,
+      "n": 0,
+      "p_wrong": 1.0
+    }
+  ],
+  "summary": {
+    "mode": "jlens",
+    "n": 130,
+    "sources": [
+      "PopQA",
+      "data/eval_results_jlens.json"
+    ],
+    "n_abstained": 19,
+    "n_scored": 111,
+    "n_wrong": 82,
+    "accuracy": 0.261,
+    "labels": "judge",
+    "auroc_answer_score": 0.872,
+    "auroc_max_score": 0.873,
+    "auroc_min_p_final": 0.867,
+    "auroc_mean_score": 0.758
+  }
+}

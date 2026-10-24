@@ -521,7 +521,7 @@ function renderHalu() {
     else cur = null;
   }
   // Verdict: calibrated P(wrong) from PopQA bins when available, else the raw score.
-  const cal = INFO && INFO.calibration;
+  const cal = INFO && ((mode === "jlens" && INFO.calibration_jlens) || INFO.calibration);
   const metric = cal ? (H[cal.metric] ?? H.max_score) : H.max_score;
   const bin = cal && cal.bins.find((b) => metric >= b.lo && metric < b.hi);
   const pWrong = bin ? bin.p_wrong : null;

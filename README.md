@@ -48,9 +48,11 @@ well that works on `data/questions.json`.
 Calibrated risk shown in the UI (pooled): answer score < 0.70 → 8 % wrong,
 0.70–0.75 → 36 %, 0.75–0.80 → 75 %, 0.80–0.85 → 91 %, ≥ 0.85 → 100 %.
 
-Caveats: under the logit lens two of the three signals are near-constant
-(early layers never agree with the output), so `p_final` does most of the
-work until a J-lens is fitted; confident errors are invisible to the
+With the fitted J-lens (30 WikiText prompts, Colab T4) the same 111
+questions give AUROC 0.87: the J-lens makes the middle layers *readable*
+(the Palau column shows city → island/archipelago → Koror before "Nha"
+appears with zero support) but does not detect more hallucinations than
+output confidence on this model. Confident errors are invisible to the
 detector by construction, which is what the **Verify** button (Gemini judge)
 is for. Full details: `docs/IMPLEMENTATION.md`.
 

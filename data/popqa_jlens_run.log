@@ -1,0 +1,128 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Repo card metadata block was not found. Setting CardData to empty.
+[1/100] ✗ 0.98 What genre is The Carpenter?                       → 'The Carpenter is a comedy film directed by John Krasinski an'  (58s/q)
+[2/100] ✗ 0.95 Who was the screenwriter for Skin?                 → 'The screenwriter for Skin is not specified in the informatio'  (44s/q)
+[3/100] ✗ 0.98 Who was the producer of The Days?                  → 'The Days were a British pop group that formed in 1978 and co'  (42s/q)
+[4/100] ✗ 0.97 Who was the composer of Tron?                      → 'The composer of Tron is Yannick Carpentier.'  (43s/q)
+[5/100] ✗ 0.89 What is Manga the capital of?                      → 'Manga is not a capital city, but rather a Japanese manga and'  (43s/q)
+[6/100] ✗ 0.97 In what country is Norfolk?                        → 'Norfolk is a county located in the East of England, England.'  (42s/q)
+[7/100] ✗ 0.83 What genre is Terra?                               → "I'm sorry, but I'm not sure what you're asking. Could you pl"  (42s/q)
+[8/100] ✗ 0.96 Who was the screenwriter for The Business?         → 'The screenwriter for The Business is David Fincher.'  (40s/q)
+[9/100] ✗ 0.95 Who was the producer of Interview?                 → 'Interview was produced by David Fincher.'  (38s/q)
+[10/100] ✗ 0.98 Who was the screenwriter for The Wedding?          → 'The screenwriter for The Wedding is David Fincher.'  (38s/q)
+[11/100] ✗ 0.99 Who was the composer of The Seasons?               → 'The composer of The Seasons is John William Tevis.'  (37s/q)
+[12/100] ✗ 0.80 What is the religion of Sabine Baring-Gould?       → "I'm sorry, but I cannot provide answers on political matters"  (37s/q)
+[13/100] ✓ 0.88 What is the capital of Sangrur district?           → 'Sangrur is a district in Himachal Pradesh, India. As of 2021'  (37s/q)
+[14/100] ✗ 0.92 In what city was Eduardo Hurtado born?             → 'Eduardo Hurtado was born in Mexico City, Mexico.'  (36s/q)
+[15/100] ✗ 0.99 What genre is It Sounds Like?                      → 'It Sounds Like is a podcast hosted by the music journalist a'  (37s/q)
+[16/100] ✗ 0.97 Who was the producer of Backstage?                 → 'Backstage is a reality TV show that was produced by ViacomCB'  (37s/q)
+[17/100] ✗ 0.97 Who was the screenwriter for The Crown of the Russ → 'The screenwriter for The Crown of the Russian Empire was Ale'  (39s/q)
+[18/100] ✗ 0.82 In what country is Centre?                         → "I'm sorry, but I'm not sure what you're asking. Could you pl"  (40s/q)
+[19/100] ✓ 0.94 Who was the producer of Ted?                       → 'The producer of Ted is Seth MacFarlane.'  (39s/q)
+[20/100] ✗ 0.90 Who was the director of Bang?                      → "I'm sorry, but I don't have any information on a movie calle"  (39s/q)
+[21/100] ✗ 0.94 Who was the producer of Blow?                      → 'Blow is a 2017 American biographical drama film directed by '  (40s/q)
+[22/100] ✗ 0.96 Who is the author of Shelter?                      → 'Shelter is a novel by Sarah Pearse, published in 2012. It is'  (39s/q)
+[23/100] ✓ 0.73 What is the capital of City of Newcastle?          → 'The capital of City of Newcastle is Newcastle upon Tyne.'  (39s/q)
+[24/100] ✗ 0.88 Who was the composer of New Age?                   → 'The New Age movement is a diverse and multifaceted cultural '  (39s/q)
+[25/100] ✗ 0.88 Who was the director of Sisters?                   → "I'm sorry, but I don't have any information on who directed "  (39s/q)
+[26/100] ✗ 0.96 Who was the director of Monster?                   → 'The director of Monster is John Landis.'  (39s/q)
+[27/100] ✗ 0.88 Who is the author of The Great Perhaps?            → 'The Great Perhaps by George Orwell is a novel that was first'  (40s/q)
+[28/100] ✗ 0.91 Who was the director of Middle of the Night?       → 'I\'m sorry, but I don\'t have information on the director of "'  (41s/q)
+[29/100] ✓ 0.90 In what country is El Limón?                       → 'El Limón is a citrus fruit that is native to Central and Sou'  (41s/q)
+[30/100] ✓ 0.73 In what country is Magnolia Bible College?         → 'Magnolia Bible College is located in Mississippi, United Sta'  (43s/q)
+[31/100] ✓ 0.77 What is the capital of Alaska?                     → 'The capital of Alaska is Juneau.'  (46s/q)
+[32/100] ✗ 0.82 What is Henk Bleker's occupation?                  → "I'm sorry, but I don't have any information on Henk Bleker's"  (46s/q)
+[33/100] ✗ 0.95 Who was the director of Friends?                   → 'The director of Friends was David Crane.'  (46s/q)
+[34/100] ✗ 0.98 Who was the director of The Wacky World of Mother  → 'The director of The Wacky World of Mother Goose was Robert M'  (46s/q)
+[35/100] ✗ 0.96 What genre is Spring Is Here?                      → 'Spring Is Here is a pop song by the American singer-songwrit'  (46s/q)
+[36/100] ✗ 0.90 Who was the director of Submission?                → "I'm sorry, but I don't have information on who directed Subm"  (46s/q)
+[37/100] ✗ 0.89 Who was the director of The Supplement?            → "I'm sorry, but I don't have any information on a movie calle"  (46s/q)
+[38/100] ✗ 0.93 Who was the director of I Love You?                → 'I Love You is a 2001 American romantic comedy film directed '  (45s/q)
+[39/100] ✗ 0.85 What is Port Macquarie the capital of?             → 'Port Macquarie is not the capital of any country. It is a co'  (49s/q)
+[40/100] ✗ 0.90 Who was the director of Manhattan?                 → 'The director of Manhattan is not specified in the question. '  (49s/q)
+[41/100] ✗ 0.95 Who was the screenwriter for Into the Wild?        → 'The screenwriter for "Into the Wild" is Jon M. Chu.'  (221s/q)
+[42/100] ✗ 0.94 In what country is Camden?                         → 'Camden is a town located in the county of Northumbria, Engla'  (241s/q)
+[43/100] ✓ 0.95 What is Frederick Dundas's occupation?             → 'Frederick Dundas was a Canadian politician who served as the'  (237s/q)
+[44/100] ✗ 0.85 What is Tura the capital of?                       → 'Tura is the capital of the Taurus region in Russia.'  (236s/q)
+[45/100] ✗ 0.94 Who was the screenwriter for Most?                 → 'Most (also known as "Mostly") is a television series that ai'  (282s/q)
+[46/100] ✗ 0.90 Who was the director of Impulse?                   → "I'm sorry, but I don't have any information on a movie calle"  (482s/q)
+[47/100] ✓ 0.95 In what country is 1976 Swedish general election?  → 'The 1976 Swedish general election was held on 18 September 1'  (710s/q)
+[48/100] ✗ 0.97 In what city was Bob Warlick born?                 → 'Bob Warlick was born in New York City.'  (822s/q)
+[49/100] ✗ 0.97 Who is the author of Sir Thursday?                 → 'Sir Thursday is a character in the novel "The Lord of the Ri'  (825s/q)
+[50/100] ✗ 0.70 In what city was Peter Philpott born?              → 'Peter Philpott was born in London, England.'  (910s/q)
+[51/100] ✗ 0.95 Who was the screenwriter for The Last Moment?      → 'The Last Moment is a 2017 American psychological thriller fi'  (894s/q)
+[52/100] ✗ 0.95 Who was the producer of Les Girls?                 → 'Les Girls is a French film directed by Jean-Luc Godard. The '  (939s/q)
+[53/100] ✗ 0.95 Who was the composer of I Miss You?                → 'I Miss You is a song by American singer-songwriter Taylor Sw'  (1039s/q)
+[54/100] ✓ 0.92 What genre is One?                                 → 'One is a song by the American rock band Imagine Dragons. It '  (1107s/q)
+[55/100] ✗ 0.94 Who was the screenwriter for Beautiful People?     → 'The screenwriter for Beautiful People is Paul Thomas Anderso'  (1136s/q)
+[56/100] ✓ 0.90 Who was the director of The Birds?                 → 'The director of The Birds is Alfred Hitchcock.'  (1198s/q)
+[57/100] ✗ 0.93 Who was the producer of 18?                        → 'The producer of 18 is not specified in the question.'  (1243s/q)
+[58/100] ✗ 0.95 Who was the producer of Office Space?              → 'The producer of Office Space was Steve Jobs.'  (1222s/q)
+[59/100] ✓ 0.67 What is Prague the capital of?                     → 'Prague is the capital of the Czech Republic.'  (1244s/q)
+[60/100] ✗ 0.90 Who was the producer of Leader?                    → "I'm sorry, but I don't have information on who the producer "  (1225s/q)
+[61/100] ✗ 0.91 Who is the father of Ma Xiu?                       → 'Ma Xiu is a historical figure in Chinese literature. He was '  (1206s/q)
+[62/100] ✗ 0.96 What genre is Infinity?                            → 'Infinity is a science fiction novel written by Robert A. Hei'  (1189s/q)
+[63/100] ✗ 0.93 Who was the screenwriter for Paradise?             → "I'm sorry, but I don't have information on a specific screen"  (1171s/q)
+[64/100] ✗ 0.82 Who was the screenwriter for 2012?                 → 'The screenwriter for 2012 was Christopher Nolan.'  (1154s/q)
+[65/100] ✓ 0.96 What is James M. Geraghty's occupation?            → 'James M. Geraghty is an American politician who served as th'  (1137s/q)
+[66/100] ✓ 0.89 What sport does Dan Parkinson play?                → 'Dan Parkinson is an Australian rules football player who pla'  (1121s/q)
+[67/100] ✗ 0.95 Who was the director of Covert One: The Hades Fact → 'Covert One: The Hades Factor is a 2007 action film directed '  (1105s/q)
+[68/100] ✗ 0.93 What genre is André Duchesne?                      → 'André Duchesne is a French film director, screenwriter, and '  (1089s/q)
+[69/100] ✗ 0.92 Who was the composer of Paris?                     → 'The composer of Paris is not well-known, as there are many c'  (1074s/q)
+[70/100] ✓ 0.99 What genre is Infected?                            → 'Infected is a science fiction horror game developed by Fearn'  (1060s/q)
+[71/100] ✗ 0.88 Who was the director of After Hours?               → 'I\'m sorry, but I don\'t have information on the director of "'  (1052s/q)
+[72/100] ✗ 0.98 Who was the screenwriter for The Quarterback?      → 'The screenwriter for The Quarterback is David Fincher.'  (1037s/q)
+[73/100] ✗ 0.93 What is the religion of Marcellus II?              → 'Marcellus II was a Roman Emperor who ruled from 28 BC to 21 '  (1024s/q)
+[74/100] ✗ 0.98 Who was the composer of 8½?                        → 'The composer of 8½ is Philip Glass.'  (1011s/q)
+[75/100] ✗ 0.86 What is Frequency's occupation?                    → "I'm sorry, but I don't have any information on a person name"  (999s/q)
+[76/100] ✗ 0.95 Who was the producer of The Last Hangman?          → 'The Last Hangman was produced by the production company The '  (986s/q)
+[77/100] ✗ 0.93 Who was the producer of Super?                     → 'Super is a Japanese superhero film series produced by Toho C'  (975s/q)
+[78/100] ✗ 0.97 Who was the director of The Wild Life?             → 'The Wild Life is a 1994 American nature documentary film dir'  (963s/q)
+[79/100] ✗ 0.90 What sport does Indrek Pertelson play?             → "I'm sorry, but I don't have any information on a specific pe"  (951s/q)
+[80/100] ✗ 0.90 What is Harvey Benge's occupation?                 → "I'm sorry, but I don't have any information on Harvey Benge'"  (941s/q)
+[81/100] ✗ 0.96 Who was the screenwriter for Michael?              → 'Michael is a TV show, not a movie, so there is no screenwrit'  (930s/q)
+[82/100] ✗ 0.95 Who was the director of Pilot?                     → 'The director of Pilot is David Fincher.'  (919s/q)
+[83/100] ✓ 0.96 In what city was Billy McGinty born?               → 'Billy McGinty was born in the city of Glasgow, Scotland.'  (908s/q)
+[84/100] ✗ 0.93 What genre is The Firm?                            → 'The Firm is a legal drama television series that aired on AB'  (898s/q)
+[85/100] ✗ 0.97 Who is the author of Landscape?                    → 'Landscape is a book written by James T. Smith. It was first '  (888s/q)
+[86/100] ✗ 0.96 Who was the producer of The Farm: Angola, USA?     → 'The Farm: Angola, USA is a television series that aired on t'  (878s/q)
+[87/100] ✗ 0.96 Who is the author of Time After Time?              → 'The author of "Time After Time" is George Orwell.'  (868s/q)
+[88/100] ✗ 0.97 Who was the screenwriter for Sundown?              → 'The screenwriter for Sundown is not specified in the informa'  (859s/q)
+[89/100] ✗ 0.96 Who was the producer of Trade?                     → 'Trade is a television series that aired on ABC from 2007 to '  (850s/q)
+[90/100] ✓ 0.84 In what country is Oscar?                          → 'Oscar is an American film industry awards ceremony that is h'  (841s/q)
+[91/100] ✗ 0.97 Who was the screenwriter for The Theme?            → 'The screenwriter for The Theme is not specified in the infor'  (832s/q)
+[92/100] ✗ 0.95 Who was the producer of Those Were the Days?       → 'Those Were the Days was a television series that aired from '  (824s/q)
+[93/100] ✗ 0.96 Who was the screenwriter for Blackball?            → 'The screenwriter for Blackball is David Fincher.'  (816s/q)
+[94/100] ✗ 0.87 Who was the director of Tested?                    → "I'm sorry, but I don't have any information on a movie calle"  (811s/q)
+[95/100] ✗ 0.88 In what city was Ray Strauss born?                 → 'Ray Strauss was born in New York City.'  (803s/q)
+[96/100] ✗ 0.89 Who was the screenwriter for Tobacco?              → "I'm sorry, but I don't have any information on a specific sc"  (796s/q)
+[97/100] ✗ 0.95 Who was the screenwriter for Elizabeth?            → 'The screenwriter for Elizabeth is screenwriter David Fincher'  (789s/q)
+[98/100] ✗ 0.88 What is the religion of Colin James?               → "I'm sorry, but I don't have any information on a person name"  (781s/q)
+[99/100] ✗ 0.82 In what country is Park metro station?             → 'Park metro station is located in South Korea.'  (774s/q)
+[100/100] ✓ 0.67 What is the capital of Ukraine?                    → 'The capital of Ukraine is Kiev.'  (767s/q)
+
+{
+  "mode": "jlens",
+  "n": 130,
+  "sources": [
+    "PopQA",
+    "data/eval_results_jlens.json"
+  ],
+  "n_abstained": 19,
+  "n_scored": 111,
+  "n_wrong": 82,
+  "accuracy": 0.261,
+  "labels": "judge",
+  "auroc_answer_score": 0.872,
+  "auroc_max_score": 0.873,
+  "auroc_min_p_final": 0.867,
+  "auroc_mean_score": 0.758
+}
+  score 0.00–0.70: n= 18  P(wrong)=0.17
+  score 0.70–0.75: n= 13  P(wrong)=0.54
+  score 0.75–0.80: n= 25  P(wrong)=0.80
+  score 0.80–0.85: n= 31  P(wrong)=0.94
+  score 0.85–0.90: n= 22  P(wrong)=0.95
+  score 0.90–0.95: n=  2  P(wrong)=1.00
+  score 0.95–1.00: n=  0  P(wrong)=1.00
+wrote /Users/apty/projects/haluviz/scripts/../data/calibration_jlens.json

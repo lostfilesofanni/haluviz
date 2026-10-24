@@ -289,10 +289,46 @@ Two consequences:
   logit lens both had support ≈ 0 and commit ≈ 1. Whether this lifts the
   question-level AUROC is measured in §9.2.
 
-### 9.2 Logit lens vs J-lens on the same 130 questions
-*(run in progress: `data/eval_results_jlens.json`, `data/popqa_results_jlens.json`,
-`data/calibration_jlens.json`; judge labels transfer because greedy output is
-identical across lens modes.)*
+### 9.2 Logit lens vs J-lens on the same 130 questions (judge labels, 111 scored)
+
+Greedy output is identical in both modes, so the labels transfer; only the
+readout and therefore the signals change.
+
+| question-level AUROC | logit lens | J-lens |
+|---|---|---|
+| 1 − p_final (max over tokens) | 0.867 | 0.867 |
+| commit_depth (max) | 0.633 | 0.545 |
+| commit_depth (mean) | 0.540 | 0.520 |
+| 1 − support (max) | 0.625 | 0.630 |
+| 1 − support (mean) | 0.643 | 0.534 |
+| score (max) | 0.870 | 0.873 |
+| **answer_score** | **0.898** | 0.872 |
+
+Signal statistics over all content tokens: mean commit_depth 0.90 → 0.91,
+mean support 0.15 → 0.18, fraction with support > 0.1: 26 % → 31 %.
+
+**Result: negative for detection, positive for explanation.** The J-lens
+makes the middle layers *readable* (§9.1) and makes the signals behave
+sensibly within an answer, but at the question level the workspace signals
+stay near chance under both lenses (0.52–0.63) and output confidence carries
+the detector. Pooled AUROC is 0.90 vs 0.87, a difference inside the noise of
+111 questions. So on this model the J-lens explains *how* a hallucination
+formed (right category, wrong name, no support) rather than catching more of
+them.
+
+Candidate reasons, in order of likelihood:
+1. **The model.** Qwen-1.8B is wrong on 88 % of long-tail questions; for a
+   model that mostly doesn't know, "the answer was never in the workspace" is
+   true of right and wrong answers alike, so support can't separate them.
+   The paper's workspace results are on frontier-scale models.
+2. **The lens.** 30 WikiText prompts vs the paper's 1000; mid-layer readouts
+   are still noisy (§9.1 shows structural tokens up to L12).
+3. **The aggregation.** Equal-weight mean of three signals and a max over
+   tokens; a learned combination could do better but 111 labels is too few
+   to fit one honestly.
+
+The UI uses `calibration.json` (logit) or `calibration_jlens.json` according
+to the active lens.
 
 ## 9b. Phase 2 — suggest a fix (`jspace_viz/fix.py`, `POST /api/fix`)
 
@@ -359,3 +395,4 @@ is produced by `scripts/eval_fix.py` → `data/fix_results.json`
 | 10-23 | Judge labels replace substring labels | 11/81 PopQA substring labels were wrong |
 | 10-23 | Pool PopQA + hand set for calibration | PopQA alone bakes in a 12 % base rate |
 | 10-23 | answer_score = (max+mean)/2 | most robust aggregate across both sets |
+| 10-24 | Report J-lens as explanatory, not a better detector | AUROC 0.87 vs 0.90 logit on 111 judged questions; workspace signals near chance under both |
