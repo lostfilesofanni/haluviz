@@ -426,3 +426,5 @@ is produced by `scripts/eval_fix.py` → `data/fix_results.json`
 | 10-24 | Own visual identity: dark base + palette meaning system | user: must not read as a jspace-viz/TradingView clone |
 | 10-24 | Cache greedy generations server-side | re-reads were paying 2/3 of their time regenerating an identical answer |
 | 10-24 | Report J-lens as explanatory, not a better detector | AUROC 0.87 vs 0.90 logit on 111 judged questions; workspace signals near chance under both |
+| 10-25 | Exclude the first generated word from the max term of answer_score | an opinion prompt scored 80 % wrong on the strength of "It" at 0.94; offline re-score of the 111 judged answers: AUROC .872→.883 J-lens, .898→.900 logit, 8/9 opener-max answers were correct |
+| 10-25 | Name the highest-scoring word under the gauge; mark answers cut by the token cap; say the slider does not move the gauge | the gauge was unexplainable with flags hidden and truncation looked like a model fault |

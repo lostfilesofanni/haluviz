@@ -97,7 +97,13 @@ def hallucination_signals(
             cur = None
     for sp in spans:
         sp["text"] = sp["text"].strip()
-    content = [t["score"] for t in tokens if WORDLIKE.search(t["token"]) and not t["in_prompt"]]
+    ct = [t for t in tokens if WORDLIKE.search(t["token"]) and not t["in_prompt"]]
+    content = [t["score"] for t in ct]
+    # The sentence opener ("It", "The") is a coin flip between fine phrasings, not
+    # a fact, yet it often holds the max. Keep it out of the max term: on the 111
+    # judged answers AUROC .872→.883 (J-lens), .898→.900 (logit); 8 of the 9
+    # J-lens answers where the opener was the max were correct.
+    body = [t["score"] for t in ct if t["word"] != ct[0]["word"]] or content
     return {
         "threshold": threshold,
         "tokens": tokens,
@@ -107,7 +113,7 @@ def hallucination_signals(
         # catches a single wrong entity in a correct frame (hand set, AUROC .92);
         # mean alone catches whole fabricated answers (PopQA, .81); the average
         # holds up on both (.90 / .82).
-        "answer_score": round((max(content) + sum(content) / len(content)) / 2, 3) if content else 0.0,
+        "answer_score": round((max(body) + sum(content) / len(content)) / 2, 3) if content else 0.0,
     }
 
 
@@ -124,4 +130,6 @@ if __name__ == "__main__":  # self-check: late-committed, unsupported, low-p tok
     assert r["tokens"][0]["flag"] is False and r["tokens"][0]["commit_depth"] == 0.0
     assert r["tokens"][1]["flag"] is True and r["tokens"][1]["commit_depth"] == 1.0
     assert r["spans"] == [{"start": 2, "end": 2, "text": "Zork", "score": r["tokens"][1]["score"]}]
+    assert r["answer_score"] == round((r["tokens"][1]["score"] + (r["tokens"][0]["score"] + r["tokens"][1]["score"]) / 2) / 2, 3)
+    assert hallucination_signals(grid, [0, 1], {1: " Paris"}, 1)["answer_score"] > 0  # opener-only answer falls back
     print("ok")
