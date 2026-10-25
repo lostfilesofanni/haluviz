@@ -11,6 +11,7 @@ fit locally with ``scripts/fit_lens.py``.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 _NEURONPEDIA = "neuronpedia/jacobian-lens"
 
@@ -83,12 +84,14 @@ PRESETS: dict[str, Preset] = {
 
 #: Demo prompts. The first three follow examples shipped with the official
 #: jacobian-lens repo (Apache-2.0, Anthropic PBC).
-EXAMPLES: list[dict[str, str]] = [
-    {"name": "Fact it knows: capital of France", "prompt": "What is the capital of France? Answer in one sentence."},
-    {"name": "Obscure: capital of Palau", "prompt": "What is the capital city of Palau? Answer in one sentence."},
-    {"name": "Obscure: 1907 Nobel in Literature", "prompt": "Who won the Nobel Prize in Literature in 1907? Answer in one sentence."},
-    {"name": "Obscure: emperor when Pompeii fell", "prompt": "Who was the Roman emperor when Pompeii was buried in 79 AD? Answer in one sentence."},
-    {"name": "Invented: a book that doesn't exist", "prompt": "Summarize the plot of the 1994 novel 'The Glass Cartographer' by Helen Marrow."},
+# gold: the accepted answer (substring match, case-insensitive); fabricated: the
+# right answer is to decline, so a confident answer is graded Wrong.
+EXAMPLES: list[dict[str, Any]] = [
+    {"name": "Fact it knows: capital of France", "prompt": "What is the capital of France? Answer in one sentence.", "gold": "Paris"},
+    {"name": "Obscure: capital of Palau", "prompt": "What is the capital city of Palau? Answer in one sentence.", "gold": "Ngerulmud"},
+    {"name": "Obscure: 1907 Nobel in Literature", "prompt": "Who won the Nobel Prize in Literature in 1907? Answer in one sentence.", "gold": "Kipling"},
+    {"name": "Obscure: emperor when Pompeii fell", "prompt": "Who was the Roman emperor when Pompeii was buried in 79 AD? Answer in one sentence.", "gold": "Titus"},
+    {"name": "Invented: a book that doesn't exist", "prompt": "Summarize the plot of the 1994 novel 'The Glass Cartographer' by Helen Marrow.", "gold": "No such book (fabricated)", "fabricated": True},
     {
         "name": "Multi-hop: country shaped like a boot",
         "prompt": (
