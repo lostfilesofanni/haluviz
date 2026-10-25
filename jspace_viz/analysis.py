@@ -7,6 +7,7 @@ from __future__ import annotations
 from typing import Any
 
 import torch
+from transformers import StoppingCriteria, StoppingCriteriaList
 
 from jspace_viz.hallucination import hallucination_signals
 from jspace_viz.hooks import ActivationRecorder
@@ -16,6 +17,23 @@ from jspace_viz.model import WrappedModel
 #: Leading positions excluded from the per-layer summary metrics (attention
 #: sinks distort them; same rationale as fitting's skip_first).
 METRICS_SKIP_FIRST = 4
+
+SENTENCE_END = (".", "!", "?")
+
+
+def _ends_sentence(text: str) -> bool:
+    return text.rstrip().endswith(SENTENCE_END) or text.startswith("<|")
+
+
+class _StopAtSentenceEnd(StoppingCriteria):
+    """Stop once the newest token closes a sentence (or is an end-of-turn marker)."""
+
+    def __init__(self, tokenizer):
+        self.tokenizer = tokenizer
+
+    def __call__(self, input_ids, scores, **kwargs):
+        done = _ends_sentence(self.tokenizer.decode(input_ids[0, -1:]))
+        return torch.full((input_ids.shape[0],), done, dtype=torch.bool, device=input_ids.device)
 
 
 def _excess_kurtosis(x: torch.Tensor) -> torch.Tensor:
@@ -90,6 +108,17 @@ def read_grid(
             do_sample=False,
             pad_token_id=model.tokenizer.eos_token_id,
         )
+        # max_new_tokens is a soft cap: if it lands mid-sentence, run on to the
+        # next sentence end so the answer reads whole. Hard ceiling +32 tokens.
+        # ponytail: "3." in a decimal also counts as a sentence end; fine for chat answers.
+        if not _ends_sentence(model.tokenizer.decode(generated[0, -1:])):
+            generated = model.hf_model.generate(
+                generated,
+                max_new_tokens=32,
+                do_sample=False,
+                pad_token_id=model.tokenizer.eos_token_id,
+                stopping_criteria=StoppingCriteriaList([_StopAtSentenceEnd(model.tokenizer)]),
+            )
         continuation = model.tokenizer.decode(
             generated[0, prompt_len:], skip_special_tokens=True
         )
@@ -198,6 +227,9 @@ def read_grid(
     return {
         "continuation": continuation,
         "continuation_ids": ids_list[prompt_len:] if continuation is not None else None,
+        # True only when generation stopped mid-sentence: no end-of-turn marker and
+        # the soft-cap extension still did not reach a sentence end.
+        "truncated": continuation is not None and not _ends_sentence(vocab[ids_list[-1]]),
         "hallucination": hallucination,
         "prompt_len": prompt_len,
         **({"ranks": ranks} if ranks is not None else {}),

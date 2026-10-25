@@ -108,6 +108,12 @@ second copy of the model. Stop the old one:
 pkill -f 'haluviz'
 ```
 
+**Why did the answer end mid-sentence?**
+It should not any more. *New tokens* is a soft cap: when the limit lands in
+the middle of a sentence the server generates up to 32 more tokens and stops
+at the first sentence end. If even that is not enough, the answer box says so
+and you can raise *new tokens* (up to 128).
+
 **How long does a read take?**
 About 30 seconds for the first read of a question on an M1 with 32 new
 tokens. Set *new tokens* to 16 and it roughly halves. Re-reading the same
@@ -222,7 +228,11 @@ answer_score = (max + mean) / 2    over content-word scores
 ```
 Max alone catches a single wrong name in a correct sentence. Mean alone
 catches a fully invented answer. The average was the most robust across both
-test sets.
+test sets. The first generated word is left out of the max term: openers like
+"It" or "The" are a coin flip between fine phrasings and were holding the max
+in correct answers. Measured offline on the 111 judged answers, that raised
+AUROC from 0.872 to 0.883 under the J-lens and 0.898 to 0.900 under the logit
+lens.
 
 **Where does the percentage come from?**
 The answer score is looked up in a calibration table built from 111 real

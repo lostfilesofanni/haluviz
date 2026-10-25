@@ -505,6 +505,11 @@ function renderHalu() {
   const flaggedWords = new Set(toks.filter((t) => t.flag).map((t) => t.word));
   for (const t of toks) t.flag = flaggedWords.has(t.word) && WORDLIKE.test(t.token);
   for (const t of toks) halu.set(t.pos, { score: t.score, flag: t.flag });
+  // the word behind max_score: the gauge is driven by it even when the slider hides all flags
+  const ct = toks.filter((t) => WORDLIKE.test(t.token) && !t.in_prompt);
+  const body = ct.filter((t) => t.word !== ct[0].word); // opener excluded, as in hallucination.py
+  const top = (body.length ? body : ct).reduce((a, t) => (!a || t.score > a.score ? t : a), null);
+  const topWord = top ? toks.filter((t) => t.word === top.word).map((t) => t.token).join("").trim() : "";
   // inline answer with flagged tokens marked
   $("halu-answer").innerHTML = toks
     .map((t) => {
@@ -512,7 +517,8 @@ function renderHalu() {
       if (!t.flag) return s;
       return `<mark title="score ${t.score} · p=${(t.p_final * 100).toFixed(0)}% · committed at ${(t.commit_depth * 100).toFixed(0)}% depth · workspace support ${(t.support * 100).toFixed(0)}% · instability ${(100 * (t.instability ?? 0)).toFixed(0)}% (${t.flips ?? 0} flips in the last third)">${s}</mark>`;
     })
-    .join("");
+    .join("") +
+    (data.truncated ? `<span class="hint"> … stopped after ${data.continuation_ids.length} tokens without finishing the sentence; raise “new tokens” for the full answer</span>` : "");
   // contiguous flagged tokens -> spans
   const spans = [];
   let cur = null;
@@ -532,7 +538,7 @@ function renderHalu() {
   const needle = pWrong != null ? pWrong : Math.min(1, metric);
   drawGauge($("halu-gauge"), needle, band);
   $("halu-verdict").innerHTML = pWrong != null
-    ? `<span class="pct">${Math.round(pWrong * 100)}%</span>${esc(label)}<span class="note">estimated chance this answer is wrong · calibrated on ${cal.n} ${esc(cal.source)} questions</span>`
+    ? `<span class="pct">${Math.round(pWrong * 100)}%</span>${esc(label)}<span class="note">estimated chance this answer is wrong${topWord ? ` · highest word “${esc(topWord)}” ${top.score.toFixed(2)}` : ""} · calibrated on ${cal.n} short factual questions (${esc(cal.source)}); not meaningful for opinions or open-ended prompts</span>`
     : `<span class="pct">${metric.toFixed(2)}</span>${esc(label)}<span class="note">raw answer score, uncalibrated — run scripts/eval_popqa.py</span>`;
   const nWord = toks.filter((t) => WORDLIKE.test(t.token) && !t.in_prompt).length;
   const nFlag = toks.filter((t) => t.flag).length;
