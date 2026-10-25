@@ -18,8 +18,8 @@ The visualizer started from [Festyve/jspace-viz](https://github.com/Festyve/jspa
 ## What's on the screen
 
 - **The grid.** One column per word, one row per layer. Each cell is the word
-  that layer was leaning toward. Brighter blue means more confident. Green
-  columns are the words the model actually wrote. Orange means a word was
+  that layer was leaning toward. Darker blue means more confident. Orange
+  columns are the words the model actually wrote. Red means a word was
   flagged. A thin orange line on top of a cell means the model changed its
   mind at that layer.
 - **Hallucination check.** A gauge from *reliable* to *hallucinated* and a
@@ -32,6 +32,13 @@ The visualizer started from [Festyve/jspace-viz](https://github.com/Festyve/jspa
   while answering. Chinese tokens get an English gloss.
 - **Fix.** *Verify answer* asks Gemini if the answer is true. *Suggest a fix*
   offers a safer "I'm not sure" answer and the corrected one.
+
+**Compare** (top bar) puts two example runs side by side: a known fact against
+an obscure or fabricated one. It shows which candidate words raced for the
+first answer word layer by layer, how foggy each layer was, the detector's
+signals for A and B, and both grids. Examples with a gold answer are graded
+Correct or Wrong; a fabricated premise counts as Correct only if the model
+declines.
 
 The **J-lens / logit lens** switch changes how the middle layers are read.
 The logit lens shows them raw, which is mostly noise. The J-lens shows what

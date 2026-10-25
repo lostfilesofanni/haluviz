@@ -6,29 +6,37 @@
 <title>haluviz — J-space + hallucination detector</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="static/app.css?v=3">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@300;400&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="static/app.css?v=5">
 </head>
 <body>
 <header id="topbar">
-  <h1>haluviz</h1>
-  <span class="sub">what the model is thinking, and where it's making things up &middot; <a href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a></span>
+  <div class="brand">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="1.6" fill="#000"/></svg>
+    <h1>haluviz</h1>
+  </div>
+  <div class="status" role="status"><span class="dot"></span><span id="model-chip" class="chip">loading&hellip;</span><span id="lens-chip" class="chip"></span></div>
+  <div class="segment" id="view-nav">
+    <button data-view="explore" class="active">Explore</button>
+    <button data-view="compare">Compare</button>
+  </div>
   <span class="spacer"></span>
-  <span id="model-chip" class="chip">loading&hellip;</span>
-  <span id="lens-chip" class="chip"></span>
+  <a class="chip" href="https://transformer-circuits.pub/2026/workspace/index.html" target="_blank" rel="noopener">paper</a>
+  <span class="lens-label">Lens</span>
+  <div class="segment" id="mode-toggle">
+    <button data-mode="jlens" class="active" title="transport with J_l before unembedding">J-lens</button>
+    <button data-mode="logit" title="unembed the raw residual (J = I baseline)">logit lens</button>
+  </div>
 </header>
 
 <section id="toolbar">
+  <div class="prompt-card">
   <div class="prompt-row">
-    <textarea id="prompt" rows="3" spellcheck="false" placeholder="Ask the model a factual question, then press Read (⌘↵). One sentence is plenty."></textarea>
+    <label><span>Question</span><textarea id="prompt" rows="1" spellcheck="false" placeholder="Who painted The Night Watch?  ·  press Read or ⌘↵"></textarea></label>
     <button id="read" class="primary">Read</button>
   </div>
   <div class="pills">
     <select id="examples" class="pill"><option value="">examples&hellip;</option></select>
-    <div class="segment" id="mode-toggle">
-      <button data-mode="jlens" class="active" title="transport with J_l before unembedding">J-lens</button>
-      <button data-mode="logit" title="unembed the raw residual (J = I baseline)">logit lens</button>
-    </div>
     <label class="pill" title="wrap the prompt in the model's chat template"><input id="chat" type="checkbox" checked><span>chat</span></label>
     <label class="pill num" title="how many tokens the model generates"><span>new tokens</span><input id="newtok" type="number" min="1" max="128" value="32"></label>
     <label class="pill num" title="how many candidate words each cell keeps for the hover list, english-only lookup, and workspace chips"><span>candidates per cell</span><input id="topk" type="number" min="1" max="20" value="8"></label>
@@ -36,6 +44,7 @@
     <label class="pill" id="live-label" title="re-read automatically while you type"><input id="live" type="checkbox"><span>live</span></label>
     <button id="jump-gen" class="pill ok" hidden title="scroll the grid to the model's own generated words">→ what it wrote</button>
     <span id="status"></span>
+  </div>
   </div>
   <div class="pills" id="pinned-row" hidden>
     <span class="hint">pinned</span>
@@ -65,7 +74,7 @@
       <div class="card-head"><h2>how it works</h2></div>
       <ol class="steps">
         <li><b>Ask</b> a factual question and press <b>Read</b>.</li>
-        <li>The model answers; every layer's thinking appears in the grid, generated words in green.</li>
+        <li>The model answers; every layer's thinking appears in the grid, generated words in orange.</li>
         <li>The verdict gauge shows the calibrated chance the answer is wrong, and the words that drove it.</li>
         <li><b>Verify</b> asks a stronger model for the truth; <b>Suggest a fix</b> offers a safer answer.</li>
       </ol>
@@ -100,7 +109,35 @@
   </aside>
 </main>
 
+<section id="compare" hidden>
+  <div class="cmp-head">
+    <div>
+      <h1>Compare runs</h1>
+      <span class="hint">Shared layer axis and y-scale. Signals measured at the answer onset.</span>
+    </div>
+    <div class="cmp-pairs"><span class="hint">Pairs</span><span id="cmp-pairs"></span></div>
+  </div>
+  <div id="cmp-slots" class="cmp-slots"></div>
+  <div class="cmp-body">
+    <section class="card" id="cmp-race-card">
+      <h2>Candidate race at the answer onset</h2>
+      <div id="cmp-race"></div>
+    </section>
+    <div class="cmp-side">
+      <section class="card">
+        <div class="card-head"><h2>Fog profile</h2><span class="hint">entropy at the onset position, bits</span></div>
+        <div id="cmp-fog"></div>
+      </section>
+      <section class="card" id="cmp-sig"></section>
+    </div>
+  </div>
+  <section class="cmp-grids">
+    <div class="pills"><button id="cmp-grids-toggle" class="pill">Show slice grids</button><span class="hint">Slice grids for A and B side by side · last 8 prompt tokens and the answer</span></div>
+    <div id="cmp-grids" hidden></div>
+  </section>
+</section>
+
 <div id="tooltip" hidden></div>
-<script src="static/app.js?v=3"></script>
+<script src="static/app.js?v=5"></script>
 </body>
 </html>

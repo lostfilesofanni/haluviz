@@ -113,7 +113,7 @@ function renderWelcome() {
     ? 'Pick an example below. To type <em>your own</em> prompts, clone the repo — <a href="https://github.com/Festyve/jspace-viz" target="_blank" rel="noopener">github.com/Festyve/jspace-viz</a> — and run it locally (two commands).'
     : "Ask it something above and press <b>Read</b> (⌘↵), or start from an example. Easy facts read green; obscure ones usually don't.";
   $("grid").innerHTML =
-    `<div class="welcome"><p>Each cell shows what one layer of <b>${esc(INFO.model_id.split("/").pop())}</b> ` +
+    `<div class="welcome"><h2>Ask a short factual question</h2><p>Each cell shows what one layer of <b>${esc(INFO.model_id.split("/").pop())}</b> ` +
     `is <i>about to say</i> at each word. Generated words are scored for hallucination from the same grid.</p>` +
     `<p>${typeHint}</p><p>${chips}</p></div>`;
 }
@@ -313,15 +313,16 @@ async function read(opts = {}) {
 const ENGLISH = /^[\x20-\x7e\n\t]*[A-Za-z0-9][\x20-\x7e\n\t]*$/;
 $("english").addEventListener("change", () => { if (data) renderGrid(); });
 
-// Background for a top-1 probability (0..1) — accent blue ramp.
+// Cell shading returns [background, darkCell]; dark cells get white text.
+// Top-1 probability (0..1) — blue ramp.
 function probColor(p) {
-  const a = Math.min(0.85, Math.pow(p, 0.6));
-  return `rgba(53, 70, 255, ${a.toFixed(3)})`;
+  const a = Math.min(0.92, Math.pow(p, 0.6));
+  return [`rgba(31, 79, 128, ${a.toFixed(3)})`, a > 0.5];
 }
-// Background for a rank (0 = top) — orange ramp, fades out past ~1000.
+// Rank (0 = top) — warm grey ramp, fades out past ~1000.
 function rankColor(r) {
-  const a = Math.max(0, 0.9 - 0.9 * (Math.log10(r + 1) / 3));
-  return `rgba(255, 238, 155, ${a.toFixed(3)})`;
+  const a = Math.max(0, 0.92 - 0.92 * (Math.log10(r + 1) / 3));
+  return [`rgba(47, 43, 40, ${a.toFixed(3)})`, a > 0.5];
 }
 
 function renderGrid() {
@@ -346,12 +347,12 @@ function renderGrid() {
     const cls = row.is_output ? " outrow" : "";
     parts.push(`<div class="lcell${cls}">${row.is_output ? "output" : "L" + row.layer}</div>`);
     for (let t = 0; t < cols; t++) {
-      let text, bg;
+      let text, bg, dk = false;
       const pi = rankViewId === null ? -1 : pinned.findIndex((p) => p.id === rankViewId);
       if (pi >= 0 && row.pinned_ranks && row.pinned_ranks[t][pi] != null) {
         const r = row.pinned_ranks[t][pi];
         text = r === 0 ? "★0" : String(r);
-        bg = rankColor(r);
+        [bg, dk] = rankColor(r);
       } else if (pi >= 0 && row.pinned_ranks) {
         text = "–";
         bg = "transparent";
@@ -361,10 +362,10 @@ function renderGrid() {
           i = row.top_ids[t].findIndex((id) => ENGLISH.test(vocab[id] || ""));
         }
         text = i < 0 ? "·" : tokStr(vocab[row.top_ids[t][i]]);
-        bg = i < 0 ? "transparent" : probColor(row.top_probs[t][i]);
+        if (i >= 0) [bg, dk] = probColor(row.top_probs[t][i]); else bg = "transparent";
       }
       const flip = t >= promptLen - 1 && li > 0 && pi < 0 && rows[li - 1].top_ids[t][0] !== row.top_ids[t][0];
-      parts.push(`<div class="cell${cls}${genCls(t)}${flip ? " flip" : ""}" data-l="${li}" data-t="${t}" style="background:${bg}">${esc(text)}</div>`);
+      parts.push(`<div class="cell${cls}${genCls(t)}${flip ? " flip" : ""}${dk ? " dk" : ""}" data-l="${li}" data-t="${t}" style="background:${bg}">${esc(text)}</div>`);
     }
   }
   const wrap = $("grid-wrap");
@@ -489,7 +490,7 @@ $("workspace-chips").addEventListener("click", (e) => {
 // re-derived here so the threshold slider works without another read.
 const WORDLIKE = /[A-Za-z0-9]/;
 function haluColor(score) {
-  return `rgba(233, 85, 0, ${(0.18 + 0.5 * score).toFixed(3)})`;
+  return `rgba(185, 28, 28, ${(0.08 + 0.3 * score).toFixed(3)})`;
 }
 function renderHalu() {
   halu = new Map();
@@ -522,11 +523,7 @@ function renderHalu() {
     else cur = null;
   }
   // Verdict: calibrated P(wrong) from PopQA bins when available, else the raw score.
-  const cal = INFO && ((mode === "jlens" && INFO.calibration_jlens) || INFO.calibration);
-  const metric = cal ? (H[cal.metric] ?? H.max_score) : H.max_score;
-  const bin = cal && cal.bins.find((b) => metric >= b.lo && metric < b.hi);
-  const pWrong = bin ? bin.p_wrong : null;
-  const band = pWrong != null ? (pWrong < 0.25 ? "low" : pWrong < 0.6 ? "mid" : "high") : (H.max_score < thr ? "low" : "high");
+  const { cal, metric, pWrong, band } = verdictFor(H, thr);
   panel.className = "card " + band;
   const label = band === "low" ? "likely reliable" : band === "mid" ? "uncertain" : "likely hallucinated";
   const needle = pWrong != null ? pWrong : Math.min(1, metric);
@@ -604,22 +601,32 @@ $("halu-thresh").addEventListener("input", () => {
   renderGrid();
 });
 
+// Calibrated P(wrong) from the PopQA bins when available, else the raw score.
+function verdictFor(H, thr) {
+  const cal = INFO && ((mode === "jlens" && INFO.calibration_jlens) || INFO.calibration);
+  const metric = cal ? (H[cal.metric] ?? H.max_score) : H.max_score;
+  const bin = cal && cal.bins.find((b) => metric >= b.lo && metric < b.hi);
+  const pWrong = bin ? bin.p_wrong : null;
+  const band = pWrong != null ? (pWrong < 0.25 ? "low" : pWrong < 0.6 ? "mid" : "high") : (H.max_score < thr ? "low" : "high");
+  return { cal, metric, pWrong, band };
+}
+
 // Half-arc gauge: needle at P(wrong), arc coloured by band.
 function drawGauge(svg, v, band) {
   const cx = 120, cy = 122, R = 88, w = 14;
-  const col = band === "low" ? "#adc642" : band === "mid" ? "#ffee9b" : "#e95500";
+  const col = band === "low" ? "#15803d" : band === "mid" ? "#c2703d" : "#b91c1c";
   const pt = (f, r) => { const a = Math.PI * (1 - f); return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; };
   const arc = (f0, f1, r) => { const [x0, y0] = pt(f0, r), [x1, y1] = pt(f1, r); return `M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0 1 ${x1.toFixed(1)},${y1.toFixed(1)}`; };
   const v1 = Math.max(0.005, Math.min(1, v));
   const [nx, ny] = pt(v1, R - w / 2 - 6);
   svg.innerHTML =
-    `<path d="${arc(0, 1, R)}" fill="none" stroke="#34373e" stroke-width="${w}" stroke-linecap="round"/>` +
+    `<path d="${arc(0, 1, R)}" fill="none" stroke="#ebe8e4" stroke-width="${w}" stroke-linecap="round"/>` +
     `<path d="${arc(0, v1, R)}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>` +
-    `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#ecebe6" stroke-width="2" stroke-linecap="round"/>` +
-    `<circle cx="${cx}" cy="${cy}" r="4" fill="#ecebe6"/>` +
-    `<text x="14" y="138" fill="#8f9299" font-size="10" font-family="Inter,system-ui">reliable</text>` +
-    `<text x="${cx}" y="14" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="middle">uncertain</text>` +
-    `<text x="226" y="138" fill="#8f9299" font-size="10" font-family="Inter,system-ui" text-anchor="end">hallucinated</text>`;
+    `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#1c1917" stroke-width="2" stroke-linecap="round"/>` +
+    `<circle cx="${cx}" cy="${cy}" r="4" fill="#1c1917"/>` +
+    `<text x="14" y="138" fill="#777169" font-size="10" font-family="Inter,system-ui">reliable</text>` +
+    `<text x="${cx}" y="14" fill="#777169" font-size="10" font-family="Inter,system-ui" text-anchor="middle">uncertain</text>` +
+    `<text x="226" y="138" fill="#777169" font-size="10" font-family="Inter,system-ui" text-anchor="end">hallucinated</text>`;
 }
 
 function renderMetrics() {
@@ -646,21 +653,21 @@ function drawChart(svg, ys, ymin, ymax, shadeBand = false) {
       const inBand = i < ys.length && ys[i] >= cut;
       if (inBand && start === null) start = i;
       if (!inBand && start !== null) {
-        out += `<rect x="${x(start)}" y="${padT}" width="${x(i - 1) - x(start)}" height="${H - padB - padT}" fill="rgba(255,238,155,.10)"/>`;
+        out += `<rect x="${x(start)}" y="${padT}" width="${x(i - 1) - x(start)}" height="${H - padB - padT}" fill="rgba(31,79,128,.08)"/>`;
         start = null;
       }
     }
   }
-  out += `<line x1="${padL}" y1="${H - padB}" x2="${W - 6}" y2="${H - padB}" stroke="#26282e"/>`;
-  out += `<text x="${padL - 4}" y="${y(hi) + 4}" fill="#8f9299" font-size="9" text-anchor="end">${hi.toFixed(hi >= 10 ? 0 : 2)}</text>`;
-  out += `<text x="${padL - 4}" y="${H - padB}" fill="#8f9299" font-size="9" text-anchor="end">${lo.toFixed(lo >= 10 ? 0 : 2)}</text>`;
+  out += `<line x1="${padL}" y1="${H - padB}" x2="${W - 6}" y2="${H - padB}" stroke="#e7e5e4"/>`;
+  out += `<text x="${padL - 4}" y="${y(hi) + 4}" fill="#777169" font-size="9" text-anchor="end">${hi.toFixed(hi >= 10 ? 0 : 2)}</text>`;
+  out += `<text x="${padL - 4}" y="${H - padB}" fill="#777169" font-size="9" text-anchor="end">${lo.toFixed(lo >= 10 ? 0 : 2)}</text>`;
   const lastFitted = ys.length - 2; // final entry is the output row (J = I)
-  out += `<polyline fill="none" stroke="#96a0ff" stroke-width="1.5" points="${ys
+  out += `<polyline fill="none" stroke="#1f4f80" stroke-width="1.75" points="${ys
     .slice(0, lastFitted + 1).map((v, i) => `${x(i)},${y(v)}`).join(" ")}"/>`;
-  out += `<circle cx="${x(ys.length - 1)}" cy="${y(ys[ys.length - 1])}" r="2.5" fill="#ffee9b"/>`;
+  out += `<circle cx="${x(ys.length - 1)}" cy="${y(ys[ys.length - 1])}" r="2.5" fill="#c2703d"/>`;
   const L = data.layers;
-  out += `<text x="${padL}" y="${H - 4}" fill="#8f9299" font-size="9">L${L[0]}</text>`;
-  out += `<text x="${W - 6}" y="${H - 4}" fill="#8f9299" font-size="9" text-anchor="end">out</text>`;
+  out += `<text x="${padL}" y="${H - 4}" fill="#777169" font-size="9">L${L[0]}</text>`;
+  out += `<text x="${W - 6}" y="${H - 4}" fill="#777169" font-size="9" text-anchor="end">out</text>`;
   svg.innerHTML = out;
 }
 
@@ -744,3 +751,192 @@ $("prompt").addEventListener("input", () => {
 });
 
 init().catch((e) => setStatus(e.message, true));
+
+// ---- compare view ----------------------------------------------------------
+// Two example runs side by side: who wins the candidate race at the answer
+// onset, how foggy each layer is, and the detector's signals A vs B.
+const CMP_PAIRS = [
+  { label: "Known vs obscure capital", a: 0, b: 1 },
+  { label: "Fact vs fabricated book", a: 0, b: 4 },
+  { label: "Obscure vs fabricated", a: 2, b: 4 },
+];
+const cmp = { a: 0, b: 1, runs: new Map(), menu: null, grids: false, token: 0 };
+const DECLINE = /no such|not aware|does ?n[o']t exist|not exist|fictional|could ?n[o']t find|unable to|not familiar|no record|not a real|can ?n[o']t find|not sure|no information|don't have/i;
+
+function showView(v) {
+  for (const b of $("view-nav").children) b.classList.toggle("active", b.dataset.view === v);
+  $("toolbar").hidden = $("main").hidden = v !== "explore";
+  $("compare").hidden = v !== "compare";
+  if (v === "compare") renderCompare();
+}
+$("view-nav").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) showView(b.dataset.view); });
+
+async function cmpRead(i) {
+  const key = `${i}:${mode}`;
+  if (cmp.runs.has(key)) return cmp.runs.get(key);
+  const res = await fetch("api/read", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: INFO.examples[i].prompt, mode, top_k: 8, chat: $("chat").checked, max_new_tokens: +$("newtok").value, threshold: +$("halu-thresh").value }),
+  });
+  if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
+  const d = await res.json();
+  cmp.runs.set(key, d);
+  return d;
+}
+
+// gold answer: substring match; a fabricated premise is correct only if the model declines
+function grade(ex, d) {
+  const ans = d.continuation || "";
+  if (!ex.gold) return "ungraded";
+  if (ex.fabricated) return DECLINE.test(ans) ? "correct" : "wrong";
+  return ans.toLowerCase().includes(ex.gold.toLowerCase()) ? "correct" : "wrong";
+}
+function shortAnswer(d) {
+  const s = (d.continuation || "").replace(/\s+/g, " ").trim();
+  return s.length > 64 ? s.slice(0, 63) + "…" : s;
+}
+// The answer onset: first generated word that is not a stopword or a prompt word.
+function onsetPos(d) {
+  const pl = d.prompt_len ?? d.seq_len;
+  const tok = (t) => d.vocab[d.context_ids[t]] || "";
+  const promptText = d.context_ids.slice(0, pl).map((id) => d.vocab[id] || "").join("").toLowerCase();
+  for (let t = pl; t < d.seq_len; t++) {
+    if (t > pl && !/^[\s▁]/.test(tok(t))) continue; // not a word start
+    let w = tok(t).trim();
+    for (let u = t + 1; u < d.seq_len && /^[A-Za-z0-9]/.test(tok(u)); u++) w += tok(u); // join the word's pieces
+    w = w.toLowerCase();
+    if (/^[a-z0-9]/.test(w) && w.length > 2 && !STOP.has(w) && !promptText.includes(w)) return t;
+  }
+  return Math.min(pl, d.seq_len - 1);
+}
+const VTXT = { correct: '<span class="v-ok">✓ Correct</span>', wrong: '<span class="v-bad">✕ Wrong</span>', ungraded: '<span class="v-na">○ Ungraded</span>' };
+
+function renderSlots(runs) {
+  $("cmp-pairs").innerHTML = CMP_PAIRS.map((p, k) => `<button class="pill${p.a === cmp.a && p.b === cmp.b ? " sel" : ""}" data-pair="${k}">${esc(p.label)}</button>`).join("");
+  $("cmp-slots").innerHTML = ["a", "b"].map((s, k) => {
+    const i = cmp[s], ex = INFO.examples[i], d = runs[k];
+    const menu = cmp.menu === s
+      ? `<div class="cmp-menu" role="menu">${INFO.examples.map((e, j) => `<button role="menuitem" data-pick="${s}:${j}" class="${j === i ? "cur" : ""}"><span>${esc(e.name)}</span><span class="hint">${esc(e.gold || "")}</span></button>`).join("")}</div>` : "";
+    const meta = d
+      ? `<code>→ ${esc(shortAnswer(d))}</code>${VTXT[grade(ex, d)]}<span>gold: ${esc(ex.gold || "none")}</span>`
+      : `<span class="hint">${runs[k] === undefined ? "waiting" : "reading…"}</span>`;
+    return `<div class="cmp-slot card"><span class="tag">${s.toUpperCase()}</span><div class="body"><span class="q" title="${esc(ex.prompt)}">${esc(ex.name)}</span><span class="meta">${meta}</span></div><button class="pill" data-menu="${s}" aria-expanded="${cmp.menu === s}">Change run</button>${menu}</div>`;
+  }).join("");
+}
+
+async function renderCompare() {
+  if (STATIC) { $("cmp-slots").innerHTML = '<p class="hint">Compare needs a live model — clone the repo and run it locally.</p>'; return; }
+  const token = ++cmp.token;
+  const runs = [null, undefined];
+  renderSlots(runs);
+  for (const [k, s] of [[0, "a"], [1, "b"]]) {
+    runs[k] = null;
+    renderSlots(runs);
+    try { runs[k] = await cmpRead(cmp[s]); } catch (e) { setStatus(e.message, true); $("cmp-slots").insertAdjacentHTML("beforeend", `<p class="hint v-bad">${esc(e.message)}</p>`); return; }
+    if (token !== cmp.token) return;
+  }
+  renderSlots(runs);
+  renderCmpBody(runs);
+}
+$("compare").addEventListener("click", (e) => {
+  const pair = e.target.closest("[data-pair]"), menu = e.target.closest("[data-menu]"), pick = e.target.closest("[data-pick]");
+  if (pair) { const p = CMP_PAIRS[+pair.dataset.pair]; cmp.a = p.a; cmp.b = p.b; cmp.menu = null; renderCompare(); }
+  else if (pick) { const [s, j] = pick.dataset.pick.split(":"); cmp[s] = +j; cmp.menu = null; renderCompare(); }
+  else if (menu) { cmp.menu = cmp.menu === menu.dataset.menu ? null : menu.dataset.menu; renderSlots([cmp.runs.get(`${cmp.a}:${mode}`), cmp.runs.get(`${cmp.b}:${mode}`)]); }
+  else if (e.target.closest("#cmp-grids-toggle")) { cmp.grids = !cmp.grids; $("cmp-grids").hidden = !cmp.grids; $("cmp-grids-toggle").textContent = cmp.grids ? "Hide slice grids" : "Show slice grids"; }
+  else if (cmp.menu && !e.target.closest(".cmp-menu")) { cmp.menu = null; renderSlots([cmp.runs.get(`${cmp.a}:${mode}`), cmp.runs.get(`${cmp.b}:${mode}`)]); }
+});
+
+const fittedRows = (d) => d.grid.filter((r) => !r.is_output);
+const bandOf = (rows) => [Math.floor(rows.length * 0.25), Math.ceil(rows.length * 0.85) - 1];
+const axisX = (W, pl, pr, n) => (i) => pl + (i * (W - pl - pr)) / Math.max(1, n - 1);
+
+function renderCmpBody([A, B]) {
+  $("cmp-race").innerHTML = [["A", cmp.a, A], ["B", cmp.b, B]].map(([tag, i, d]) => raceChart(tag, INFO.examples[i], d)).join("");
+  $("cmp-fog").innerHTML = fogChart(A, B);
+  $("cmp-sig").innerHTML = sigTable(A, B);
+  $("cmp-grids").innerHTML = [["A", cmp.a, A], ["B", cmp.b, B]].map(([tag, i, d]) => miniGrid(tag, INFO.examples[i], d)).join("");
+}
+
+// Which candidates the lens ranked first at the onset position, layer by layer.
+function raceChart(tag, ex, d) {
+  const t = onsetPos(d), c = t - 1, rows = fittedRows(d), emitted = d.context_ids[t];
+  const goldW = ex.gold && !ex.fabricated ? ex.gold.toLowerCase().split(/\s+/)[0] : null;
+  const peak = new Map();
+  rows.forEach((r) => r.top_ids[c].forEach((id, k) => { if (r.top_probs[c][k] > (peak.get(id) || 0)) peak.set(id, r.top_probs[c][k]); }));
+  const others = [...peak.entries()].sort((x, y) => y[1] - x[1]).map(([id]) => id).filter((id) => id !== emitted).slice(0, 5);
+  const goldId = [...peak.keys()].find((id) => (d.vocab[id] || "").trim().toLowerCase() === goldW);
+  const W = 460, H = 200, pl = 30, pr = 12, pt = 12, pb = 20;
+  const x = axisX(W, pl, pr, rows.length), y = (p) => pt + (H - pt - pb) * (1 - p);
+  const prob = (r, id) => { const k = r.top_ids[c].indexOf(id); return k < 0 ? 0 : r.top_probs[c][k]; };
+  const [lo, hi] = bandOf(rows);
+  let out = `<rect x="${x(lo)}" y="${pt}" width="${x(hi) - x(lo)}" height="${H - pt - pb}" fill="#eef3f8"/>`;
+  for (const g of [0, 0.5, 1]) out += `<line x1="${pl}" x2="${W - pr}" y1="${y(g)}" y2="${y(g)}" stroke="#e7e5e4"/><text x="${pl - 5}" y="${y(g) + 3}" text-anchor="end" font-size="9" fill="#777169">${g}</text>`;
+  const greys = ["#777169", "#8f8983", "#a59f97", "#b6b0a8", "#c9c4bd"];
+  [...others.reverse(), emitted].forEach((id, k) => {
+    const isE = id === emitted, isG = id === goldId;
+    const ps = rows.map((r) => prob(r, id));
+    const stroke = isE ? "#c2703d" : isG ? "#1c1917" : greys[others.length - 1 - k] || "#c9c4bd";
+    out += `<polyline fill="none" points="${ps.map((p, i) => `${x(i).toFixed(1)},${y(p).toFixed(1)}`).join(" ")}" stroke="${stroke}" stroke-width="${isE ? 3 : isG ? 1.5 : 1.25}"${isG && !isE ? ' stroke-dasharray="6 4"' : ""} stroke-linejoin="round"/>`;
+    const pi = ps.indexOf(Math.max(...ps));
+    out += `<text x="${(x(pi) + (pi > rows.length / 2 ? -4 : 4)).toFixed(1)}" y="${(y(ps[pi]) - 4).toFixed(1)}" text-anchor="${pi > rows.length / 2 ? "end" : "start"}" font-size="10" fill="${stroke}" font-family="Geist Mono,ui-monospace,monospace">${esc(tokStr(d.vocab[id]))}</text>`;
+  });
+  const commit = rows.findIndex((r, i) => rows.slice(i).every((rr) => rr.top_ids[c][0] === emitted));
+  if (commit > 0) { const late = commit > rows.length / 2; out += `<line x1="${x(commit)}" x2="${x(commit)}" y1="${pt}" y2="${H - pb}" stroke="#1c1917" stroke-dasharray="2 3"/><text x="${x(commit) + (late ? -3 : 3)}" y="${H - pb - 4}" text-anchor="${late ? "end" : "start"}" font-size="9" fill="#1c1917">commit L${rows[commit].layer}</text>`; }
+  out += `<text x="${pl}" y="${H - 6}" font-size="9" fill="#777169">L${rows[0].layer}</text><text x="${W - pr}" y="${H - 6}" font-size="9" fill="#777169" text-anchor="end">L${rows[rows.length - 1].layer}</text>`;
+  const note = goldW ? (goldId ? " · dashed: gold answer" : " · gold never in the top-8") : "";
+  return `<div class="race"><div class="race-cap"><span class="tag sm">${tag}</span><span>p(<b>${esc(tokStr(d.vocab[emitted]))}</b>) at position ${t}, emitted in orange${note}</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Candidate race, run ${tag}">${out}</svg></div>`;
+}
+
+function fogChart(A, B) {
+  const sa = fittedRows(A).map((r) => r.entropy[onsetPos(A) - 1]), sb = fittedRows(B).map((r) => r.entropy[onsetPos(B) - 1]);
+  const W = 460, H = 150, pl = 30, pr = 12, pt = 10, pb = 20, n = Math.max(sa.length, sb.length);
+  const top = Math.max(1, ...sa, ...sb);
+  const x = axisX(W, pl, pr, n), y = (v) => pt + (H - pt - pb) * (1 - v / top);
+  const [lo, hi] = bandOf(fittedRows(A));
+  let out = `<rect x="${x(lo)}" y="${pt}" width="${x(hi) - x(lo)}" height="${H - pt - pb}" fill="#f6f8fb"/>`;
+  for (const g of [0, top / 2, top]) out += `<line x1="${pl}" x2="${W - pr}" y1="${y(g)}" y2="${y(g)}" stroke="#e7e5e4"/><text x="${pl - 5}" y="${y(g) + 3}" text-anchor="end" font-size="9" fill="#777169">${g.toFixed(0)}</text>`;
+  for (const [s, col] of [[sa, "#1f4f80"], [sb, "#c2703d"]]) out += `<polyline fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" points="${s.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}"/>`;
+  out += `<text x="${pl}" y="${H - 6}" font-size="9" fill="#777169">L0</text><text x="${W - pr}" y="${H - 6}" font-size="9" fill="#777169" text-anchor="end">L${n - 1}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Entropy by layer, A and B">${out}</svg>` +
+    `<div class="legend"><i class="sw" style="background:#1f4f80"></i>A<i class="sw" style="background:#c2703d"></i>B<i class="sw" style="background:#eef3f8"></i>workspace band</div>`;
+}
+
+function sigTable(A, B) {
+  const sig = (d) => {
+    const H = d.hallucination, t = onsetPos(d), tok = H && H.tokens.find((k) => k.pos === t);
+    const rows = fittedRows(d), [lo, hi] = bandOf(rows);
+    const ent = rows.slice(lo, hi + 1).reduce((s, r) => s + r.entropy[t - 1], 0) / (hi - lo + 1);
+    return { pw: H ? verdictFor(H, +$("halu-thresh").value).pWrong : null, max: H ? H.max_score : null, p: tok ? tok.p_final : null, d: tok ? tok.commit_depth : null, s: tok ? tok.support : null, i: tok ? (tok.instability ?? 0) : null, ent };
+  };
+  const a = sig(A), b = sig(B);
+  const pct = (v) => (v == null ? "—" : `${Math.round(v * 100)}%`);
+  const rows = [
+    ["P(wrong), calibrated", a.pw, b.pw, pct, 1, true],
+    ["Max hallucination score", a.max, b.max, (v) => (v == null ? "—" : v.toFixed(2)), 1, false],
+    ["Confidence at onset", a.p, b.p, pct, 1, false],
+    ["Decided at (depth)", a.d, b.d, pct, 1, false],
+    ["Workspace support", a.s, b.s, pct, 1, false],
+    ["Instability", a.i, b.i, pct, 1, false],
+    ["Band entropy at onset, bits", a.ent, b.ent, (v) => v.toFixed(2), Math.max(a.ent, b.ent, 1), false],
+  ];
+  return `<div class="sig-head"><span>Signal</span><span>A</span><span>B</span><span>Gap, scaled to signal range</span></div>` + rows.map(([label, va, vb, fmt, range, bold]) => {
+    const gap = va == null || vb == null ? 0 : Math.abs(va - vb) / range;
+    const tag = va == null || vb == null ? "" : Math.abs(va - vb) < 1e-3 ? "same" : va > vb ? "A higher" : "B higher";
+    return `<div class="sig-line${bold ? " bold" : ""}"><span>${label}</span><span>${fmt(va)}</span><span>${fmt(vb)}</span><span class="gap"><i><b style="width:${Math.round(gap * 100)}%;background:${va > vb ? "#1f4f80" : "#c2703d"}"></b></i><em>${tag}</em></span></div>`;
+  }).join("");
+}
+
+// Compact slice grid: the last 8 prompt tokens plus the answer, every layer.
+function miniGrid(tag, ex, d) {
+  const pl = d.prompt_len ?? d.seq_len, from = Math.max(0, pl - 8), eng = $("english").checked;
+  const cols = []; for (let t = from; t < d.seq_len; t++) cols.push(t);
+  const head = `<div class="cg-row cg-head" style="grid-template-columns:28px repeat(${cols.length},56px)"><span></span>${cols.map((t) => `<span class="${t >= pl ? "gen" : ""}" title="position ${t}">${esc(tokStr(d.vocab[d.context_ids[t]]))}</span>`).join("")}</div>`;
+  const body = d.grid.map((row) => `<div class="cg-row${row.is_output ? " out" : ""}" style="grid-template-columns:28px repeat(${cols.length},56px)"><span class="lab">${row.is_output ? "out" : "L" + row.layer}</span>${cols.map((t) => {
+    let i = 0; if (eng) i = row.top_ids[t].findIndex((id) => ENGLISH.test(d.vocab[id] || ""));
+    if (i < 0) return `<span style="background:transparent">·</span>`;
+    const [bg, dk] = probColor(row.top_probs[t][i]);
+    return `<span class="${dk ? "dk" : ""}" style="background:${bg}" title="${(row.top_probs[t][i] * 100).toFixed(0)}%">${esc(tokStr(d.vocab[row.top_ids[t][i]]))}</span>`;
+  }).join("")}</div>`).join("");
+  return `<div class="cg"><span class="cg-title"><span class="tag sm">${tag}</span>${esc(ex.name)}</span><div class="cg-scroll">${head}${body}</div></div>`;
+}
